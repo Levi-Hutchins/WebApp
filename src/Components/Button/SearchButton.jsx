@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Search';
-const SendButton = (props) => {
+const SearchButton = (props) => {
   return (
     <div>
       <Button variant="contained" endIcon={<SendIcon />} className='SearchButton' onClick={() => {alert(props.inputData)}}>
@@ -11,4 +11,4 @@ const SendButton = (props) => {
   )
 }
 
-export default SendButton
+export default SearchButton
