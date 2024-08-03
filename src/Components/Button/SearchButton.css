@@ -1,0 +1,7 @@
+.SearchButton{
+    min-width: 50px;
+    height: 100%;
+    margin-left: -1px;
+    padding: 0;
+    border-radius:0 4px 4px 0;
+}

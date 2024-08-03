@@ -1,0 +1,26 @@
+/* InputBox.css */
+.input-box {
+    margin: 1rem;
+    width: 25ch;
+  }
+  
+  .input-field {
+    width: 25ch;
+  }
+  
+  .input-field .MuiOutlinedInput-root {
+    background-color: #24242c;
+  }
+  
+  .input-field .MuiOutlinedInput-notchedOutline {
+    border-color: #454545;
+  }
+  
+  .input-field .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: #013b64;
+  }
+  
+  .input-field .MuiInputLabel-root {
+    color: rgb(185, 185, 185);
+  }
+  
