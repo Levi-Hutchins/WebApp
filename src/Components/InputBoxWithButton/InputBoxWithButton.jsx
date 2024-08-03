@@ -11,6 +11,7 @@ const InputBoxWithButton = (props) => {
     alert("Submittedddddddd");
   };
   const handleChange = (event) => {
+    console.log(event.target.value)
     setInputValue(event.target.value);
   };
   return (
@@ -28,7 +29,7 @@ const InputBoxWithButton = (props) => {
             className="input-field"
             sx={{ input: { color: "rgb(225, 225, 225)" } }}
             onChange={handleChange}
-            InputProps={{endAdornment: (<SendButton onSubmit={handleSubmit}></SendButton>)}}
+            InputProps={{endAdornment: (<SendButton inputData={inputValue}></SendButton>)}}
           />
         </Box>
       </form>

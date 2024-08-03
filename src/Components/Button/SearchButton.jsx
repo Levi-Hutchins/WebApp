@@ -4,7 +4,7 @@ import SendIcon from '@mui/icons-material/Search';
 const SendButton = (props) => {
   return (
     <div>
-      <Button variant="contained" endIcon={<SendIcon />} className='SearchButton'>
+      <Button variant="contained" endIcon={<SendIcon />} className='SearchButton' onClick={() => {alert(props.inputData)}}>
         {props.displayValue}
       </Button>
     </div>
