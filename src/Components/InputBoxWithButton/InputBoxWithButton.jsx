@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import "./InputBox.css";
+import "./InputBoxWithButton.css";
 import SendButton from "../Button/SearchButton";
+import { Send } from "@mui/icons-material";
 
-const InputBox = (props) => {
+const InputBoxWithButton = (props) => {
   const [inputValue, setInputValue] = useState("");
   const handleSubmit = () => {
     alert("Submittedddddddd");
@@ -25,14 +26,14 @@ const InputBox = (props) => {
             label={props.displayValue}
             variant="outlined"
             className="input-field"
-            sx={{ input: { color: "rgb(185, 185, 185)" } }}
+            sx={{ input: { color: "rgb(225, 225, 225)" } }}
             onChange={handleChange}
+            InputProps={{endAdornment: (<SendButton onSubmit={handleSubmit}></SendButton>)}}
           />
         </Box>
       </form>
-      <SendButton displayValue="Send"/>
     </>
   );
 };
 
-export default InputBox;
+export default InputBoxWithButton;

@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import InputBox from './Components/InputBox/InputBox';
+import InputBoxWithButton from './Components/InputBoxWithButton/InputBoxWithButton';
 
 function App() {
   return (
@@ -9,7 +9,7 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
 
 
-         <InputBox displayValue="Search"/>
+         <InputBoxWithButton displayValue="Search"/>
       </header>
     </div>
   );

@@ -1,4 +1,4 @@
-/* InputBox.css */
+
 .input-box {
     margin: 1rem;
     width: 25ch;
@@ -17,10 +17,10 @@
   }
   
   .input-field .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
-    border-color: #013b64;
+    border-color: #3366ff;
   }
   
   .input-field .MuiInputLabel-root {
-    color: rgb(185, 185, 185);
+    color: rgb(225, 225, 225);
   }
   
