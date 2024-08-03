@@ -1,0 +1,17 @@
+.input-box {
+    margin: 1rem;
+    width: 25ch;
+
+  }
+  
+.input-field {
+    width: 25ch;
+    color: red;
+    
+
+  }
+  .input-field .MuiOutlinedInput-root {
+    &.Mui-focused fieldset {
+      border-color: red; 
+    }
+  }
