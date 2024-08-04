@@ -26,7 +26,8 @@ const InputBoxWithButton = (props) => {
             label={props.displayValue}
             variant="outlined"
             className="input-field"
-            sx={{ input: { color: "rgb(225, 225, 225)" } }}
+            sx={{ input: { color: "rgb(225, 225, 225)" },
+           }}
             onChange={handleChange}
             InputProps={{endAdornment: (<SearchButton inputData={inputValue}></SearchButton>)}}
           />

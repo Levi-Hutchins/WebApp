@@ -14,7 +14,7 @@ const NavBar = () => {
 
       <ul>
         <li>
-          <Link to="/Search">FIND ITEM</Link>
+          <Link to="/Search">ITEM SEARCH</Link>
         </li>
         <li>
           <Link to="/Test">TEST</Link>
