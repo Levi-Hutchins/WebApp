@@ -44,9 +44,12 @@ const NavBar = () => {
 
             sx={{
                 fontFamily: 'Andale Mono, monospace	',
-
                 borderColor: '#5e43f3',
-                color: 'white'
+                color: 'white',
+                "&:hover": {
+                    borderColor: "#4e3ac0", 
+
+              }
 
             }}
           >
