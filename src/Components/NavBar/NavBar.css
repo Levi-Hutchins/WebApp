@@ -6,7 +6,7 @@ body{
     margin: 0;
 }
 .nav{
-    background-color: #24242c;
+    background-color: #212224;
     color: white;
     height: 70px;
     display: flex;
@@ -35,8 +35,9 @@ body{
 
 }
 
-.nav li.active{
-    background-color: #555
+.nav li.active {
+    background-color: #555;
+    color: red
 }
 .nav li:hover{
     background-color: #777
