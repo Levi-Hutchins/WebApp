@@ -1,13 +1,14 @@
 *{
     box-sizing: border-box;
 }
+
 body{
     margin: 0;
 }
 .nav{
-    background-color: black;
+    background-color: #24242c;
     color: white;
-    height: 60px;
+    height: 70px;
     display: flex;
     justify-content: space-between;
     align-items: stretch;
@@ -37,3 +38,18 @@ body{
 .nav li:hover{
     background-color: #777
 }
+
+.nav li:hover, .homepage:hover {
+    background-color: #777;
+  }
+
+  .register-button-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .register-button {
+    border-radius: 10px;
+  }
+
+

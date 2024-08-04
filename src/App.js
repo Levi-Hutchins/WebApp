@@ -1,10 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
-import InputBoxWithButton from './Components/InputBoxWithButton/InputBoxWithButton';
 import NavBar from './Components/NavBar/NavBar';
 import { Route, Routes } from 'react-router-dom';
 import Home from './Pages/Home';
 import SearchPage from './Pages/SearchPage';
+import TestPage from './Pages/TestPage';
+import RegisterPage from './Pages/RegisterPage';
 
 
 function App() {
@@ -16,6 +17,9 @@ function App() {
           <Routes>
               <Route path="/" element= {<Home/>}/>
               <Route path="/Search" element= {<SearchPage/>}/>
+              <Route path="/Test" element= {<TestPage/>}/>
+              <Route path='/Register' element= {<RegisterPage/>}/>
+
 
           </Routes>
         </div>
