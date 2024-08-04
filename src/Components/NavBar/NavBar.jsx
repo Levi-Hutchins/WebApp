@@ -2,8 +2,10 @@ import React from "react";
 import "./NavBar.css";
 import Button from "@mui/material/Button";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 const NavBar = () => {
+    const navigate = useNavigate();
+
   return (
     <div className="nav">
       <Link to="/" className="homepage">
@@ -22,6 +24,7 @@ const NavBar = () => {
           <Button
             className="register-button"
             variant="contained"
+            onClick={() => navigate('/Register')}
             sx={{
             fontFamily: 'Andale Mono, monospace	',
               backgroundColor: "#5e43f3",
@@ -37,6 +40,8 @@ const NavBar = () => {
           <Button
             className="login-button"
             variant="outlined"
+            onClick={() => navigate('/LogIn')}
+
             sx={{
                 fontFamily: 'Andale Mono, monospace	',
 
