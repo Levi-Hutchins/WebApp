@@ -14,6 +14,9 @@ body{
     align-items: stretch;
     gap: 2rem;
     padding: 0 1rem;
+    font-family: 'Andale Mono, monospace';
+    font-size: large;
+    
 }
 .nav ul{
     padding: 0;
@@ -49,6 +52,14 @@ body{
   }
   
   .register-button {
+    border-radius: 10px;
+  }
+  .login-button-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .login-button {
     border-radius: 10px;
   }
 
