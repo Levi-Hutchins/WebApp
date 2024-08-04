@@ -4,7 +4,7 @@ import InputBoxWithButton from '../Components/InputBoxWithButton/InputBoxWithBut
 const SearchPage = () => {
   return (
     <div>
-      <h1>Search Page</h1>
+      <h1 style={{color: 'white'}}>Search Page</h1>
 
       <InputBoxWithButton displayValue="Search an Item"/>
     </div>

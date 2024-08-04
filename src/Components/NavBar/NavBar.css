@@ -48,6 +48,8 @@ body{
   }
 
   .register-button-container {
+    background-color: unset !important;
+
     display: flex;
     align-items: center;
   }
@@ -56,11 +58,14 @@ body{
     border-radius: 10px;
   }
   .login-button-container {
+    background-color: unset !important;
+
     display: flex;
     align-items: center;
   }
   
   .login-button {
+
     border-radius: 10px;
   }
 
