@@ -23,4 +23,8 @@
   .input-field .MuiInputLabel-root {
     color: rgb(225, 225, 225);
   }
+
+  form{
+    margin-right: 225px;
+  }
   

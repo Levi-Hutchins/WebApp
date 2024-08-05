@@ -7,13 +7,20 @@ import SearchPage from './Pages/SearchPage/SearchPage';
 import TestPage from './Pages/TestPage';
 import RegisterPage from './Pages/RegisterPage';
 import LogInPage from './Pages/LogInPage';
+import { useEffect, useRef } from 'react';
 
 
 function App() {
+
   return (
+   
+
     <div className="App">
         <NavBar/>
 
+
+
+      
         <div className="container">
           <Routes>
               <Route path="/" element= {<Home/>}/>
