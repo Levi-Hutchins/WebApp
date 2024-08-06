@@ -6,11 +6,13 @@ import SearchButton from "../Button/SearchButton";
 
 const InputBoxWithButton = (props) => {
   const [inputValue, setInputValue] = useState("");
+
   const handleSubmit = () => {
-    alert("Submittedddddddd");
+    alert(inputValue);
   };
+
   const handleChange = (event) => {
-    console.log(event.target.value)
+    console.log(event.target.value);
     setInputValue(event.target.value);
   };
   return (
@@ -26,9 +28,16 @@ const InputBoxWithButton = (props) => {
             label={props.displayValue}
             variant="outlined"
             className="input-field"
-            sx={{ input: { color: "rgb(225, 225, 225)" } }}
+            sx={{
+              color: "rgb(225, 225, 225)",
+              "&.Mui-focused": { color: "white" },
+            }}
             onChange={handleChange}
-            InputProps={{endAdornment: (<SearchButton inputData={inputValue}></SearchButton>)}}
+            InputProps={{
+              endAdornment: (
+                <SearchButton inputData={inputValue}></SearchButton>
+              ),
+            }}
           />
         </Box>
       </form>

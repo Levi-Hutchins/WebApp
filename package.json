@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
+    "@fontsource/archivo-black": "^5.0.20",
     "@mui/icons-material": "^5.16.6",
     "@mui/material": "^5.16.6",
     "@testing-library/jest-dom": "^5.17.0",
@@ -20,7 +21,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint src --ext .js,.jsx"
+
   },
   "eslintConfig": {
     "extends": [
