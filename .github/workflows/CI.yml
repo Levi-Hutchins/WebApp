@@ -19,11 +19,14 @@ jobs:
       with:
         node-version: '22'  
 
-    - name: Install dependencies
+    - name: 📦 Install dependencies 📦
       run: npm install
 
-    - name: Run build
+    - name: 🏗 Run Build 🏗
       run: npm run build
 
-    - name: Run tests
+    - name: 🧪 Run Tests 🧪
       run: npm test
+    
+    - name: 🧹 Lint Codebase 🧹
+      run: npm run lint
