@@ -5,7 +5,7 @@ const databaseConfig = {
     password: process.env.PASSWORD, 
     server: process.env.SERVER,    
     port: parseInt(process.env.PORT,10),           
-    database: process.env.MASTER, 
+    database: process.env.DATABASE, 
 
     options: {
         encrypt: true,       

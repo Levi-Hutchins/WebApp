@@ -5,19 +5,12 @@ import "./InputBoxWithButton.css";
 import SearchButton from "../Button/SearchButton";
 
 const InputBoxWithButton = (props) => {
-  const [inputValue, setInputValue] = useState("");
+ 
 
-  const handleSubmit = () => {
-    alert(inputValue);
-  };
 
-  const handleChange = (event) => {
-    console.log(event.target.value);
-    setInputValue(event.target.value);
-  };
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={props.onSubmit}>
         <Box
           component="form"
           className="input-box"
@@ -32,10 +25,10 @@ const InputBoxWithButton = (props) => {
               color: "rgb(225, 225, 225)",
               "&.Mui-focused": { color: "white" },
             }}
-            onChange={handleChange}
+            onChange={props.onChange}
             InputProps={{
               endAdornment: (
-                <SearchButton inputData={inputValue}></SearchButton>
+                <SearchButton inputData={props.inputValueProps}></SearchButton>
               ),
             }}
           />
