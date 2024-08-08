@@ -10,6 +10,8 @@ import "../../Components/InputBoxWithButton/InputBoxWithButton.css";
 
 const SearchPage = () => {
   const [productSubmitted, setProductSubmitted] = useState(false);
+  const [productsFound, setProductsFound] = useState('');
+
   const [inputValue, setInputValue] = useState("");
 
   const handleChange = (event) => {
@@ -21,7 +23,7 @@ const SearchPage = () => {
     setProductSubmitted(true);
     axios.post("http://localhost:4000/api/search", { product: inputValue })
     .then(res => {
-      console.log(res);
+      set
       console.log(res.data);
     })
     .catch(err => {
