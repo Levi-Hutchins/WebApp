@@ -10,7 +10,7 @@ const InputBoxWithButton = (props) => {
 
   return (
     <>
-      <form onSubmit={props.onSubmit}>
+      <form>
         <Box
           component="form"
           className="input-box"
@@ -28,7 +28,7 @@ const InputBoxWithButton = (props) => {
             onChange={props.onChange}
             InputProps={{
               endAdornment: (
-                <SearchButton inputData={props.inputValueProps}></SearchButton>
+                <SearchButton onSubmit={props.onSubmit}></SearchButton>
               ),
             }}
           />

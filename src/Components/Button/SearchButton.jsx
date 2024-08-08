@@ -14,9 +14,7 @@ const SearchButton = (props) => {
         variant="contained"
         endIcon={<SendIcon />}
         className="SearchButton"
-        onClick={() => {
-          alert(props.inputData);
-        }}
+        onClick={props.onSubmit}
       >
         {props.displayValue}
       </Button>

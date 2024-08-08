@@ -15,7 +15,7 @@ const SearchPage = () => {
   };
 
   const handleSearch = () => {
-    alert("SEARCH");
+    alert(inputValue);
   };
 
   return (
