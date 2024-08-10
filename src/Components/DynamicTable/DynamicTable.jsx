@@ -21,6 +21,9 @@ export default function DynamicTable({ data }) {
     setPage(0);
   };
 
+
+
+
   const columns = [{ id: "Name", label: "Name", minWidth: 170 }];
 
   return (
@@ -51,13 +54,14 @@ export default function DynamicTable({ data }) {
 
                   return (
                     <TableRow
+                      onClick={() => {alert("YES")}}
                       hover
                       role="checkbox"
                       tabIndex={-1}
                       key={row.ID || rowIndex}
                     >
                       <TableCell key={row.ID || rowIndex} align="left">
-                        {value !== undefined ? value : "-"}
+                      {value !== undefined ? value : "-"} 
                       </TableCell>
                     </TableRow>
                   );
