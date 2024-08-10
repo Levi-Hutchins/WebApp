@@ -19,15 +19,39 @@ async function searchProducts(productName) {
     try{
         let db_connection = await sql.connect(databaseConfig);
 
-        let result = await db_connection.request()
+        let similarResults = await db_connection.request()
         .input('productName', sql.VarChar, productName)
-        .query('SELECT TOP 10 * FROM [master].[dbo].[Product] WHERE Name LIKE \'%\' + @productName + \'%\'');
+        .query('SELECT * FROM [master].[dbo].[Product] WHERE Name LIKE \'%\' + @productName + \'%\'');
         //.query('SELECT * FROM [master].[dbo].[Product]');
 
 
         
         await sql.close();
 
+        return similarResults.recordset
+
+    } catch(error){
+        console.error(error);
+        return null
+    }
+}
+async function getProductDetails(productID) {
+
+    try{
+        let db_connection = await sql.connect(databaseConfig);
+
+        let stocktakeEntries = await db_connection.request()
+        .input('productID', sql.Int, productID)
+        .query('SELECT * FROM [master].[dbo].[Stocktake] WHERE ProductId = ( SELECT ID FROM [master].[dbo].[Product] WHERE ID = @productID)');
+        //.query('SELECT * FROM [master].[dbo].[Product]');
+
+
+        
+        await sql.close();
+        console.log(result.recordset)
+
+
+        //TODO: need to query the source table with the retrieved sourceIDs above to get what the product is
         return result.recordset
 
     } catch(error){
@@ -35,5 +59,8 @@ async function searchProducts(productName) {
         return null
     }
 }
+
+getProductDetails(220)
+
 
 module.exports = { searchProducts };
