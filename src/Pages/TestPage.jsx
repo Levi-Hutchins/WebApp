@@ -1,6 +1,4 @@
 import React from 'react'
-import DynamicTable from '../Components/DynamicTable/DynamicTable'
-import TestBox from '../Components/InputBoxWithButton/TestBox'
 
 
 
