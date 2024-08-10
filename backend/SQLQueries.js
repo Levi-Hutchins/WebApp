@@ -1,6 +1,6 @@
 
 const sql = require('mssql');
-const databaseConfig = require('./SQLConfig'); // Assuming you have a SQLConfig.js file exporting database configuration
+require('dotenv').config()
 
 const databaseConfig = {
     user: process.env.USERACC,  
@@ -21,12 +21,13 @@ async function searchProducts(productName) {
 
         let result = await db_connection.request()
         .input('productName', sql.VarChar, productName)
-        .query('SELECT TOP 10 * FROM [master].[dbo].[Product] WHERE Name = @productName');
+        .query('SELECT TOP 10 * FROM [master].[dbo].[Product] WHERE Name LIKE \'%\' + @productName + \'%\'');
+        //.query('SELECT * FROM [master].[dbo].[Product]');
+
 
         
         await sql.close();
 
-        
         return result.recordset
 
     } catch(error){

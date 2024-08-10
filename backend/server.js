@@ -22,6 +22,8 @@ app.post('/api/search', async (req, res) => {
 
   try {
     const result = await searchProducts(product);
+    console.log("[INFO] Returning data ")
+
     return res.json(result);
   } catch (err) {
     console.error(err);

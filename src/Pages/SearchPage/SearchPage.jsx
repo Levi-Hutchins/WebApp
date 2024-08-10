@@ -5,11 +5,13 @@ import { useState } from "react";
 import "@fontsource/archivo-black";
 import "./SearchPage.css";
 
+import DynamicTable from "../../Components/DynamicTable/DynamicTable"
 import InputBoxWithButton from "../../Components/InputBoxWithButton/InputBoxWithButton";
 import "../../Components/InputBoxWithButton/InputBoxWithButton.css";
 
 //TODO: Have a look at MUI autocomplete component with a hook on page load that queries
 // the database for all the products to be loaded in the autocomplte 
+
 
 const SearchPage = () => {
   const [productSubmitted, setProductSubmitted] = useState(false);
@@ -27,8 +29,8 @@ const SearchPage = () => {
     axios
       .post("http://localhost:4000/api/search", { product: inputValue })
       .then((res) => {
-        set;
         console.log(res.data);
+        setProductsFound(res.data)
       })
       .catch((err) => {
         console.error(err);
@@ -43,15 +45,16 @@ const SearchPage = () => {
       </div>
 
       <div className="components">
-        {productSubmitted ? (
-          <h1>TRUE</h1>
-        ) : (
-          <InputBoxWithButton
+      <InputBoxWithButton
             displayValue="Search For an Item"
             onChange={handleChange}
             onSubmit={handleSubmit}
             inputValueProps={inputValue}
           />
+        {productSubmitted ? (
+          <DynamicTable data={productsFound}/>
+        ) : (
+          <></>
         )}
       </div>
     </div>
