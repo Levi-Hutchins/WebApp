@@ -5,7 +5,10 @@
     display: flex;
     width: 50%;
 }
-
+.input span {
+    color: #ff4c4c; /* Red color for error messages */
+    font-size: 12px; /* Smaller font size for error messages */
+}
 .inputs {
     display: flex;
     flex-direction: column;
