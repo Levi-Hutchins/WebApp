@@ -17,10 +17,10 @@
   }
   
   .input-field .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
-    border-color: #013b64;
+    border-color: #5e43f3;
   }
   
   .input-field .MuiInputLabel-root {
-    color: rgb(185, 185, 185);
+    color: rgb(255, 255, 255);
   }
   

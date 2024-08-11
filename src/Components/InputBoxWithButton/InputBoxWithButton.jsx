@@ -2,7 +2,7 @@ import React from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import "./InputBoxWithButton.css";
-import SearchButton from "../Button/SearchButton";
+import SearchButton from "../Button/CustomButton";
 
 const InputBoxWithButton = (props) => {
  

@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Search";
-const SearchButton = (props) => {
+const CustomButton = ({displayValue, buttonIcon, onSubmit}) => {
   return (
     <div>
       <Button
@@ -12,14 +12,14 @@ const SearchButton = (props) => {
           },
         }}
         variant="contained"
-        endIcon={<SendIcon />}
+        endIcon={buttonIcon}
         className="SearchButton"
-        onClick={props.onSubmit}
+        onClick={onSubmit}
       >
-        {props.displayValue}
+        {displayValue}
       </Button>
     </div>
   );
 };
 
-export default SearchButton;
+export default CustomButton;
