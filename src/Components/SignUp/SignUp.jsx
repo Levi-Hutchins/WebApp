@@ -3,8 +3,10 @@ import "./SignUp.css";
 import InputBox from "../InputBox/InputBox";
 import PersonIcon from "@mui/icons-material/Person";
 import CustomButton from "../Button/CustomButton";
+import Alert from '@mui/material/Alert';
 
-const SignUp = () => {
+
+const SignUp = ({setSuccess}) => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -12,6 +14,7 @@ const SignUp = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
 
   const [errors, setErrors] = useState({});
+  const[successfulSubmission, setSuccessfulSubmission] = useState(false)
 
   const handleNameChange = (event) => setFullName(event.target.value);
 
@@ -58,7 +61,9 @@ const SignUp = () => {
 
     setErrors(validationErrors);
     if (errorMsg !== "") alert(errorMsg);
-    if (Object.keys(validationErrors).length === 0) alert("Form Submitted");
+    if (Object.keys(validationErrors).length === 0){
+        setSuccess(true);
+        alert("Form Submitted");}
   };
 
   return (
@@ -110,6 +115,7 @@ const SignUp = () => {
           />
         </div>
       </div>
+      
     </div>
   );
 };

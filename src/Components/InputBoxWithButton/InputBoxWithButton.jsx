@@ -9,7 +9,7 @@ const InputBoxWithButton = ({displayValue, onChange, onSubmit}) => {
 
 
   return (
-      <form>
+      <div>
         <Box
           component="form"
           className="input-box"
@@ -37,7 +37,7 @@ const InputBoxWithButton = ({displayValue, onChange, onSubmit}) => {
           />
 
         </Box>
-      </form>
+      </div>
   );
 };
 
