@@ -1,5 +1,4 @@
-import { useState } from "react";
-import InputBox from "../../Components/InputBox/InputBox";
+
 import "./RegisterPage.css";
 import SignUp from "../../Components/SignUp/SignUp";
 
