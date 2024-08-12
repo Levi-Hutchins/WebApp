@@ -3,11 +3,9 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import "./InputBox.css";
 
-const InputBox = ({ displayValue, handleChange, errroLevel }) => {
-
+const InputBox = ({ displayValue, handleChange, errorLevel }) => {
 
   return (
-    <>
       <form>
         <Box
           component="form"
@@ -21,7 +19,7 @@ const InputBox = ({ displayValue, handleChange, errroLevel }) => {
             className="input-field"
             sx={{
               input: { color: "white" },
-              "& .MuiOutlinedInput-notchedOutline": errroLevel
+              "& .MuiOutlinedInput-notchedOutline": errorLevel
                 ? { borderColor: "red" }
                 : { borderColor: "#454545" },
             }}
@@ -29,7 +27,6 @@ const InputBox = ({ displayValue, handleChange, errroLevel }) => {
           />
         </Box>
       </form>
-    </>
   );
 };
 

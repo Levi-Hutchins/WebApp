@@ -24,21 +24,40 @@ const SignUp = () => {
   const handlePhoneNumChange = (event) => setPhoneNumber(event.target.value);
 
   const handleSubmit = (event) => {
+    let errorMsg = "";
     event.preventDefault();
     const validationErrors = {};
 
-    if (!fullName.trim()) validationErrors.fullName = true;
+    if (!fullName.trim()) {
+      validationErrors.fullName = true;
+      errorMsg += "Please enter your name\n";
+    }
 
-    if (!email.trim()) validationErrors.email = "Email is required";
-    else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email))
-      validationErrors.email = "Enter a valid Email";
+    if (!email.trim() || !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+      validationErrors.email = true;
+      errorMsg += "Please enter a valid email\n";
+    }
 
-    if (!password.trim()) validationErrors.password = "Password is required";
-    else if (password.length < 8)
-      validationErrors.password = "Password must be at least 8 characters";
+    if (!password.trim() || password.length < 8) {
+      validationErrors.password = true;
+      errorMsg += "Please enter a password greater than 8 characters\n";
+    }
+
+    if (!address.trim()) {
+      validationErrors.address = true;
+      errorMsg += "Please enter a valid address\n";
+    }
+
+    if (
+      !phoneNumber.trim() ||
+      !/^(\+61|0)?[ ]?(\(?\d{2,4}\)?)[ ]?\d{3,4}[ ]?\d{3,4}$/.test(phoneNumber)
+    ) {
+      validationErrors.phoneNumber = true;
+      errorMsg += "Please enter a phone number\n";
+    }
 
     setErrors(validationErrors);
-
+    if (errorMsg !== "") alert(errorMsg);
     if (Object.keys(validationErrors).length === 0) alert("Form Submitted");
   };
 
@@ -49,7 +68,7 @@ const SignUp = () => {
           <InputBox
             displayValue="Full Name"
             handleChange={handleNameChange}
-            errroLevel={errors.fullName}
+            errorLevel={errors.fullName}
           />
           {errors.fullName && <span>{errors.fullName}</span>}
         </div>
@@ -57,6 +76,7 @@ const SignUp = () => {
           <InputBox
             displayValue="Email Address"
             handleChange={handleEmailChange}
+            errorLevel={errors.email}
           />
           {errors.email && <span>{errors.email}</span>}
         </div>
@@ -64,16 +84,22 @@ const SignUp = () => {
           <InputBox
             displayValue="Password"
             handleChange={handlePasswordChange}
+            errorLevel={errors.password}
           />
           {errors.password && <span>{errors.password}</span>}
         </div>
         <div className="input">
-          <InputBox displayValue="Address" handleChange={handleAddressChange} />
+          <InputBox
+            displayValue="Address"
+            handleChange={handleAddressChange}
+            errorLevel={errors.address}
+          />
         </div>
         <div className="input">
           <InputBox
             displayValue="Phone Number"
             handleChange={handlePhoneNumChange}
+            errorLevel={errors.phoneNumber}
           />
         </div>
         <div className="submit-button">
