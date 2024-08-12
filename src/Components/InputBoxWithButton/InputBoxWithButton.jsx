@@ -4,7 +4,7 @@ import TextField from "@mui/material/TextField";
 import "./InputBoxWithButton.css";
 import SearchButton from "../Button/CustomButton";
 
-const InputBoxWithButton = (props) => {
+const InputBoxWithButton = ({displayValue, onChange, handleSubmit}) => {
  
 
 
@@ -20,7 +20,7 @@ const InputBoxWithButton = (props) => {
         >
           <TextField
 
-            label={props.displayValue}
+            label={displayValue}
             variant="outlined"
             className="input-field"
             sx={{
@@ -29,10 +29,10 @@ const InputBoxWithButton = (props) => {
                 color: "white"},  
               "&.Mui-focused": { color: "white" },
             }}
-            onChange={props.onChange}
+            onChange={onChange}
             InputProps={{
               endAdornment: (
-                <SearchButton onSubmit={props.onSubmit}></SearchButton>
+                <SearchButton onSubmit={handleSubmit}></SearchButton>
               ),
             }}
           />

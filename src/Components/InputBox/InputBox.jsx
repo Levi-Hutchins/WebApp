@@ -8,7 +8,7 @@ const InputBox = ({ displayValue, handleChange, errroLevel }) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form>
         <Box
           component="form"
           className="input-box"
