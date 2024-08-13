@@ -33,6 +33,7 @@ const SignUp = () => {
       validationErrors.fullName = true;
     }
 
+    //eslint-disable-next-line
     if (!email.trim() || !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
       validationErrors.email = true;
     }
@@ -47,6 +48,14 @@ const SignUp = () => {
 
     if (!email.trim() || !/^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
       validationErrors.email = true;
+    }
+
+    //eslint-disable-next-line
+    if (
+      !phoneNumber.trim() ||
+      /^(?:\+?61|0)[2-478](?:[ -]?[0-9]){8}$/.test(phoneNumber)
+    ) {
+      validationErrors.phoneNumber = true;
     }
 
     setErrors(validationErrors);
