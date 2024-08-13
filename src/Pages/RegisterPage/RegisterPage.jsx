@@ -15,17 +15,14 @@ const RegisterPage = () => {
     <div>
 
 
-      <div className="div-border">
-        {successfulSubmission ? <Alert variant="filled" severity="success">
-        This is a filled success Alert.
-      </Alert>
+   
+         <div className="div-border">
+          <SignUp/>
+          </div>
 
-         :
-          <SignUp setSuccess={setSuccessfulSubmission}/>
-        }
+        
         
       </div>
-    </div>
   );
 };
 

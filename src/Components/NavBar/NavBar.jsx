@@ -33,7 +33,7 @@ const NavBar = () => {
               },
             }}
           >
-            Register
+            Sign Up
           </Button>
         </li>
         <li className="login-button-container">

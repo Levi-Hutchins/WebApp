@@ -5,10 +5,7 @@
     display: flex;
     width: 50%;
 }
-.input span {
-    color: #ff4c4c; /* Red color for error messages */
-    font-size: 12px; /* Smaller font size for error messages */
-}
+
 .inputs {
     display: flex;
     flex-direction: column;
@@ -24,4 +21,17 @@
 
 .submit-button {
     margin-right: 250px;
+}
+.success-banner {
+    position: fixed;
+    bottom: 20px;
+    right: -300px; 
+    z-index: 1000; 
+    width: auto;
+    max-width: 300px; 
+    transition: right 0.5s ease-in-out; 
+}
+
+.success-banner.show {
+    right: 20px; 
 }

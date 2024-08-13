@@ -18,3 +18,10 @@
     
 }
 
+
+.success-banner{
+    margin-top: 250px;
+    max-width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
