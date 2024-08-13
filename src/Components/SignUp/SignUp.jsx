@@ -11,7 +11,6 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [address, setAddress] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-let [errorMsg, setErrorMsg] = useState("");
   const [errors, setErrors] = useState({});
   const [successfulSubmission, setSuccessfulSubmission] = useState(false);
   const [badSubmission, setBadSubmission] = useState(false);
@@ -32,36 +31,31 @@ let [errorMsg, setErrorMsg] = useState("");
 
     if (!fullName.trim()) {
       validationErrors.fullName = true;
-      setErrorMsg += "Please enter your name\n";
     }
 
     if (!email.trim() || !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
       validationErrors.email = true;
-      setErrorMsg += "Please enter a valid email\n";
     }
 
     if (!password.trim() || password.length < 8) {
       validationErrors.password = true;
-      setErrorMsg += "Please enter a password greater than 8 characters\n";
     }
 
     if (!address.trim()) {
       validationErrors.address = true;
-      setErrorMsg += "Please enter a valid address\n";
     }
 
-    if (
-      !phoneNumber.trim() ||
-      !/^(\+61|0)?[ ]?(\(?\d{2,4}\)?)[ ]?\d{3,4}[ ]?\d{3,4}$/.test(phoneNumber)
-    ) {
-      validationErrors.phoneNumber = true;
-      setErrorMsg += "Please enter a phone number\n";
+    if (!email.trim() || !/^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+      validationErrors.email = true;
     }
 
     setErrors(validationErrors);
-    if (setErrorMsg !== "") setBadSubmission(true);
     if (Object.keys(validationErrors).length === 0) {
       setSuccessfulSubmission(true);
+      setBadSubmission(false);
+    } else {
+      setSuccessfulSubmission(false);
+      setBadSubmission(true);
     }
   };
 
@@ -128,7 +122,7 @@ let [errorMsg, setErrorMsg] = useState("");
       {badSubmission ? (
         <div className="success-banner show">
           <Alert variant="filled" severity="error">
-             Please correct highlighted fields
+            Please correct highlighted fields
           </Alert>
         </div>
       ) : (
