@@ -1,6 +1,5 @@
 
 import "./RegisterPage.css";
-import { useState } from "react";
 import SignUp from "../../Components/SignUp/SignUp";
 
 
