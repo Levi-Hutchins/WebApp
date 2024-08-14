@@ -5,7 +5,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import CustomButton from "../Button/CustomButton";
 import Alert from "@mui/material/Alert";
 
-const SignUp = () => {
+const SignUp = ({handleNavigation}) => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -49,11 +49,12 @@ const SignUp = () => {
     if (!email.trim() || !/^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
       validationErrors.email = true;
     }
-
+    console.log(phoneNumber)
     //eslint-disable-next-line
     if (
       !phoneNumber.trim() ||
-      /^(?:\+?61|0)[2-478](?:[ -]?[0-9]){8}$/.test(phoneNumber)
+      !/^(\+?\(61\)|\(\+?61\)|\+?61|\(0[1-9]\)|0[1-9]) ?-?[0-9]{7,9}$/
+      .test(phoneNumber)
     ) {
       validationErrors.phoneNumber = true;
     }
@@ -62,6 +63,7 @@ const SignUp = () => {
     if (Object.keys(validationErrors).length === 0) {
       setSuccessfulSubmission(true);
       setBadSubmission(false);
+      handleNavigation(true)
     } else {
       setSuccessfulSubmission(false);
       setBadSubmission(true);
