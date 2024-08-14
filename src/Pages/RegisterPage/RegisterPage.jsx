@@ -8,7 +8,6 @@ import SignUp from "../../Components/SignUp/SignUp";
 
 
 const RegisterPage = () => {
-  const [navigateToAccPage, setNavigateToAccPage] = useState(false);
   const navigate = useNavigate();
 
 
