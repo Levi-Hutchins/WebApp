@@ -44,7 +44,9 @@ export default class Login extends Component {
           </button>
         </div>
         <p className="forgot-password text-centre">
-          <a href="#">Forgot password?</a>
+        <Link to="/" classname='ms-2'>Forgot your password?</Link> {/*TODO: Fix this later*/}
+
+          <a href="">Forgot password?</a>
         </p>
         <p className="Sign-up text-right">
           <Link to="/Register" classname='ms-2'>Sign up</Link>
