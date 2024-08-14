@@ -7,7 +7,6 @@ import SearchPage from './Pages/SearchPage/SearchPage';
 import TestPage from './Pages/TestPage';
 import RegisterPage from './Pages/RegisterPage';
 import LogInPage from './Pages/LogInPage';
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 
 
