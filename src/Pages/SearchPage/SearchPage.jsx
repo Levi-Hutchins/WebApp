@@ -4,6 +4,7 @@ import axios from "axios";
 import { useState } from "react";
 import "@fontsource/archivo-black";
 import "./SearchPage.css";
+import Alert from "@mui/material/Alert";
 
 import DynamicTable from "../../Components/DynamicTable/DynamicTable"
 import InputBoxWithButton from "../../Components/InputBoxWithButton/InputBoxWithButton";
@@ -15,6 +16,7 @@ const SearchPage = () => {
   const [productSubmitted, setProductSubmitted] = useState(false);
   const [productsFound, setProductsFound] = useState("");
   const [inputValue, setInputValue] = useState("");
+  const [showErrorBanner, setShowErrorBanner] = useState(false)
 
 
 
@@ -25,11 +27,12 @@ const SearchPage = () => {
 
   const handleSubmit = () => {
     if(inputValue === ""){
-      alert("Please Enter a valid product name");
+      setShowErrorBanner(true)
       return;
     }
 
     setProductSubmitted(true);
+    setShowErrorBanner(false)
     axios
       .post("http://localhost:4000/api/search", { product: inputValue })
       .then((res) => {
@@ -47,20 +50,37 @@ const SearchPage = () => {
         <h1 className="title-primary">FIND</h1>
         <h1 className="title-secondary"> AN ITEM</h1>
       </div>
-
-      <div className="components">
+      <div className="components-input">
       <InputBoxWithButton
             displayValue="Search For an Item"
             onChange={handleChange}
             onSubmit={handleSubmit}
             inputValueProps={inputValue}
           />
+      </div>
+   
+      <div className="components-table">
+    
         {productSubmitted ? (
           <DynamicTable data={productsFound}/>
         ) : (
           <></>
         )}
       </div>
+
+
+      {showErrorBanner && (
+        <div className="alert-banner">
+          <Alert variant="filled" severity="error">
+            Please correct highlighted fields
+          </Alert>
+        </div>
+      )}
+
+
+
+
+
     </div>
   );
 };

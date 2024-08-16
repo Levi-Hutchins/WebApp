@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "@mui/material/Button";
-const CustomButton = ({onSubmit, displayValue, displayIcon}) => {
+const CustomButton = ({onClick, displayValue, displayIcon}) => {
   return (
     <div>
       <Button
@@ -13,7 +13,7 @@ const CustomButton = ({onSubmit, displayValue, displayIcon}) => {
         variant="contained"
         endIcon={displayIcon}
         className="SearchButton"
-        onClick={onSubmit}
+        onClick={onClick}
       >
         {displayValue}
       </Button>

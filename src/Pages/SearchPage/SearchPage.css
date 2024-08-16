@@ -1,25 +1,45 @@
-.search-title{
-    margin-top: 100px;
-
+.search-title {
+  margin-top: 100px;
 }
 
-
-
-.components{
+.components-table {
+  max-width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+.components-input {
     max-width: fit-content;
     margin-left: auto;
     margin-right: auto;
+  }
+.title-primary {
+  display: inline;
+  font-family: "Archivo Black";
+  font-size: 52px;
+  color: #5e43f3;
+}
+.title-secondary {
+  display: inline;
+  font-family: "Archivo Black";
+  font-size: 52px;
+  color: white;
+}
+.alert-banner {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 300px;
+  z-index: 1000;
+  animation: slide-in 0.5s ease-out;
 }
 
-.title-primary{
-    display: inline;
-    font-family: 'Archivo Black';
-    font-size: 52px;
-    color: #5e43f3
-}
-.title-secondary{
-    display: inline;
-    font-family: 'Archivo Black';
-    font-size: 52px;
-    color: white
+@keyframes slide-in {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }

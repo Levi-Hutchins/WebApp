@@ -34,7 +34,7 @@ const InputBoxWithButton = ({displayValue, onSubmit, onChange}) => {
             onChange={onChange}
             InputProps={{
               endAdornment: (
-                <CustomButton onSubmit={onSubmit} displayIcon={<SendIcon/>}></CustomButton>
+                <CustomButton onClick={onSubmit} displayIcon={<SendIcon/>}></CustomButton>
               ),
             }}
           />
