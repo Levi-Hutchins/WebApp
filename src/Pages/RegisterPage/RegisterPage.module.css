@@ -12,9 +12,9 @@
 }
 .signup-title{
     position: absolute;
-    top: 50%; /* Adjust this value to move the title down */
-    left: 10%; /* Adjust this value to move the title to the left */
-    transform: translate(-10%, -20%); /* Fine-tune the position */
+    top: 50%; 
+    left: 10%; 
+    transform: translate(-10%, -20%); 
     text-align: left;
 }
 

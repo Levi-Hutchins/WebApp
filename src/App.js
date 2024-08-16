@@ -1,22 +1,30 @@
 import './App.css';
 import NavBar from './Components/NavBar/NavBar';
 import { Route, Routes } from 'react-router-dom';
-import Home from './Pages/Home';
+import Home from './Pages/HomePage/Home';
 import SearchPage from './Pages/SearchPage/SearchPage';
 import TestPage from './Pages/TestPage';
 import RegisterPage from './Pages/RegisterPage/RegisterPage';
 import LogInPage from './Pages/LogInPage';
 import UserAccountPage from './Pages/UserAccountPage';
 
+import video from "./assets/backgroundVideo.mp4"
+import { useEffect, useRef } from 'react';
+
 
 
 function App() {
-
+  const videoRef = useRef(null);
+  useEffect(() => {
+    if(videoRef.current) videoRef.current.playbackRate = 0.9
+  })
   return (
    
 
     <div className="App">
+        <div className="overlay">
         <NavBar/>
+        <video ref={videoRef} src={video} autoPlay loop muted/>
 
 
 
@@ -40,7 +48,7 @@ function App() {
         <p>Unit Test</p>
 
       
-
+        </div>
     </div>
   );
 }
