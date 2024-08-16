@@ -1,0 +1,36 @@
+.home-title{
+    position: absolute;
+    top: 20%; 
+    left: 10%; 
+    transform: translate(-10%, -20%); 
+    text-align: left;
+}
+.home-info{
+
+
+    position: absolute;
+    top: 30%; 
+    left: 10%; 
+    transform: translate(-10%, -20%); 
+
+}
+.home-info-text{
+    color: white;
+    font-family: 'Archivo Black';
+    display: inline;
+    text-align: left;
+
+
+}
+.home-title-primary{
+    display: inline;
+    font-family: 'Archivo Black';
+    font-size: 64px;
+    color: #5e43f3
+}
+.home-title-secondary{
+    display: inline;
+    font-family: 'Archivo Black';
+    font-size: 64px;
+    color: white
+}

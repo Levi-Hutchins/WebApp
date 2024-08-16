@@ -1,7 +1,7 @@
 import './App.css';
 import NavBar from './Components/NavBar/NavBar';
 import { Route, Routes } from 'react-router-dom';
-import Home from './Pages/Home';
+import Home from './Pages/HomePage/Home';
 import SearchPage from './Pages/SearchPage/SearchPage';
 import TestPage from './Pages/TestPage';
 import RegisterPage from './Pages/RegisterPage/RegisterPage';
