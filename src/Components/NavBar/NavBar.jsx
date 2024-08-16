@@ -1,10 +1,12 @@
 import React from "react";
 import "./NavBar.css";
 import Button from "@mui/material/Button";
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
-import { Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import CustomButton from "../Button/CustomButton";
 const NavBar = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <div className="nav">
@@ -24,12 +26,12 @@ const NavBar = () => {
           <Button
             className="register-button"
             variant="contained"
-            onClick={() => navigate('/Register')}
+            onClick={() => navigate("/Register")}
             sx={{
-            fontFamily: 'Andale Mono, monospace	',
+              fontFamily: "Andale Mono, monospace	",
               backgroundColor: "#5e43f3",
               "&:hover": {
-                backgroundColor: "#4e3ac0", 
+                backgroundColor: "#4e3ac0",
               },
             }}
           >
@@ -40,21 +42,27 @@ const NavBar = () => {
           <Button
             className="login-button"
             variant="outlined"
-            onClick={() => navigate('/LogIn')}
-
+            onClick={() => navigate("/LogIn")}
             sx={{
-                fontFamily: 'Andale Mono, monospace	',
-                borderColor: '#5e43f3',
-                color: 'white',
-                "&:hover": {
-                    borderColor: "#4e3ac0", 
-
-              }
-
+              fontFamily: "Andale Mono, monospace	",
+              borderColor: "#5e43f3",
+              color: "white",
+              "&:hover": {
+                borderColor: "#4e3ac0",
+              },
             }}
           >
             Log In
           </Button>
+        </li>
+        <li className="shop-button-container">
+          <CustomButton
+            className="shop-button"
+            onSubmit={() => navigate("/Search")}
+            displayIcon={<ShoppingCartIcon/>}
+          
+          />
+          
         </li>
       </ul>
     </div>
