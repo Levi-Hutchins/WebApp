@@ -6,8 +6,8 @@ body{
     margin: 0;
 }
 .nav{
-    background-color: #212224;
-    color: white;
+  background-color: rgba(33, 34, 36, 0.8) !important;
+  color: white;
     height: 70px;
     display: flex;
     justify-content: space-between;
