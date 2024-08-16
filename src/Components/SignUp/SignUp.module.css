@@ -27,17 +27,5 @@
     justify-content: center;
     margin-top: 20px;
 }
-.success-banner {
-    position: fixed;
-    bottom: 20px;
-    right: -300px; 
-    z-index: 1000; 
-    width: auto;
-    max-width: 300px; 
-    transition: right 0.5s ease-in-out; 
-}
 
-.success-banner.show {
-    right: 20px; 
-}
 

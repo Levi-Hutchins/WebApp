@@ -5,15 +5,17 @@ import PersonIcon from "@mui/icons-material/Person";
 import CustomButton from "../Button/CustomButton";
 import Alert from "@mui/material/Alert";
 
-const SignUp = ({handleNavigation}) => {
+const SignUp = ({
+  handleNavigation,
+  setSuccessfulSubmission,
+  setBadSubmission,
+}) => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [address, setAddress] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [errors, setErrors] = useState({});
-  const [successfulSubmission, setSuccessfulSubmission] = useState(false);
-  const [badSubmission, setBadSubmission] = useState(false);
 
   const handleNameChange = (event) => setFullName(event.target.value);
 
@@ -49,12 +51,13 @@ const SignUp = ({handleNavigation}) => {
     if (!email.trim() || !/^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
       validationErrors.email = true;
     }
-    console.log(phoneNumber)
+    console.log(phoneNumber);
     //eslint-disable-next-line
     if (
       !phoneNumber.trim() ||
-      !/^(\+?\(61\)|\(\+?61\)|\+?61|\(0[1-9]\)|0[1-9]) ?-?[0-9]{7,9}$/
-      .test(phoneNumber)
+      !/^(\+?\(61\)|\(\+?61\)|\+?61|\(0[1-9]\)|0[1-9]) ?-?[0-9]{7,9}$/.test(
+        phoneNumber
+      )
     ) {
       validationErrors.phoneNumber = true;
     }
@@ -63,7 +66,7 @@ const SignUp = ({handleNavigation}) => {
     if (Object.keys(validationErrors).length === 0) {
       setSuccessfulSubmission(true);
       setBadSubmission(false);
-      handleNavigation(true)
+      handleNavigation(true);
     } else {
       setSuccessfulSubmission(false);
       setBadSubmission(true);
@@ -115,30 +118,12 @@ const SignUp = ({handleNavigation}) => {
           <div className={styles["signup-input"]}>
             <CustomButton
               displayValue="Sign Up"
-              onSubmit={handleSubmit}
+              onClick={handleSubmit}
               buttonIcon={<PersonIcon />}
             />
           </div>
         </div>
       </div>
-      {successfulSubmission ? (
-        <div className={styles["success-banner show"]}>
-          <Alert variant="filled" severity="success">
-            User Successfully Created !
-          </Alert>
-        </div>
-      ) : (
-        <div className={styles["success-banner"]}></div>
-      )}
-      {badSubmission ? (
-        <div className={styles["success-banner show"]}>
-          <Alert variant="filled" severity="error">
-            Please correct highlighted fields
-          </Alert>
-        </div>
-      ) : (
-        <div className={styles["success-banner"]}></div>
-      )}
     </>
   );
 };
