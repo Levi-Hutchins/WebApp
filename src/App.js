@@ -5,8 +5,9 @@ import { Route, Routes } from 'react-router-dom';
 import Home from './Pages/Home';
 import SearchPage from './Pages/SearchPage/SearchPage';
 import TestPage from './Pages/TestPage';
-import RegisterPage from './Pages/RegisterPage';
+import RegisterPage from './Pages/RegisterPage/RegisterPage';
 import LogInPage from './Pages/LogInPage';
+import UserAccountPage from './Pages/UserAccountPage';
 
 
 
@@ -28,6 +29,9 @@ function App() {
               <Route path="/Test" element= {<TestPage/>}/>
               <Route path='/Register' element= {<RegisterPage/>}/>
               <Route path='/LogIn' element= {<LogInPage/>}/>
+              <Route path='/UserAccount' element= {<UserAccountPage/>}/>
+
+
 
 
 
@@ -35,7 +39,6 @@ function App() {
         </div>
 
         <p>Unit Test</p>
-        <img src={logo} className="App-logo" alt="logo" />
 
       
 

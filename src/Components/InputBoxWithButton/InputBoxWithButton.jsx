@@ -2,7 +2,7 @@ import React from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import "./InputBoxWithButton.css";
-import SearchButton from "../Button/SearchButton";
+import CustomButton from "../Button/CustomButton";
 
 const InputBoxWithButton = (props) => {
  
@@ -32,7 +32,7 @@ const InputBoxWithButton = (props) => {
             onChange={props.onChange}
             InputProps={{
               endAdornment: (
-                <SearchButton onSubmit={props.onSubmit}></SearchButton>
+                <CustomButton onSubmit={props.onSubmit}></CustomButton>
               ),
             }}
           />
