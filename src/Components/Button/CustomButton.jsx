@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Search";
-const SearchButton = (props) => {
+const CustomButton = (props) => {
   return (
     <div>
       <Button
@@ -22,4 +22,4 @@ const SearchButton = (props) => {
   );
 };
 
-export default SearchButton;
+export default CustomButton;

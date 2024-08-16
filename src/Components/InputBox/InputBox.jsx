@@ -1,37 +1,44 @@
-import React, { useState } from "react";
+import React from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import "./InputBox.css";
-import SendButton from "../Button/SearchButton";
+import styles from "./InputBox.module.css";
 
-const InputBox = (props) => {
-  const [inputValue, setInputValue] = useState("");
-  const handleSubmit = () => {
-    alert("Submittedddddddd");
-  };
-  const handleChange = (event) => {
-    setInputValue(event.target.value);
-  };
+const InputBox = ({ displayValue, handleChange, errorLevel }) => {
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <Box
-          component="form"
-          className="input-box"
-          noValidate
-          autoComplete="off"
-        >
-          <TextField
-            label={props.displayValue}
-            variant="outlined"
-            className="input-field"
-            sx={{ input: { color: "rgb(185, 185, 185)" } }}
-            onChange={handleChange}
-          />
-        </Box>
-      </form>
-      <SendButton displayValue="Send"/>
-    </>
+    <Box
+      component="form"
+      className={styles["input-box-comp"]}
+      noValidate
+      autoComplete="off"
+    >
+      <TextField
+  label={displayValue}
+  variant="outlined"
+  className={styles["input-field-comp"]}
+  InputProps={{
+    className: styles["input-field-root"],
+  }}
+  InputLabelProps={{
+    className: styles["input-label"],
+  }}
+  sx={{
+    input: { color: "white" },
+    "& .MuiOutlinedInput-notchedOutline": {
+      borderColor: errorLevel ? "red" : "#454545",
+    },
+    "& .MuiInputLabel-root": {
+      color: "white",
+    },
+    "& .MuiInputLabel-root.Mui-focused": {
+      color: "white",
+    },
+    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      borderColor: "#5e43f3",
+    },
+  }}
+  onChange={handleChange}
+/>
+    </Box>
   );
 };
 
