@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
-import Home from '../src/Pages/Home'; 
+import Home from '../src/Pages/HomePage/Home'; 
 
-test('renders HOME heading', () => {
+test('renders Home', () => {
   render(<Home />);
-  const headingElement = screen.getByText(/HOME/);
+  const headingElement = screen.getByText(/WELCOME/);
   expect(headingElement).toBeInTheDocument();
 });
