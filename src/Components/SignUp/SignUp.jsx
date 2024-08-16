@@ -3,7 +3,6 @@ import styles from "./SignUp.module.css";
 import InputBox from "../InputBox/InputBox";
 import PersonIcon from "@mui/icons-material/Person";
 import CustomButton from "../Button/CustomButton";
-import Alert from "@mui/material/Alert";
 
 const SignUp = ({
   handleNavigation,
