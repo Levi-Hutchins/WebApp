@@ -14,7 +14,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../Utils/ShoppingCartSlice";
 
-export default function DynamicTable({ data, handleItemAdded }) {
+export default function DynamicTable({ data, }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [modalOpen, setModalOpen] = useState(false);
@@ -38,7 +38,6 @@ export default function DynamicTable({ data, handleItemAdded }) {
 
   const handleCartAdd = (event, value) => {
     event.stopPropagation();
-    handleItemAdded();
     dispatch(addToCart(value))
 
   };

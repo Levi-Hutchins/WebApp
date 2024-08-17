@@ -3,6 +3,7 @@ import styles from "./SignUp.module.css";
 import InputBox from "../InputBox/InputBox";
 import PersonIcon from "@mui/icons-material/Person";
 import CustomButton from "../Button/CustomButton";
+import { toast } from "react-toastify";
 
 const SignUp = ({
   handleNavigation,
@@ -63,12 +64,16 @@ const SignUp = ({
 
     setErrors(validationErrors);
     if (Object.keys(validationErrors).length === 0) {
-      setSuccessfulSubmission(true);
-      setBadSubmission(false);
+        toast.success("Registration Successful !",{
+            position: "bottom-right"
+        })
+
       handleNavigation(true);
     } else {
-      setSuccessfulSubmission(false);
-      setBadSubmission(true);
+      toast.error("Please correct highlighted fields",{
+        position: "bottom-right"
+      })
+
     }
   };
 
