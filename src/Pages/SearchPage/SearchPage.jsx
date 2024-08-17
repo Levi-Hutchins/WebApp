@@ -17,8 +17,14 @@ const SearchPage = () => {
   const [productsFound, setProductsFound] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [showErrorBanner, setShowErrorBanner] = useState(false)
+  const [showItemAddedBanner, setShowItemAddedBanner] = useState(false);
 
-
+  const handleItemAdded = () => {
+    setShowItemAddedBanner(true)
+    setTimeout(() => {
+      setShowItemAddedBanner(false)
+    }, 2000);
+  }
 
   const handleChange = (event) => {
     console.log(event.target.value);
@@ -62,7 +68,7 @@ const SearchPage = () => {
       <div className="components-table">
     
         {productSubmitted ? (
-          <DynamicTable data={productsFound}/>
+          <DynamicTable data={productsFound} handleItemAdded={handleItemAdded}/>
         ) : (
           <></>
         )}
@@ -72,7 +78,14 @@ const SearchPage = () => {
       {showErrorBanner && (
         <div className="alert-banner">
           <Alert variant="filled" severity="error">
-            Please correct highlighted fields
+            Please enter an item
+          </Alert>
+        </div>
+      )}
+        {showItemAddedBanner && (
+        <div className="alert-banner">
+          <Alert variant="filled" severity="info">
+            Item Added to Cart !
           </Alert>
         </div>
       )}

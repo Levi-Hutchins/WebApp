@@ -10,14 +10,16 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import PopUpModal from "../Modal/Modal";
 import CustomButton from "../Button/CustomButton";
-import AddIcon from '@mui/icons-material/Add';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../Utils/ShoppingCartSlice";
 
-export default function DynamicTable({ data }) {
+export default function DynamicTable({ data, handleItemAdded }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null); 
-
+  const dispatch = useDispatch();
   const handleOpen = (row) => {
     setSelectedRow(row);
     setModalOpen(true); 
@@ -34,10 +36,14 @@ export default function DynamicTable({ data }) {
     setPage(0);
   };
 
-  const handleButtonClick = (event, value) => {
+  const handleCartAdd = (event, value) => {
     event.stopPropagation();
-    alert(value);
+    handleItemAdded();
+    dispatch(addToCart(value))
+
   };
+
+
 
   const columns = [{ id: "Name", label: "Product Name", minWidth: 170 }];
 
@@ -59,7 +65,7 @@ export default function DynamicTable({ data }) {
                   </TableCell>
                 ))}
                 <TableCell align="center" sx={{ fontWeight: 'bold', minWidth: 50 }}>
-                  Actions
+                  Add to Cart
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -76,7 +82,7 @@ export default function DynamicTable({ data }) {
                         role="checkbox"
                         tabIndex={-1}
                         key={row.ID || rowIndex}
-                        onClick={() => handleOpen(row)} // This handles row click
+                        onClick={() => handleOpen(row)} 
                       >
                         <TableCell key={row.ID || rowIndex} align="left">
                           {value !== undefined ? value : "-"}
@@ -85,8 +91,8 @@ export default function DynamicTable({ data }) {
                           <div className="right-align">
                             <CustomButton 
                               className="custom-button" 
-                              displayIcon={<AddIcon/>} 
-                              onClick={(event) => handleButtonClick(event, value)} // Pass onClick handler here
+                              displayIcon={<AddShoppingCartIcon/>} 
+                              onClick={(event) => handleCartAdd(event, row)} 
                             />
                           </div>
                         </TableCell>
