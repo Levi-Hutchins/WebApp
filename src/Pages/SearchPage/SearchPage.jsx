@@ -50,7 +50,7 @@ const SearchPage = () => {
 
   const handleCheckoutClick = () => {
     
-    if(cartItems.length == 0){
+    if(cartItems.length === 0){
       toast.info("You have no items in your cart !",{
         position: "bottom-right",
       })

@@ -1,6 +1,6 @@
 import React from 'react';
 import CustomBadge from '../Components/Badge/CustomBadge';
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 
 const TestPage = () => { 
