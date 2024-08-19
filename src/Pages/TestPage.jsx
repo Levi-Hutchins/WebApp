@@ -15,7 +15,7 @@ const TestPage = () => {
       <h1>Shopping Cart</h1>
       <ul>
         {cartItems.map((item) => (
-          <li key={item.ID}>
+          <li key={item.ID} style={{color: 'white'}}>
             {item.Name} - {item.cartQuantity}
           </li>
         ))}

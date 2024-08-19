@@ -1,7 +1,9 @@
 import React from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import "@fontsource/archivo-black";
 import "./SearchPage.css";
 
@@ -10,11 +12,15 @@ import InputBoxWithButton from "../../Components/InputBoxWithButton/InputBoxWith
 import "../../Components/InputBoxWithButton/InputBoxWithButton.css";
 import { toast } from "react-toastify";
 
+import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
+import CustomButton from "../../Components/Button/CustomButton";
 const SearchPage = () => {
   const [productSubmitted, setProductSubmitted] = useState(false);
   const [productsFound, setProductsFound] = useState("");
   const [inputValue, setInputValue] = useState("");
+  const navigate = useNavigate();
 
+  const cartItems = useSelector((state) => state.cart.cartItems)
 
 
   const handleChange = (event) => {
@@ -42,6 +48,17 @@ const SearchPage = () => {
       });
   };
 
+  const handleCheckoutClick = () => {
+    
+    if(cartItems.length == 0){
+      toast.info("You have no items in your cart !",{
+        position: "bottom-right",
+      })
+    }else{
+      navigate("/ShoppingCart")
+    }
+  }
+
   return (
     <div>
       <div className="search-title">
@@ -59,9 +76,16 @@ const SearchPage = () => {
 
       <div className="components-table">
         {productSubmitted ? (
-          <DynamicTable
-            data={productsFound}
-          />
+          <>
+            <DynamicTable data={productsFound} />
+            <div style={{ marginTop: "10px" }}>
+              <CustomButton
+                displayValue={"Checkout"}
+                displayIcon={<ShoppingCartCheckoutIcon />}
+                onClick={handleCheckoutClick}
+              />
+            </div>
+          </>
         ) : (
           <></>
         )}

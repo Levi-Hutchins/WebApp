@@ -57,7 +57,7 @@ const NavBar = () => {
         <li className="shop-button-container">
     
 
-          <CustomBadge className="shop-button" itemCount={2} onClick={() => navigate("/Test")}/>
+          <CustomBadge className="shop-button" onClick={() => navigate("/ShoppingCart")}/>
           
         </li>
       </ul>

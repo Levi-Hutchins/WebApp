@@ -7,7 +7,7 @@ import TestPage from "./Pages/TestPage";
 import RegisterPage from "./Pages/RegisterPage/RegisterPage";
 import LogInPage from "./Pages/LogInPage";
 import UserAccountPage from "./Pages/UserAccountPage";
-
+import ShoppingCartPage from "./Pages/ShoppingCartPage/ShoppingCartPage";
 import video from "./assets/backgroundVideo.mp4";
 import { useEffect, useRef } from "react";
 import { ToastContainer } from "react-toastify";
@@ -33,6 +33,7 @@ function App() {
             <Route path="/Register" element={<RegisterPage />} />
             <Route path="/LogIn" element={<LogInPage />} />
             <Route path="/UserAccount" element={<UserAccountPage />} />
+            <Route path="/ShoppingCart" element={<ShoppingCartPage />} />
           </Routes>
         </div>
 
