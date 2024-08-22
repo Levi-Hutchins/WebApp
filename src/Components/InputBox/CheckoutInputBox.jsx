@@ -1,9 +1,9 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import styles from "./InputBox.module.css";
+import styles from "./CheckoutInputBox.module.css";
 
-const InputBox = ({ displayValue, handleChange, errorLevel }) => {
+const CheckoutInputBox = ({ displayValue, handleChange, errorLevel }) => {
   return (
     <Box
       component="form"
@@ -43,4 +43,4 @@ const InputBox = ({ displayValue, handleChange, errorLevel }) => {
   );
 };
 
-export default InputBox;
+export default CheckoutInputBox;
