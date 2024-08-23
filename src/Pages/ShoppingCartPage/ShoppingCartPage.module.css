@@ -31,10 +31,14 @@
     text-align: left;
 }
 .checkout-inputs {
-    display: flex; /* Use flexbox to align items horizontally */
-    gap: 10px; /* Add some space between the input boxes */
+    display: flex; 
+    gap: 10px; 
+  }
+  .checkout-input-name {
+    display: flex; 
+    gap: 10px; 
   }
   
   .checkout-panel input {
-    width: 100%; /* Make sure the inputs take up the full width available in their container */
+    width: 100%; 
   }

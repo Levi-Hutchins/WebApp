@@ -8,7 +8,7 @@
   }
   
   .input-field-root {
-    background-color: #e3e3e3;
+    background-color: #e8e8e8;
   }
   
   .input-field-root.Mui-focused .MuiOutlinedInput-notchedOutline {
@@ -16,6 +16,6 @@
   }
   
   .input-label {
-    color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
   }
   

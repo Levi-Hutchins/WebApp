@@ -7,8 +7,6 @@ import { toast } from "react-toastify";
 
 const SignUp = ({
   handleNavigation,
-  setSuccessfulSubmission,
-  setBadSubmission,
 }) => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
