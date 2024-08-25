@@ -30,11 +30,14 @@ const InputBoxWithButton = ({displayValue, onSubmit, onChange}) => {
               "& .MuiOutlinedInput-root": {
                 color: "white"},  
               "&.Mui-focused": { color: "white" },
+              "& .MuiInputLabel-root.Mui-focused": {
+                color: "white",
+              },
             }}
             onChange={onChange}
             InputProps={{
               endAdornment: (
-                <CustomButton onSubmit={onSubmit} displayIcon={<SendIcon/>}></CustomButton>
+                <CustomButton onClick={onSubmit} displayIcon={<SendIcon/>}></CustomButton>
               ),
             }}
           />

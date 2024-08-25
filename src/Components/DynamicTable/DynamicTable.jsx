@@ -9,17 +9,22 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import PopUpModal from "../Modal/Modal";
+import CustomButton from "../Button/CustomButton";
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../Utils/ShoppingCartSlice";
 
-export default function DynamicTable({ data }) {
+export default function DynamicTable({ data, }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null); 
-
+  const dispatch = useDispatch();
   const handleOpen = (row) => {
     setSelectedRow(row);
     setModalOpen(true); 
   };
+
   const handleClose = () => setModalOpen(false);
 
   const handleChangePage = (event, newPage) => {
@@ -31,11 +36,19 @@ export default function DynamicTable({ data }) {
     setPage(0);
   };
 
+  const handleCartAdd = (event, value) => {
+    event.stopPropagation();
+    dispatch(addToCart(value))
+
+  };
+
+
+
   const columns = [{ id: "Name", label: "Product Name", minWidth: 170 }];
 
   return (
     <>
-      <Paper sx={{ width: "100%", overflow: "hidden" }}>
+      <Paper sx={{ width: "700px", overflow: "hidden" }}>
         <TableContainer sx={{ maxHeight: 440 }}>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
@@ -50,6 +63,9 @@ export default function DynamicTable({ data }) {
                     {column.label}
                   </TableCell>
                 ))}
+                <TableCell align="center" sx={{ fontWeight: 'bold', minWidth: 50 }}>
+                  Add to Cart
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -61,21 +77,30 @@ export default function DynamicTable({ data }) {
 
                     return (
                       <TableRow
-                        onClick={() => handleOpen(row)} 
                         hover
                         role="checkbox"
                         tabIndex={-1}
                         key={row.ID || rowIndex}
+                        onClick={() => handleOpen(row)} 
                       >
                         <TableCell key={row.ID || rowIndex} align="left">
                           {value !== undefined ? value : "-"}
+                        </TableCell>
+                        <TableCell align="right">
+                          <div className="right-align">
+                            <CustomButton 
+                              className="custom-button" 
+                              displayIcon={<AddShoppingCartIcon/>} 
+                              onClick={(event) => handleCartAdd(event, row)} 
+                            />
+                          </div>
                         </TableCell>
                       </TableRow>
                     );
                   })
               ) : (
                 <TableRow>
-                  <TableCell colSpan={columns.length} align="center">
+                  <TableCell colSpan={columns.length + 1} align="center">
                     No Results Found
                   </TableCell>
                 </TableRow>
@@ -94,7 +119,6 @@ export default function DynamicTable({ data }) {
         />
       </Paper>
       
-     
       <PopUpModal 
         open={modalOpen} 
         onClose={handleClose}

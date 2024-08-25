@@ -1,10 +1,9 @@
 import React from "react";
 import "./NavBar.css";
 import Button from "@mui/material/Button";
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 import { Link, useNavigate } from "react-router-dom";
-import CustomButton from "../Button/CustomButton";
+import CustomBadge from "../Badge/CustomBadge";
 const NavBar = () => {
   const navigate = useNavigate();
 
@@ -56,12 +55,9 @@ const NavBar = () => {
           </Button>
         </li>
         <li className="shop-button-container">
-          <CustomButton
-            className="shop-button"
-            onSubmit={() => navigate("/Search")}
-            displayIcon={<ShoppingCartIcon/>}
-          
-          />
+    
+
+          <CustomBadge className="shop-button" onClick={() => navigate("/ShoppingCart")}/>
           
         </li>
       </ul>

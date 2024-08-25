@@ -2,8 +2,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-const  {searchProducts}  = require('./SQLQueries');
+const  {searchProducts}  = require('./ProductQueries');
 
+const green = '\x1b[32m';
+const reset = '\x1b[0m';
 
 require('dotenv').config();
 
@@ -31,9 +33,10 @@ app.post('/api/search', async (req, res) => {
   }
 });
 app.get('/api', async (req, res) => {
+  console.log(`${green}[INFO] -> GET /api - Health Status${reset}`);
   res.status(200).send('Running')
 })
 
 app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+  console.log(`${green}[INFO] -> Server now running on port ${port}${reset}`);
 });
