@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import styles from "./CheckoutInputBox.module.css";
 
-const CheckoutInputBox = ({ displayValue, handleChange, errorLevel, onKeyPress }) => {
+const CheckoutInputBox = ({ displayValue, handleChange, errorLevel, onKeyPress, width, value, name }) => {
   return (
     <Box
       component="form"
@@ -11,7 +11,7 @@ const CheckoutInputBox = ({ displayValue, handleChange, errorLevel, onKeyPress }
       noValidate
       autoComplete="off"
     >
-      <TextField      
+      <TextField
         onKeyDown={onKeyPress}
         label={displayValue}
         variant="outlined"
@@ -23,9 +23,11 @@ const CheckoutInputBox = ({ displayValue, handleChange, errorLevel, onKeyPress }
           className: styles["input-label"],
         }}
         sx={{
+          width: width || "100%",
           input: { color: "black" },
           "& .MuiOutlinedInput-notchedOutline": {
             borderColor: errorLevel ? "red" : "#454545",
+            borderWidth: errorLevel ? "2px" : "1px",
           },
           "& .MuiInputLabel-root": {
             color: "black",
@@ -33,12 +35,14 @@ const CheckoutInputBox = ({ displayValue, handleChange, errorLevel, onKeyPress }
           "& .MuiInputLabel-root.Mui-focused": {
             color: "black",
           },
-          "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-            {
-              borderColor: "#5e43f3",
-            },
+          "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            borderColor: errorLevel ? "red" : "#5e43f3",
+          },
         }}
-        onChange={handleChange}
+        onChange={handleChange}  
+        value={value}  
+        name={name}  
+        error={errorLevel}
       />
     </Box>
   );

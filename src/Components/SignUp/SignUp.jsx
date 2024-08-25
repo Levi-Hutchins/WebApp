@@ -49,7 +49,6 @@ const SignUp = ({
     if (!email.trim() || !/^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
       validationErrors.email = true;
     }
-    console.log(phoneNumber);
     //eslint-disable-next-line
     if (
       !phoneNumber.trim() ||
