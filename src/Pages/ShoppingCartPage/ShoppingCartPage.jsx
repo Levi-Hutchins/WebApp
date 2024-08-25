@@ -6,7 +6,7 @@ import styles from "./ShoppingCartPage.module.css";
 import CheckoutInputBox from "../../Components/InputBox/CheckoutInputBox";
 import { toast } from "react-toastify";
 import CustomButton from "../../Components/Button/CustomButton";
-import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
+import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 const ShoppingCartPage = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
 
@@ -22,24 +22,21 @@ const ShoppingCartPage = () => {
     expiryDate: "",
     securityCode: null,
   };
-  
-  const handleNumbersOnly = (e) =>{
-        if (
-          !(
-            /[0-9]/.test(e.key) ||
-            e.key === "Backspace" ||
-            e.key === "Delete"
-          )
-        ) {
-          e.preventDefault();
-          toast.warning("Please enter numbers only", {
-            position: "bottom-right",
-          });
-        }
-      }
-  
 
-  const { values, errors, handleChange, handleSubmit, isSubmitting } = useForm(initialValues, checkoutValidator, toast);
+  const handleNumbersOnly = (e) => {
+    if (!(/[0-9]/.test(e.key) || e.key === "Backspace" || e.key === "Delete")) {
+      e.preventDefault();
+      toast.warning("Please enter numbers only", {
+        position: "bottom-right",
+      });
+    }
+  };
+
+  const { values, errors, handleChange, handleSubmit } = useForm(
+    initialValues,
+    checkoutValidator,
+    toast
+  );
 
   return (
     <div>
@@ -53,8 +50,11 @@ const ShoppingCartPage = () => {
           ))}
         </ul>
         <div className={styles["checkout-button"]}>
-        <CustomButton displayValue={"Checkout"} onClick={handleSubmit} displayIcon={<ShoppingCartCheckoutIcon/>}/>
-
+          <CustomButton
+            displayValue={"Checkout"}
+            onClick={handleSubmit}
+            displayIcon={<ShoppingCartCheckoutIcon />}
+          />
         </div>
       </div>
 
@@ -64,15 +64,15 @@ const ShoppingCartPage = () => {
             displayValue={"First Name"}
             handleChange={handleChange}
             errorLevel={!!errors.firstName}
-            value={values.firstName}  
-            name="firstName" 
+            value={values.firstName}
+            name="firstName"
           />
           <CheckoutInputBox
             displayValue={"Last Name"}
             handleChange={handleChange}
             errorLevel={!!errors.lastName}
-            value={values.lastName}  
-            name="lastName"  
+            value={values.lastName}
+            name="lastName"
           />
         </div>
 
@@ -81,8 +81,8 @@ const ShoppingCartPage = () => {
             displayValue={"Email Address"}
             handleChange={handleChange}
             errorLevel={!!errors.emailAddress}
-            value={values.emailAddress} 
-            name="emailAddress"  
+            value={values.emailAddress}
+            name="emailAddress"
           />
           {errors.emailAddress && (
             <span className={styles["error-text"]}>{errors.emailAddress}</span>
@@ -91,8 +91,8 @@ const ShoppingCartPage = () => {
             displayValue={"Phone Number"}
             handleChange={handleChange}
             errorLevel={!!errors.phoneNumber}
-            value={values.phoneNumber}  
-            name="phoneNumber"  
+            value={values.phoneNumber}
+            name="phoneNumber"
             onKeyPress={handleNumbersOnly}
           />
         </div>
@@ -103,17 +103,16 @@ const ShoppingCartPage = () => {
             displayValue={"Street Address"}
             handleChange={handleChange}
             errorLevel={!!errors.streetAddress}
-            value={values.streetAddress}  
-            name="streetAddress"  
+            value={values.streetAddress}
+            name="streetAddress"
           />
           <CheckoutInputBox
             displayValue={"PostCode"}
             handleChange={handleChange}
             errorLevel={!!errors.postCode}
-            value={values.postCode}  
-            name="postCode" 
+            value={values.postCode}
+            name="postCode"
             onKeyPress={handleNumbersOnly}
-
           />
         </div>
 
@@ -123,18 +122,17 @@ const ShoppingCartPage = () => {
             displayValue={"Card Number"}
             handleChange={handleChange}
             errorLevel={!!errors.cardNumber}
-            value={values.cardNumber}  
-            name="cardNumber" 
+            value={values.cardNumber}
+            name="cardNumber"
             onKeyPress={handleNumbersOnly}
-
           />
           <CheckoutInputBox
             width="450px"
             displayValue={"Name on Card"}
             handleChange={handleChange}
             errorLevel={!!errors.nameOnCard}
-            value={values.nameOnCard}  
-            name="nameOnCard"  
+            value={values.nameOnCard}
+            name="nameOnCard"
           />
         </div>
 
@@ -144,23 +142,20 @@ const ShoppingCartPage = () => {
             displayValue={"Expiry Date (MM / YY)"}
             handleChange={handleChange}
             errorLevel={!!errors.expiryDate}
-            value={values.expiryDate}  
-            name="expiryDate"  
+            value={values.expiryDate}
+            name="expiryDate"
           />
           <CheckoutInputBox
             width="150px"
             displayValue={"Security Code"}
             handleChange={handleChange}
             errorLevel={!!errors.securityCode}
-            value={values.securityCode}  
-            name="securityCode"  
+            value={values.securityCode}
+            name="securityCode"
             onKeyPress={handleNumbersOnly}
-
           />
         </div>
       </div>
-
-      
     </div>
   );
 };
