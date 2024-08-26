@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import "@fontsource/archivo-black";
 import "./SearchPage.css";
 
-import DynamicTable from "../../Components/DynamicTable/DynamicTable";
+import DynamicTable from "../../Components/DynamicTables/DynamicTable";
 import InputBoxWithButton from "../../Components/InputBoxWithButton/InputBoxWithButton";
 import "../../Components/InputBoxWithButton/InputBoxWithButton.css";
 import { toast } from "react-toastify";
