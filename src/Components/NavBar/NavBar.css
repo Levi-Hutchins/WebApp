@@ -5,18 +5,25 @@
 body {
   margin: 0;
 }
+
 .nav {
   background-color: rgba(33, 34, 36, 0.8) !important;
   color: white;
   height: 70px;
   display: flex;
   justify-content: space-between;
-  align-items: stretch;
-  gap: 2rem;
+  align-items: center; 
   padding: 0 1rem;
   font-family: "Andale Mono, monospace";
   font-size: large;
 }
+
+.left-section {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; 
+}
+
 .nav ul {
   padding: 0;
   margin: 0;
@@ -24,6 +31,7 @@ body {
   display: flex;
   gap: 1rem;
 }
+
 .nav a {
   color: inherit;
   text-decoration: none;
@@ -33,43 +41,39 @@ body {
   padding: 0.25rem;
 }
 
+.account-link {
+  display: flex;
+  align-items: center;
+  background-color: unset !important;
+
+}
+
+.homepage {
+  display: flex;
+  align-items: center;
+  margin-left: 15px;
+}
+
 .nav li.active {
   background-color: #555;
   color: red;
 }
-.nav li:hover {
-  background-color: #777;
-}
 
 .nav li:hover,
-.homepage:hover {
+.homepage:hover,
+.account-link:hover {
   background-color: #777;
 }
 
-.register-button-container {
+.register-button-container,
+.login-button-container,
+.shop-button-container {
   background-color: unset !important;
-
   display: flex;
   align-items: center;
 }
 
-.register-button {
-  border-radius: 10px;
-}
-.login-button-container {
-  background-color: unset !important;
-
-  display: flex;
-  align-items: center;
-}
-
+.register-button,
 .login-button {
   border-radius: 10px;
 }
-.shop-button-container {
-  background-color: unset !important;
-
-  display: flex;
-  align-items: center;
-}
-

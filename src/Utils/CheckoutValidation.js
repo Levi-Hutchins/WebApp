@@ -1,19 +1,6 @@
 //TODO: implement this later -fails build because defined and not used
-// const validateAddress = (address) => {
-//   const axios = require('axios');
-//   const params = {
-//     access_key: process.env.APIKEY,
-//     query: address
-//   }
 
-//   axios.get('https://api.positionstack.com/v1/forward', {params})
-//     .then(response => {
-//       console.log(response.data);
-//     }).catch(error => {
-//       console.log(error);
-//     });
-
-// }
+import { validateAddress } from "./AddressValidation";
 
 const validateExpiryDate = (expiryDate) => {
   if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(expiryDate)) {
@@ -35,6 +22,7 @@ const validateExpiryDate = (expiryDate) => {
 };
 
 const checkoutValidator = (values) => {
+  console.log("validation")
   const errors = {};
 
   if (
@@ -58,7 +46,13 @@ const checkoutValidator = (values) => {
   ) {
     errors.phoneNumber = true;
   }
-  //TODO: Address validation using API to get similare results
+  
+  //TODO: Implement this address valifation find out a way
+  // const isAddressValid = await validateAddress(values.streetAddress, values.postCode);
+  // if (!isAddressValid) {
+  //   errors.streetAddress = true;
+  // }
+
 
   if (!values.postCode || !/^\d{4}$/.test(values.postCode))
     errors.postCode = true;
