@@ -1,17 +1,30 @@
 import React from "react";
 import "./NavBar.css";
 import Button from "@mui/material/Button";
-
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Link, useNavigate } from "react-router-dom";
 import CustomBadge from "../Badge/CustomBadge";
+
 const NavBar = () => {
   const navigate = useNavigate();
 
   return (
     <div className="nav">
-      <Link to="/" className="homepage">
-        HOME
-      </Link>
+      <div className="left-section">
+        <Link to="/UserAccount" className="account-link">
+          <AccountCircleIcon
+            fontSize="large"
+            sx={{
+              color: "#5e43f3",
+              backgroundColor: "white",
+              borderRadius: "50%",
+            }}
+          />
+        </Link>
+        <Link to="/" className="homepage">
+          HOME
+        </Link>
+      </div>
 
       <ul>
         <li>
@@ -27,7 +40,7 @@ const NavBar = () => {
             variant="contained"
             onClick={() => navigate("/Register")}
             sx={{
-              fontFamily: "Andale Mono, monospace	",
+              fontFamily: "Andale Mono, monospace",
               backgroundColor: "#5e43f3",
               "&:hover": {
                 backgroundColor: "#4e3ac0",
@@ -43,7 +56,7 @@ const NavBar = () => {
             variant="outlined"
             onClick={() => navigate("/LogIn")}
             sx={{
-              fontFamily: "Andale Mono, monospace	",
+              fontFamily: "Andale Mono, monospace",
               borderColor: "#5e43f3",
               color: "white",
               "&:hover": {
@@ -55,10 +68,10 @@ const NavBar = () => {
           </Button>
         </li>
         <li className="shop-button-container">
-    
-
-          <CustomBadge className="shop-button" onClick={() => navigate("/ShoppingCart")}/>
-          
+          <CustomBadge
+            className="shop-button"
+            onClick={() => navigate("/ShoppingCart")}
+          />
         </li>
       </ul>
     </div>
