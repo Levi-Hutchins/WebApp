@@ -6,7 +6,7 @@ import SearchPage from "./Pages/SearchPage/SearchPage";
 import TestPage from "./Pages/TestPage";
 import RegisterPage from "./Pages/RegisterPage/RegisterPage";
 import LogInPage from "./Pages/LogInPage";
-import UserAccountPage from "./Pages/UserAccountPage";
+import UserAccountPage from "./Pages/AccountPage/UserAccountPage";
 import ShoppingCartPage from "./Pages/ShoppingCartPage/ShoppingCartPage";
 import video from "./assets/backgroundVideo.mp4";
 import { useEffect, useRef } from "react";

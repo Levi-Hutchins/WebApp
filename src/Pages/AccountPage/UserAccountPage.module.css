@@ -1,0 +1,22 @@
+.title-primary{
+    display: inline;
+    font-family: 'Archivo Black';
+    font-size: 94px;
+    color: #5e43f3
+}
+.title-secondary{
+    display: inline;
+    font-family: 'Archivo Black';
+    font-size: 94px;
+    color: white
+}
+.avatar-icon{
+    position: absolute;
+    bottom: 55%;
+    left: 10%;
+}
+.details-table{
+    position: absolute;
+    bottom: 25%;
+    left: 40%;
+}
