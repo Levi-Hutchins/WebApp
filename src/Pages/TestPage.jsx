@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from "react-redux";
 import UserDetailsTable from '../Components/DynamicTables/UserDetailsTable';
 
 import { toast } from "react-toastify";
