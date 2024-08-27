@@ -12,11 +12,17 @@ const UserAccountPage = () => {
       </div>{" "}
       <div className={styles["avatar-icon"]}>
 
-      <Avatar sx={{ bgcolor: "#5e43f3", width:200, height: 200, fontSize: 50 }}>OP</Avatar>
+      <Avatar sx={{ bgcolor: "#5e43f3", width:200, height: 200, fontSize: 50 }}>JD</Avatar>
 
       </div>
 
+
+      <div className={styles["details-table"]}>
+
+
       <UserDetailsTable/>
+
+      </div>
     </div>
   );
 };

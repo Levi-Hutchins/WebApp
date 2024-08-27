@@ -11,6 +11,8 @@ import TextField from "@mui/material/TextField";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import SaveIcon from '@mui/icons-material/Save';
 import CustomButton from "../Button/CustomButton";
+import { toast } from "react-toastify";
+import validateUpdatedDetails from "../../Utils/Validation/UpdateDetailsValidation"
 
 function createData(accountValue, value) {
   return { accountValue, value };
@@ -24,10 +26,11 @@ const initialRows = [
   createData("Password", "********"),
 ];
 
-const UserDetailsTable = ({toast}) => {
+const UserDetailsTable = () => {
   const [rows, setRows] = useState(initialRows);
   const [editRowIndex, setEditRowIndex] = useState(null);
   const [editValue, setEditValue] = useState("");
+  const [errors, setErrors] = useState({})
 
   const handleEditClick = (index) => {
     setEditRowIndex(index);
@@ -42,19 +45,25 @@ const UserDetailsTable = ({toast}) => {
     const updatedRows = rows.map((row, index) =>
       index === editRowIndex ? { ...row, value: editValue } : row
     );
-    setRows(updatedRows); 
-    console.log(updatedRows);
-    setEditRowIndex(null); 
-
-
-    toast.success("Details Updated !",{
+    const validationErrors = validateUpdatedDetails(updatedRows, editRowIndex);
+    setErrors(validationErrors);
+    
+    if (Object.keys(validationErrors).length === 0) {
+      setRows(updatedRows); 
+      setEditRowIndex(null); 
+      toast.success("Details Updated !",{
+        position: "bottom-right"
+      });
+    }
+    toast.error("Please correct highlighted fields",{
       position: "bottom-right"
     })
+
   };
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+    <TableContainer component={Paper} sx={{width: 700}}>
+      <Table sx={{ width: 700 }} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell>Account Values</TableCell>
@@ -86,6 +95,10 @@ const UserDetailsTable = ({toast}) => {
                           height: "40px",
                           fontSize: "0.870rem",
                         },
+                        "& .MuiOutlinedInput-notchedOutline": {
+            borderColor: errors[editRowIndex] ? "red" : "#454545",
+          }
+                       
                       }}
                     />
                     <Box sx={{ ml: 1 }}>

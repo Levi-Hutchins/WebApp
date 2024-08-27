@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import useForm from "./CheckoutHook";
-import checkoutValidator from "../../Utils/CheckoutValidation";
+import checkoutValidator from "../../Utils/Validation/CheckoutValidation";
 import styles from "./ShoppingCartPage.module.css";
 import CheckoutInputBox from "../../Components/InputBox/CheckoutInputBox";
 import { toast } from "react-toastify";
