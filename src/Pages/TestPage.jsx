@@ -1,12 +1,10 @@
 import React from 'react';
-import CustomBadge from '../Components/Badge/CustomBadge';
 import { useSelector } from "react-redux";
 import UserDetailsTable from '../Components/DynamicTables/UserDetailsTable';
 
 import { toast } from "react-toastify";
 
 const TestPage = () => { 
-  const cartItems = useSelector((state) => state.cart.cartItems)
 
   return (
     <div>

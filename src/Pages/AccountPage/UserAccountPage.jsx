@@ -8,7 +8,7 @@ const UserAccountPage = () => {
     <div>
       <div className={styles["title"]}>
         <h1 className={styles["title-secondary"]}>HELLO</h1>
-        <h1 className={styles["title-secondary"]}></h1>
+        <h1 className={styles["title-secondary"]}>Username will go here</h1>
       </div>{" "}
       <div className={styles["avatar-icon"]}>
 
