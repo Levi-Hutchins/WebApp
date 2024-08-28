@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import styles from "./InputBox.module.css";
 
-const InputBox = ({ displayValue, handleChange, errorLevel }) => {
+const InputBox = ({ displayValue, handleChange, errorLevel, isPassword }) => {
   return (
     <Box
       component="form"
@@ -15,6 +15,7 @@ const InputBox = ({ displayValue, handleChange, errorLevel }) => {
         label={displayValue}
         variant="outlined"
         className={styles["input-field-comp"]}
+        type={isPassword ? "password" : "text"}
         InputProps={{
           className: styles["input-field-root"],
         }}
