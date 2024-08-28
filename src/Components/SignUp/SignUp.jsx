@@ -11,6 +11,8 @@ const SignUp = ({
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
   const [address, setAddress] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [errors, setErrors] = useState({});
@@ -20,6 +22,13 @@ const SignUp = ({
   const handleEmailChange = (event) => setEmail(event.target.value);
 
   const handlePasswordChange = (event) => setPassword(event.target.value);
+
+  const handleConfirmPasswordChange = (event) => setConfirmPassword(event.target.value);
+
+
+
+
+
 
   const handleAddressChange = (event) => setAddress(event.target.value);
 
@@ -41,6 +50,9 @@ const SignUp = ({
     if (!password.trim() || password.length < 8) {
       validationErrors.password = true;
     }
+    if (!confirmPassword.trim() || confirmPassword !==  password) {
+        validationErrors.confirmPassword = true;
+      }
 
     if (!address.trim()) {
       validationErrors.address = true;
@@ -80,38 +92,44 @@ const SignUp = ({
         <div className={styles["signup-inputs"]}>
           <div className={styles["signup-input"]}>
             <InputBox
-              displayValue="Full Name"
+              displayValue="Full Name*"
               handleChange={handleNameChange}
               errorLevel={errors.fullName}
             />
-            {errors.fullName && <span>{errors.fullName}</span>}
           </div>
           <div className={styles["signup-input"]}>
             <InputBox
-              displayValue="Email Address"
+              displayValue="Email Address*"
               handleChange={handleEmailChange}
               errorLevel={errors.email}
             />
-            {errors.email && <span>{errors.email}</span>}
           </div>
           <div className={styles["signup-input"]}>
             <InputBox
-              displayValue="Password"
+              displayValue="Password*"
               handleChange={handlePasswordChange}
               errorLevel={errors.password}
+              isPassword={true}
             />
-            {errors.password && <span>{errors.password}</span>}
           </div>
           <div className={styles["signup-input"]}>
             <InputBox
-              displayValue="Address"
+              displayValue="Confirm Password"
+              handleChange={handleConfirmPasswordChange}
+              errorLevel={errors.confirmPassword}
+              isPassword={true}
+            />
+          </div>
+          <div className={styles["signup-input"]}>
+            <InputBox
+              displayValue="Street Address*"
               handleChange={handleAddressChange}
               errorLevel={errors.address}
             />
           </div>
           <div className={styles["signup-input"]}>
             <InputBox
-              displayValue="Phone Number"
+              displayValue="Phone Number*"
               handleChange={handlePhoneNumChange}
               errorLevel={errors.phoneNumber}
             />
