@@ -4,87 +4,30 @@ import InputBox from "../InputBox/InputBox";
 import PersonIcon from "@mui/icons-material/Person";
 import CustomButton from "../Button/CustomButton";
 import { toast } from "react-toastify";
+import useForm from "./SignUpHook";
+import signUpValidator from "../../Utils/Validation/SignUpValidation";
+
 
 const SignUp = ({
   handleNavigation,
 }) => {
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-
-  const [address, setAddress] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [errors, setErrors] = useState({});
-
-  const handleNameChange = (event) => setFullName(event.target.value);
-
-  const handleEmailChange = (event) => setEmail(event.target.value);
-
-  const handlePasswordChange = (event) => setPassword(event.target.value);
-
-  const handleConfirmPasswordChange = (event) => setConfirmPassword(event.target.value);
-
-
-
-
-
-
-  const handleAddressChange = (event) => setAddress(event.target.value);
-
-  const handlePhoneNumChange = (event) => setPhoneNumber(event.target.value);
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const validationErrors = {};
-
-    if (!fullName.trim()) {
-      validationErrors.fullName = true;
-    }
-
-    //eslint-disable-next-line
-    if (!email.trim() || !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-      validationErrors.email = true;
-    }
-
-    if (!password.trim() || password.length < 8) {
-      validationErrors.password = true;
-    }
-    if (!confirmPassword.trim() || confirmPassword !==  password) {
-        validationErrors.confirmPassword = true;
-      }
-
-    if (!address.trim()) {
-      validationErrors.address = true;
-    }
-
-    if (!email.trim() || !/^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-      validationErrors.email = true;
-    }
-    //eslint-disable-next-line
-    if (
-      !phoneNumber.trim() ||
-      !/^(\+?\(61\)|\(\+?61\)|\+?61|\(0[1-9]\)|0[1-9]) ?-?[0-9]{7,9}$/.test(
-        phoneNumber
-      )
-    ) {
-      validationErrors.phoneNumber = true;
-    }
-
-    setErrors(validationErrors);
-    if (Object.keys(validationErrors).length === 0) {
-        toast.success("Registration Successful !",{
-            position: "bottom-right"
-        })
-
-      handleNavigation(true);
-    } else {
-      toast.error("Please correct highlighted fields",{
-        position: "bottom-right"
-      })
-
-    }
+  const initialValues = {
+    fullName: "",
+    emailAddress: "",
+    password: "",
+    streetAddress: "",
+    phoneNumber: "",
   };
+  const { values, errors, handleChange, handleSubmit } = useForm(
+    initialValues,
+    signUpValidator,
+    toast
+  );
+
+  
+  
+
+  
 
   return (
     <>
@@ -93,45 +36,64 @@ const SignUp = ({
           <div className={styles["signup-input"]}>
             <InputBox
               displayValue="Full Name*"
-              handleChange={handleNameChange}
-              errorLevel={errors.fullName}
+              handleChange={handleChange}
+              errorLevel={!!errors.fullName}
+              value={values.fullName}
+              name="fullName"
             />
           </div>
           <div className={styles["signup-input"]}>
             <InputBox
               displayValue="Email Address*"
-              handleChange={handleEmailChange}
-              errorLevel={errors.email}
+              handleChange={handleChange}
+              errorLevel={!!errors.email}
+              value={values.emailAddress}
+              name="emailAddress"
+
             />
           </div>
           <div className={styles["signup-input"]}>
             <InputBox
               displayValue="Password*"
-              handleChange={handlePasswordChange}
-              errorLevel={errors.password}
+              handleChange={handleChange}
+              errorLevel={!!errors.password}
               isPassword={true}
+              value={values.password}
+              name="password"
+
+
             />
           </div>
           <div className={styles["signup-input"]}>
             <InputBox
               displayValue="Confirm Password"
-              handleChange={handleConfirmPasswordChange}
-              errorLevel={errors.confirmPassword}
+              handleChange={handleChange}
+              errorLevel={!!errors.confirmPassword}
               isPassword={true}
+              //TODO: Fix this
+              value={values.password}
+              name="password"
+
             />
           </div>
           <div className={styles["signup-input"]}>
             <InputBox
               displayValue="Street Address*"
-              handleChange={handleAddressChange}
-              errorLevel={errors.address}
+              handleChange={handleChange}
+              errorLevel={!!errors.address}
+              value={values.streetAddress}
+              name="streetAddress"
+
             />
           </div>
           <div className={styles["signup-input"]}>
             <InputBox
               displayValue="Phone Number*"
-              handleChange={handlePhoneNumChange}
-              errorLevel={errors.phoneNumber}
+              handleChange={handleChange}
+              errorLevel={!!errors.phoneNumber}
+              value={values.phoneNumber}
+              name="phoneNumber"
+
             />
           </div>
           <div className={styles["signup-input"]}>
