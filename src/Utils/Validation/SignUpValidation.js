@@ -1,29 +1,24 @@
 const signUpValidator = (values) => {
-    console.log(values)
     const errors = {};
 
-    if (!values.fullName.trim()) {
+    if (!values.fullName?.trim()) {
       errors.fullName = true;
     }
 
-    //eslint-disable-next-line
-    if (!values.email.trim() || !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(values.email)) {
-        errors.email = true;
-    }
 
-    if (!values.password.trim() || values.password.length < 8) {
+    if (!values.password?.trim() || values.password?.length < 8) {
         errors.password = true;
     }
-    if (!values.confirmPassword.trim() || values.confirmPassword !==  values.password) {
+    if (!values.confirmPassword?.trim() || values.confirmPassword !== values.password) {
         errors.confirmPassword = true;
       }
 
-    if (!values.streetAddress.trim()) {
-        errors.address = true;
+    if (!values.streetAddress?.trim()) {
+        errors.streetAddress = true;
     }
 
-    if (!values.emailAddress.trim() || !/^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$/.test(values.emailAddress)) {
-        errors.email = true;
+    if (!values.emailAddress?.trim() || !/^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$/.test(values?.emailAddress)) {
+        errors.emailAddress = true;
     }
     //eslint-disable-next-line
     if (

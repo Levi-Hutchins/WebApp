@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import styles from "./InputBox.module.css";
 
-const InputBox = ({ displayValue, handleChange, errorLevel, isPassword, value, name }) => {
+const InputBox = ({ displayValue, handleChange, errorLevel, isPassword, value, name, onKeyPress }) => {
   return (
     <Box
       component="form"
@@ -41,6 +41,7 @@ const InputBox = ({ displayValue, handleChange, errorLevel, isPassword, value, n
         onChange={handleChange}
         value={value}  
         name={name}
+        onKeyDown={onKeyPress}
 
       />
     </Box>

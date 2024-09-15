@@ -15,6 +15,7 @@ const SignUp = ({
     fullName: "",
     emailAddress: "",
     password: "",
+    confirmPassword: "",
     streetAddress: "",
     phoneNumber: "",
   };
@@ -23,7 +24,14 @@ const SignUp = ({
     signUpValidator,
     toast
   );
-
+  const handleNumbersOnly = (e) => {
+    if (!(/[0-9]/.test(e.key) || e.key === "Backspace" || e.key === "Delete")) {
+      e.preventDefault();
+      toast.warning("Please enter numbers only", {
+        position: "bottom-right",
+      });
+    }
+  };
   
   
 
@@ -46,7 +54,7 @@ const SignUp = ({
             <InputBox
               displayValue="Email Address*"
               handleChange={handleChange}
-              errorLevel={!!errors.email}
+              errorLevel={!!errors.emailAddress}
               value={values.emailAddress}
               name="emailAddress"
 
@@ -71,8 +79,8 @@ const SignUp = ({
               errorLevel={!!errors.confirmPassword}
               isPassword={true}
               //TODO: Fix this
-              value={values.password}
-              name="password"
+              value={values.confirmPassword}
+              name="confirmPassword"
 
             />
           </div>
@@ -80,7 +88,7 @@ const SignUp = ({
             <InputBox
               displayValue="Street Address*"
               handleChange={handleChange}
-              errorLevel={!!errors.address}
+              errorLevel={!!errors.streetAddress}
               value={values.streetAddress}
               name="streetAddress"
 
@@ -90,6 +98,7 @@ const SignUp = ({
             <InputBox
               displayValue="Phone Number*"
               handleChange={handleChange}
+              onKeyPress={handleNumbersOnly}
               errorLevel={!!errors.phoneNumber}
               value={values.phoneNumber}
               name="phoneNumber"
