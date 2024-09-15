@@ -1,18 +1,20 @@
-import { React } from "react";
+import { React, useState } from "react";
 import styles from "./SignUp.module.css";
 import InputBox from "../InputBox/InputBox";
 import PersonIcon from "@mui/icons-material/Person";
 import CustomButton from "../Button/CustomButton";
 import { toast } from "react-toastify";
 import useForm from "./SignUpHook";
+
 import signUpValidator from "../../Utils/Validation/SignUpValidation";
 
 
 const SignUp = ({
   handleNavigation,
 }) => {
+
   const initialValues = {
-    fullName: "",
+    userName: "",
     emailAddress: "",
     password: "",
     confirmPassword: "",
@@ -22,7 +24,7 @@ const SignUp = ({
   const { values, errors, handleChange, handleSubmit } = useForm(
     initialValues,
     signUpValidator,
-    toast
+    toast,
   );
   const handleNumbersOnly = (e) => {
     if (!(/[0-9]/.test(e.key) || e.key === "Backspace" || e.key === "Delete")) {
@@ -43,11 +45,11 @@ const SignUp = ({
         <div className={styles["signup-inputs"]}>
           <div className={styles["signup-input"]}>
             <InputBox
-              displayValue="Full Name*"
+              displayValue="User Name*"
               handleChange={handleChange}
-              errorLevel={!!errors.fullName}
-              value={values.fullName}
-              name="fullName"
+              errorLevel={!!errors.userName}
+              value={values.userName}
+              name="userName"
             />
           </div>
           <div className={styles["signup-input"]}>
@@ -105,6 +107,8 @@ const SignUp = ({
 
             />
           </div>
+
+
           <div className={styles["signup-input"]}>
             <CustomButton
               displayValue="Sign Up"

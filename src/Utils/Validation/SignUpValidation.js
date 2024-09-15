@@ -1,8 +1,8 @@
 const signUpValidator = (values) => {
     const errors = {};
 
-    if (!values.fullName?.trim()) {
-      errors.fullName = true;
+    if (!values.userName?.trim()) {
+      errors.userName = true;
     }
 
 

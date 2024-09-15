@@ -29,7 +29,7 @@ const useForm = (initialValues, signUpValidator, toast) => {
 
     if (Object.keys(validationErrors).length === 0) {
       try {
-        const user = await axios
+        await axios
           .get(
             "http://localhost:8080/api/v1/db/data/v1/inft3050/User/find-one",
             {
@@ -42,8 +42,11 @@ const useForm = (initialValues, signUpValidator, toast) => {
             }
           )
           .then((user) => {
-            console.log(user.data);
             if (!Object.keys(user.data).length) {
+
+              //TODO: make post request to create user, waiting on error someone else reported
+
+
               toast.success("Sign Up Successful !", {
                 position: "bottom-right",
               });
