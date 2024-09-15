@@ -20,8 +20,7 @@ const SearchPage = () => {
   const [inputValue, setInputValue] = useState("");
   const navigate = useNavigate();
 
-  const cartItems = useSelector((state) => state.cart.cartItems)
-
+  const cartItems = useSelector((state) => state.cart.cartItems);
 
   const handleChange = (event) => {
     console.log(event.target.value);
@@ -38,10 +37,15 @@ const SearchPage = () => {
 
     setProductSubmitted(true);
     axios
-      .post("http://localhost:4000/api/search", { product: inputValue })
+      .get("http://localhost:8080/api/v1/db/data/v1/inft3050/Product", {
+        headers: {
+          "xc-token": process.env.REACT_APP_APIKEY,
+        },
+        params: { where: `(Name,like,${inputValue})` },
+      })
       .then((res) => {
         console.log(res.data);
-        setProductsFound(res.data);
+        setProductsFound(res.data.list);
       })
       .catch((err) => {
         console.error(err);
@@ -49,15 +53,14 @@ const SearchPage = () => {
   };
 
   const handleCheckoutClick = () => {
-    
-    if(cartItems.length === 0){
-      toast.info("You have no items in your cart !",{
+    if (cartItems.length === 0) {
+      toast.info("You have no items in your cart !", {
         position: "bottom-right",
-      })
-    }else{
-      navigate("/ShoppingCart")
+      });
+    } else {
+      navigate("/ShoppingCart");
     }
-  }
+  };
 
   return (
     <div>
