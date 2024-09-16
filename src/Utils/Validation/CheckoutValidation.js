@@ -22,7 +22,6 @@ const validateExpiryDate = (expiryDate) => {
 };
 
 const checkoutValidator = (values) => {
-  console.log("validation")
   const errors = {};
 
   if (
