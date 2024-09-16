@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import {hashPassword} from "../../Utils/HahingService"
 
 const useForm = (initialValues, signUpValidator, toast) => {
   const [values, setValues] = useState(initialValues);
@@ -44,12 +45,33 @@ const useForm = (initialValues, signUpValidator, toast) => {
           .then((user) => {
             if (!Object.keys(user.data).length) {
 
-              //TODO: make post request to create user, waiting on error someone else reported
-
-
-              toast.success("Sign Up Successful !", {
-                position: "bottom-right",
-              });
+              const passwordSalt = hashPassword(values.password)
+              const userToAdd = {
+                UserName: values.userName,
+                Email: values.emailAddress,
+                Name: "This is a test Name",
+                IsAdmin: "false",
+                Salt: passwordSalt.salt,
+                HashPW: passwordSalt.hash,
+              }
+              console.log(userToAdd)
+              axios.post("http://localhost:8080/api/v1/db/data/v1/inft3050/User", userToAdd, {
+                headers:{
+                  "xc-token": process.env.REACT_APP_APIKEY,
+                }
+              }).then((user) => {
+                if (user){
+                  toast.success("Sign Up Successful !", {
+                    position: "bottom-right",
+                  });
+                }
+              }).catch((error) => {
+                toast.error("Oops ! An error occurred",{
+                  position: "bottom-right",
+                })
+              })
+         
+             
             } else {
               toast.error("User already exists with this email", {
                 position: "bottom-right",
