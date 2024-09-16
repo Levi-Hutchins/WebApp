@@ -1,13 +1,14 @@
-const saltedSha256 = require('salted-sha256');
+
+import CryptoJS from 'crypto-js';
 
 
-const hashPassword = (password) => {
+export const hashPassword = (password) => {
+    const salt = CryptoJS.lib.WordArray.random(128 / 8).toString(); 
+    const saltedData = salt + password;
 
-    const salt = (Math.random() + 1).toString(36).substring(7)
-    const saltedHash = saltedSha256(password, salt);
+    const hash = CryptoJS.SHA256(saltedData).toString();
 
-    return {saltedHash, salt}
+    return {hash, salt}
 
 }
 
-module.exports = {hashPassword}
