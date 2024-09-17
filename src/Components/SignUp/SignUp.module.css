@@ -6,26 +6,25 @@
     width: 100%;
 }
 
-
 .signup-inputs {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 15px;
     width: 100%;
 }
 
 .signup-input {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     width: 100%;
     border: none;
+}
+
+.signup-inputs .full-width {
+    grid-column: span 2;
 }
 
 .submit-button {
     display: flex;
     justify-content: center;
     margin-top: 20px;
+    grid-column: span 2; 
 }
-
-

@@ -1,30 +1,30 @@
-import { React } from "react";
+import { React, useState } from "react";
 import styles from "./SignUp.module.css";
 import InputBox from "../InputBox/InputBox";
 import PersonIcon from "@mui/icons-material/Person";
 import CustomButton from "../Button/CustomButton";
 import { toast } from "react-toastify";
 import useForm from "./SignUpHook";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
 
 import signUpValidator from "../../Utils/Validation/SignUpValidation";
 
-
-const SignUp = ({
-  handleNavigation,
-}) => {
-
+const SignUp = ({ handleNavigation }) => {
   const initialValues = {
     userName: "",
     emailAddress: "",
+    fullName: "",
     password: "",
     confirmPassword: "",
     streetAddress: "",
     phoneNumber: "",
+    adminStatus: false,
   };
-  const { values, errors, handleChange, handleSubmit } = useForm(
+  const { values, setValues, errors, handleChange, handleSubmit } = useForm(
     initialValues,
     signUpValidator,
-    toast,
+    toast
   );
   const handleNumbersOnly = (e) => {
     if (!(/[0-9]/.test(e.key) || e.key === "Backspace" || e.key === "Delete")) {
@@ -34,10 +34,12 @@ const SignUp = ({
       });
     }
   };
-  
-  
-
-  
+  const handleChangeAdminStatus = (e) => {
+    setValues({
+      ...values,
+      adminStatus: !values.adminStatus,
+    });
+  };
 
   return (
     <>
@@ -59,7 +61,15 @@ const SignUp = ({
               errorLevel={!!errors.emailAddress}
               value={values.emailAddress}
               name="emailAddress"
-
+            />
+          </div>
+          <div className={styles["signup-input"]}>
+            <InputBox
+              displayValue="Full Name*"
+              handleChange={handleChange}
+              errorLevel={!!errors.fullName}
+              value={values.fullName}
+              name="fullName"
             />
           </div>
           <div className={styles["signup-input"]}>
@@ -70,8 +80,6 @@ const SignUp = ({
               isPassword={true}
               value={values.password}
               name="password"
-
-
             />
           </div>
           <div className={styles["signup-input"]}>
@@ -80,10 +88,8 @@ const SignUp = ({
               handleChange={handleChange}
               errorLevel={!!errors.confirmPassword}
               isPassword={true}
-              //TODO: Fix this
               value={values.confirmPassword}
               name="confirmPassword"
-
             />
           </div>
           <div className={styles["signup-input"]}>
@@ -93,7 +99,6 @@ const SignUp = ({
               errorLevel={!!errors.streetAddress}
               value={values.streetAddress}
               name="streetAddress"
-
             />
           </div>
           <div className={styles["signup-input"]}>
@@ -104,10 +109,27 @@ const SignUp = ({
               errorLevel={!!errors.phoneNumber}
               value={values.phoneNumber}
               name="phoneNumber"
-
             />
           </div>
-
+          <div className={styles["signup-input"]}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  sx={{
+                    color: "white",
+                    "&.Mui-checked": {
+                      color: "#5e43f3",
+                    },
+                  }}
+                />
+              }
+              sx={{ color: "white" }}
+              label="Would you like to be an Admin?"
+              onChange={handleChangeAdminStatus}
+              value={values.adminStatus}
+              name="adminStatus"
+            />
+          </div>
 
           <div className={styles["signup-input"]}>
             <CustomButton

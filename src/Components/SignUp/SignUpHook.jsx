@@ -7,6 +7,7 @@ const useForm = (initialValues, signUpValidator, toast) => {
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
+
     const { name, value } = e.target;
 
     setValues({
@@ -20,6 +21,7 @@ const useForm = (initialValues, signUpValidator, toast) => {
       ...prevErrors,
       [name]: fieldError,
     }));
+    console.log(values)
   };
 
   const handleSubmit = async (e) => {
@@ -49,12 +51,12 @@ const useForm = (initialValues, signUpValidator, toast) => {
               const userToAdd = {
                 UserName: values.userName,
                 Email: values.emailAddress,
-                Name: "This is a test Name",
-                IsAdmin: "false",
+                Name: values.fullName,
+                // TODO: Fix this does seem to be getting the right value
+                isAdmin: values.isAdmin ? "true": "false",
                 Salt: passwordSalt.salt,
                 HashPW: passwordSalt.hash,
               }
-              console.log(userToAdd)
               axios.post("http://localhost:8080/api/v1/db/data/v1/inft3050/User", userToAdd, {
                 headers:{
                   "xc-token": process.env.REACT_APP_APIKEY,
@@ -99,6 +101,7 @@ const useForm = (initialValues, signUpValidator, toast) => {
     errors,
     handleChange,
     handleSubmit,
+    setValues
   };
 };
 
