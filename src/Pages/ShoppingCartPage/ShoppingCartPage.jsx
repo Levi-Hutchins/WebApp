@@ -54,7 +54,7 @@ const ShoppingCartPage = () => {
     if (itemIDs.length > 0) {
       fetchPrices();
     }
-  }, [cartItems]);
+  }, [cartItems,allProductDetails]);
 
   const productDetailsById = allProductDetails.reduce((acc, item) => {
     acc[item.ItemId] = item;
