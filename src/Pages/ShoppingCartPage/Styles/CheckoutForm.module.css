@@ -1,0 +1,49 @@
+.checkout-button {
+  margin-top: 50px;
+}
+.checkout-panel {
+  position: absolute;
+  top: 55%;
+  left: 30%;
+  transform: translate(-50%, -50%);
+  border: 2px solid #c3bfbff5;
+  padding: 40px;
+  border-radius: 40px;
+  background-color: #ffffff;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  width: 650px;
+  height: 700px;
+}
+
+.checkout-inputs {
+  display: flex;
+  gap: 10px;
+}
+.checkout-input-name {
+  display: flex;
+  gap: 10px;
+}
+.checkout-input-card {
+  margin-top: 50px;
+}
+.checkout-input-card-expiry-cvv {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.checkout-input-address {
+  gap: 10px;
+}
+.checkout-card-inputs {
+  display: flex;
+  gap: 10px;
+}
+.card-number-input {
+  width: 200px;
+}
+
+.checkout-panel input {
+  width: 100%;
+}
