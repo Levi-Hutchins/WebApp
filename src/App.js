@@ -36,7 +36,6 @@ function App() {
           </Routes>
         </div>
 
-        <p>Unit Test</p>
       </div>
     </div>
   );

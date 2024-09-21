@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import CheckoutForm from "./Components/CheckoutForm";
@@ -10,12 +10,14 @@ import { toast } from "react-toastify";
 const ShoppingCartPage = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
   const [allProductDetails, setAllProductDetails] = useState([]);
+  const hasQueried = useRef(false);
 
- // useEffect hook to query backend when the page loads / cart changes
- useEffect(() => {
-    // Map through all items in the cat and get their ID into a list and make
-    // a request for each ID and
+  useEffect(() => {
+    // Check if the effect has already run
+    if (hasQueried.current) return;
+
     const itemIDs = cartItems.map((item) => item.ID);
+
     const fetchPrices = async () => {
       try {
         const responses = await Promise.all(
@@ -28,6 +30,7 @@ const ShoppingCartPage = () => {
             )
           )
         );
+
         const productDetails = responses
           .map((response) => {
             if (
@@ -42,17 +45,21 @@ const ShoppingCartPage = () => {
           .filter((item) => item !== null);
 
         setAllProductDetails(productDetails);
-        console.log(allProductDetails);
+        console.log(productDetails);
       } catch (error) {
         console.error("Error fetching prices:", error);
-        toast.error("Failed to load prices.");
+        toast.error("Failed to load prices.", {
+          position: "bottom-right"
+        });
       }
     };
 
     if (itemIDs.length > 0) {
       fetchPrices();
     }
-  }, [cartItems,allProductDetails]);
+
+    hasQueried.current = true;
+  }, [cartItems]);
 
   const initialValues = {
     firstName: "",
@@ -66,7 +73,8 @@ const ShoppingCartPage = () => {
     expiryDate: "",
     securityCode: null,
   };
-    const { values, errors, handleChange, handleSubmit } = useForm(
+
+  const { values, errors, handleChange, handleSubmit } = useForm(
     initialValues,
     checkoutValidator,
     toast
@@ -77,12 +85,13 @@ const ShoppingCartPage = () => {
     return acc;
   }, {});
 
-
-
   return (
     <div>
-      <ShoppingCart cartItems={cartItems} productDetailsById={productDetailsById}         handleSubmit={handleSubmit}
- />
+      <ShoppingCart
+        cartItems={cartItems}
+        productDetailsById={productDetailsById}
+        handleSubmit={handleSubmit}
+      />
       <CheckoutForm
         values={values}
         errors={errors}
