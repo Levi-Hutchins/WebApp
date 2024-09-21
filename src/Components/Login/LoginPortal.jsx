@@ -1,12 +1,26 @@
-import React, { Component } from "react";
 import "./Login.css"
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useAuth } from "../AuthProvider/AuthProvider";
 
 
-export default class Login extends Component {
-    render() {
-        return (
-      <form className="login">
+const Login = () => {
+  const [input, setInput] = useState({
+    username: "",
+    password: "",
+  });
+
+  const auth = useAuth();
+  const handleSubmitEvent = (e) => {
+    e.preventDefault();
+    if (input.username !== "" && input.password !== "") {
+      auth.loginAction(input);
+      return;
+    }
+    alert("Please proide a valid input");
+  };    
+  return (
+      <form className="login" onSubmit={{handleSubmitEvent}}>
         <h3>Log In</h3>
         <div className="mb-3">
           <label>Email address</label>
@@ -53,4 +67,3 @@ export default class Login extends Component {
       </form>
       );
     }
-}
