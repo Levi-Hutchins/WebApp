@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useAuth } from "../AuthProvider/AuthProvider";
 
 
-const Login = () => {
+const LoginPortal = () => {
   const [input, setInput] = useState({
     username: "",
     password: "",
@@ -67,3 +67,5 @@ const Login = () => {
       </form>
       );
     }
+
+    export default LoginPortal;
