@@ -23,7 +23,6 @@ function App() {
   });
   return (
     <div className="App">
-      <Router>
         <AuthProvider>
             <div className="overlay">
               <NavBar />
@@ -45,7 +44,6 @@ function App() {
               <p>Unit Test</p>
             </div>
         </AuthProvider>
-      </Router>
     </div>
   );
 }
