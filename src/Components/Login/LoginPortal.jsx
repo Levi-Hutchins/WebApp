@@ -19,6 +19,16 @@ const LoginPortal = () => {
     }
     alert("Please proide a valid input");
   };    
+
+  // Handle changes in input fields
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setInput((prevInput) => ({
+      ...prevInput,
+      [name]: value,
+    }));
+  };
+
   return (
       <form className="login" onSubmit={{handleSubmitEvent}}>
         <h3>Log In</h3>
@@ -28,6 +38,8 @@ const LoginPortal = () => {
             type="email"
             className="form-control"
             placeholder="Enter email"
+            value={input.username}  // Bind input to state
+            onChange={handleChange}  // Update state when the user types
           />
         </div>
         <div className="mb-3">
@@ -36,6 +48,8 @@ const LoginPortal = () => {
             type="password"
             className="form-control"
             placeholder="Enter password"
+            value={input.password}  // Bind input to state
+            onChange={handleChange}  // Update state when the user types
           />
         </div>
 
@@ -58,11 +72,11 @@ const LoginPortal = () => {
           </button>
         </div>
         <p className="forgot-password text-centre">
-        <Link to="/" classname='ms-2'>Forgot your password?</Link> {/*TODO: Fix this later*/}
+        <Link to="/" classname="ms-2">Forgot your password?</Link> {/*TODO: Fix this later*/}
 
         </p>
         <p className="Sign-up text-right">
-          <Link to="/Register" classname='ms-2'>Sign up</Link>
+          <Link to="/Register" classname="ms-2">Sign up</Link>
         </p>
       </form>
       );

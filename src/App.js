@@ -13,8 +13,6 @@ import { useEffect, useRef } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AuthProvider from "./Components/AuthProvider/AuthProvider";
-import PrivateRoute from "./Components/AuthProvider/PrivateRoute";
-
 
 function App() {
   const videoRef = useRef(null);
