@@ -8,7 +8,8 @@
     border-radius: 40px;
     background-color: #2c2c32f5;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    width: 500px;
+    width: 700px;
+    height: 500px;
 }
 .signup-title{
     position: absolute;
@@ -44,4 +45,12 @@
     bottom: 20px; 
     right: 20px; 
 }
+.sub-title{
+    color: white;
+    margin-left: 50px;
 
+
+}
+.login-link{
+    color: #5e43f3;
+}

@@ -72,3 +72,31 @@
 .checkout-panel input {
   width: 100%;
 }
+.cart-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.item-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.item-name {
+  font-weight: bold;
+  color: white;
+}
+
+.item-price {
+  font-weight: bold;
+  color: white;
+}
+
+.item-quantity {
+  color: white;
+  font-size: 0.9em;
+}
+

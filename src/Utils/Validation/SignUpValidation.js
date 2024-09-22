@@ -4,6 +4,9 @@ const signUpValidator = (values) => {
     if (!values.userName?.trim()) {
       errors.userName = true;
     }
+    if (!values.fullName?.trim()) {
+      errors.fullName = true;
+    }
 
 
     if (!values.password?.trim() || values.password?.length < 8) {

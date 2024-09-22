@@ -12,7 +12,7 @@ import PopUpModal from "../Modal/Modal";
 import CustomButton from "../Button/CustomButton";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { useDispatch } from "react-redux";
-import { addToCart } from "../../Utils/ShoppingCartSlice";
+import { addToCart } from "../../Redux/Cart/CartSlice";
 
 export default function DynamicTable({ data, }) {
   const [page, setPage] = React.useState(0);
