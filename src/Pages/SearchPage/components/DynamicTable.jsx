@@ -8,13 +8,13 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import PopUpModal from "../Modal/Modal";
-import CustomButton from "../Button/CustomButton";
+import PopUpModal from "../../../shared-components/Modal/Modal";
+import CustomButton from "../../../shared-components/Button/CustomButton";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { useDispatch } from "react-redux";
-import { addToCart } from "../../Redux/Cart/CartSlice";
+import { addToCart } from "../../../redux/Cart/CartSlice";
 
-export default function DynamicTable({ data, }) {
+export default function ItemsTable({ data, }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [modalOpen, setModalOpen] = useState(false);

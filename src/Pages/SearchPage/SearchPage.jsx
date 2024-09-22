@@ -5,15 +5,15 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import "@fontsource/archivo-black";
-import "./SearchPage.css";
+import "./styles/SearchPage.css";
 
-import DynamicTable from "../../Components/DynamicTables/DynamicTable";
-import InputBoxWithButton from "../../Components/InputBoxWithButton/InputBoxWithButton";
-import "../../Components/InputBoxWithButton/InputBoxWithButton.css";
+import DynamicTable from "./components/DynamicTable";
+import InputBoxWithButton from "../../shared-components/InputBoxWithButton/InputBoxWithButton";
+import "../../shared-components/InputBoxWithButton/InputBoxWithButton.css";
 import { toast } from "react-toastify";
 
 import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
-import CustomButton from "../../Components/Button/CustomButton";
+import CustomButton from "../../shared-components/Button/CustomButton";
 const SearchPage = () => {
   const [productSubmitted, setProductSubmitted] = useState(false);
   const [productsFound, setProductsFound] = useState("");

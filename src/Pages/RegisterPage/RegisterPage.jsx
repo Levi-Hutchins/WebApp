@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
-import styles from "./RegisterPage.module.css";
+import styles from "./styles/RegisterPage.module.css";
 
-import SignUp from "../../Components/SignUp/SignUp";
+import SignUp from "./components/SignUp";
 
 const RegisterPage = () => {
   const navigate = useNavigate();

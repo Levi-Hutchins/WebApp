@@ -1,18 +1,17 @@
 import "./App.css";
-import NavBar from "./Components/NavBar/NavBar";
+import NavBar from "./shared-components/NavBar/NavBar";
 import { Route, Routes } from "react-router-dom";
-import Home from "./Pages/HomePage/Home";
-import SearchPage from "./Pages/SearchPage/SearchPage";
-import TestPage from "./Pages/TestPage";
-import RegisterPage from "./Pages/RegisterPage/RegisterPage";
-import LogInPage from "./Pages/LogInPage";
-import UserAccountPage from "./Pages/AccountPage/UserAccountPage";
-import ShoppingCartPage from "./Pages/ShoppingCartPage/ShoppingCartPage";
+import Home from "./pages/HomePage/Home";
+import SearchPage from "./pages/SearchPage/SearchPage";
+import TestPage from "./pages/TestPage";
+import RegisterPage from "./pages/RegisterPage/RegisterPage";
+import UserAccountPage from "./pages/AccountPage/UserAccountPage";
+import ShoppingCartPage from "./pages/ShoppingCartPage/ShoppingCartPage";
 import video from "./assets/backgroundVideo.mp4";
 import { useEffect, useRef } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import LoginPortal from "./pages/LoginPage/components/LoginPortal";
 function App() {
   const videoRef = useRef(null);
   useEffect(() => {
@@ -31,7 +30,7 @@ function App() {
                   <Route path="/Search" element={<SearchPage />} />
                   <Route path="/Test" element={<TestPage />} />
                   <Route path="/Register" element={<RegisterPage />} />
-                  <Route path="/LogIn" element={<LogInPage />} />
+                  <Route path="/LogIn" element={<LoginPortal />} />
                   <Route path="/UserAccount" element={<UserAccountPage />} />
                   <Route path="/ShoppingCart" element={<ShoppingCartPage />} />
                 </Routes>

@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "../Styles/CheckoutForm.module.css";
-import CheckoutInputBox from "../../../Components/InputBox/CheckoutInputBox";
+import styles from "../styles/CheckoutForm.module.css";
+import CheckoutInputBox from "../../../shared-components/InputBox/CheckoutInputBox";
 import { toast } from "react-toastify";
 const handleNumbersOnly = (e) => {
     if (!(/[0-9]/.test(e.key) || e.key === "Backspace" || e.key === "Delete")) {
