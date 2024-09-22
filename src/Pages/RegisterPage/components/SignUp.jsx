@@ -1,14 +1,14 @@
 import { React } from "react";
-import styles from "./SignUp.module.css";
-import InputBox from "../InputBox/InputBox";
+import styles from "../styles/SignUp.module.css";
+import InputBox from "../../../shared-components/InputBox/InputBox";
 import PersonIcon from "@mui/icons-material/Person";
-import CustomButton from "../Button/CustomButton";
+import CustomButton from "../../../shared-components/Button/CustomButton";
 import { toast } from "react-toastify";
-import useForm from "./SignUpHook";
+import useForm from "../hooks/SignUpHook";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 
-import signUpValidator from "../../Utils/Validation/SignUpValidation";
+import signUpValidator from "../../../utils/Validation/SignUpValidation";
 
 const SignUp = ({ handleNavigation }) => {
   const initialValues = {

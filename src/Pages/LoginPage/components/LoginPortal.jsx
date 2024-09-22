@@ -1,7 +1,7 @@
-import "./Login.css"
+import "../styles/Login.css"
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { useAuth } from "../AuthProvider/AuthProvider";
+import { useAuth } from "../../../shared-components/AuthProvider/AuthProvider";
 
 
 const LoginPortal = () => {

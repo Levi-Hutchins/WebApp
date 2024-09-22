@@ -10,9 +10,9 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import SaveIcon from '@mui/icons-material/Save';
-import CustomButton from "../Button/CustomButton";
+import CustomButton from "../../../shared-components/Button/CustomButton";
 import { toast } from "react-toastify";
-import validateUpdatedDetails from "../../Utils/Validation/UpdateDetailsValidation"
+import validateUpdatedDetails from "../../../utils/Validation/UpdateDetailsValidation"
 
 function createData(accountValue, value) {
   return { accountValue, value };

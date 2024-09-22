@@ -1,13 +1,13 @@
 import React from "react";
 import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
-import CustomButton from "../../../Components/Button/CustomButton";
+import CustomButton from "../../../shared-components/Button/CustomButton";
 import Divider from "@mui/material/Divider";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-import styles from "../Styles/ShoppingCart.module.css";
+import styles from "../styles/ShoppingCart.module.css";
 import { useDispatch } from "react-redux";
-import { removeFromCart } from "../../../Redux/Cart/CartSlice";
+import { removeFromCart } from "../../../redux/Cart/CartSlice";
 
 
 

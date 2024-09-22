@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import CheckoutForm from "./Components/CheckoutForm";
-import ShoppingCart from "./Components/ShoppingCart";
-import useForm from "./Hooks/CheckoutHook";
-import checkoutValidator from "../../Utils/Validation/CheckoutValidation";
+import CheckoutForm from "./components/CheckoutForm"
+import ShoppingCart from "./components/ShoppingCart";
+import useForm from "./hooks/CheckoutHook";
+import checkoutValidator from "../../utils/Validation/CheckoutValidation";
 import { toast } from "react-toastify";
 
 const ShoppingCartPage = () => {
