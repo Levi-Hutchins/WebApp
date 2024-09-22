@@ -12,7 +12,6 @@ import video from "./assets/backgroundVideo.mp4";
 import { useEffect, useRef } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import AuthProvider from "./Components/AuthProvider/AuthProvider";
 
 function App() {
   const videoRef = useRef(null);
@@ -21,7 +20,6 @@ function App() {
   });
   return (
     <div className="App">
-        <AuthProvider>
             <div className="overlay">
               <NavBar />
               <video ref={videoRef} src={video} autoPlay loop muted />
