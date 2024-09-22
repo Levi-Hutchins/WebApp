@@ -12,6 +12,8 @@ import video from "./assets/backgroundVideo.mp4";
 import { useEffect, useRef } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AuthProvider from "./Components/AuthProvider/AuthProvider";
+
 function App() {
   const videoRef = useRef(null);
   useEffect(() => {
@@ -19,25 +21,27 @@ function App() {
   });
   return (
     <div className="App">
-      <div className="overlay">
-        <NavBar />
-        <video ref={videoRef} src={video} autoPlay loop muted />
-        <ToastContainer autoClose={2000} />
+        <AuthProvider>
+            <div className="overlay">
+              <NavBar />
+              <video ref={videoRef} src={video} autoPlay loop muted />
+              <ToastContainer autoClose={2000} />
 
-        <div className="container">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/Search" element={<SearchPage />} />
-            <Route path="/Test" element={<TestPage />} />
-            <Route path="/Register" element={<RegisterPage />} />
-            <Route path="/LogIn" element={<LogInPage />} />
-            <Route path="/UserAccount" element={<UserAccountPage />} />
-            <Route path="/ShoppingCart" element={<ShoppingCartPage />} />
-          </Routes>
-        </div>
+              <div className="container">
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/Search" element={<SearchPage />} />
+                  <Route path="/Test" element={<TestPage />} />
+                  <Route path="/Register" element={<RegisterPage />} />
+                  <Route path="/LogIn" element={<LogInPage />} />
+                  <Route path="/UserAccount" element={<UserAccountPage />} />
+                  <Route path="/ShoppingCart" element={<ShoppingCartPage />} />
+                </Routes>
+              </div>
 
-      </div>
     </div>
+    </div>
+
   );
 }
 
