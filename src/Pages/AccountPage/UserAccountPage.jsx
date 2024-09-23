@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "./styles/UserAccountPage.module.css";
-import UserDetailsTable from "./components/UserDetailsTable";
+import styles from "./Styles/UserAccountPage.module.css";
+import UserDetailsTable from "./Components/UserDetailsTable";
 import Avatar from '@mui/material/Avatar';
 
 const UserAccountPage = () => {

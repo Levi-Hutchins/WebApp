@@ -8,7 +8,7 @@ import useForm from "../Hooks/SignUpHook";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 
-import signUpValidator from "../../../utils/Validation/SignUpValidation";
+import signUpValidator from "../../../Utils/Validation/SignUpValidation";
 
 const SignUp = ({ handleNavigation }) => {
   const initialValues = {

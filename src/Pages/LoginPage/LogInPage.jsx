@@ -1,6 +1,6 @@
 import React from 'react'
 import { useRef, useState, useEffect } from "react"
-import Login from './components/LoginPortal';
+import Login from './Components/LoginPortal';
 
 const LogInPage = () => {
 

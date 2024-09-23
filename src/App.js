@@ -10,7 +10,7 @@ import video from "./assets/backgroundVideo.mp4";
 import { useEffect, useRef } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import LoginPortal from "./Pages/LoginPage/components/LoginPortal";
+import LoginPortal from "./Pages/LoginPage/Components/LoginPortal";
 function App() {
   const videoRef = useRef(null);
   useEffect(() => {

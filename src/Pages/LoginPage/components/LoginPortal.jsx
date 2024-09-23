@@ -1,4 +1,4 @@
-import "../styles/Login.css"
+import "../Styles/Login.css"
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "../../../shared-components/AuthProvider/AuthProvider";
