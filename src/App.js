@@ -3,7 +3,6 @@ import NavBar from "./shared-components/NavBar/NavBar";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/HomePage/Home";
 import SearchPage from "./pages/SearchPage/SearchPage";
-import TestPage from "./pages/TestPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import UserAccountPage from "./pages/AccountPage/UserAccountPage";
 import ShoppingCartPage from "./pages/ShoppingCartPage/ShoppingCartPage";
@@ -28,7 +27,6 @@ function App() {
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/Search" element={<SearchPage />} />
-                  <Route path="/Test" element={<TestPage />} />
                   <Route path="/Register" element={<RegisterPage />} />
                   <Route path="/LogIn" element={<LoginPortal />} />
                   <Route path="/UserAccount" element={<UserAccountPage />} />
