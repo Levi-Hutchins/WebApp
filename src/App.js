@@ -10,7 +10,7 @@ import video from "./assets/backgroundVideo.mp4";
 import { useEffect, useRef } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import LoginPortal from "./Pages/LoginPage/Components/LoginPortal";
+import LogInPage from "./Pages/LoginPage/LogInPage";
 function App() {
   const videoRef = useRef(null);
   useEffect(() => {
@@ -28,7 +28,7 @@ function App() {
                   <Route path="/" element={<Home />} />
                   <Route path="/Search" element={<SearchPage />} />
                   <Route path="/Register" element={<RegisterPage />} />
-                  <Route path="/LogIn" element={<LoginPortal />} />
+                  <Route path="/LogIn" element={<LogInPage />} />
                   <Route path="/UserAccount" element={<UserAccountPage />} />
                   <Route path="/ShoppingCart" element={<ShoppingCartPage />} />
                 </Routes>
