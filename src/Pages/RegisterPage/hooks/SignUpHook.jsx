@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import {hashPassword} from "../../../utils/HahingService"
+import {hashPassword} from "../../../Utils/HahingService"
 
 const useForm = (initialValues, signUpValidator, toast) => {
   const [values, setValues] = useState(initialValues);

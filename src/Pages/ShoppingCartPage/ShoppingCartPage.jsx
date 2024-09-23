@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import CheckoutForm from "./Components/CheckoutForm"
 import ShoppingCart from "./Components/ShoppingCart";
 import useForm from "./Hooks/CheckoutHook";
-import checkoutValidator from "../../utils/Validation/CheckoutValidation";
+import checkoutValidator from "../../Utils/Validation/CheckoutValidation";
 import { toast } from "react-toastify";
 
 const ShoppingCartPage = () => {

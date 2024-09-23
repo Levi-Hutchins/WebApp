@@ -12,7 +12,7 @@ import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import SaveIcon from '@mui/icons-material/Save';
 import CustomButton from "../../../shared-components/Button/CustomButton";
 import { toast } from "react-toastify";
-import validateUpdatedDetails from "../../../utils/Validation/UpdateDetailsValidation"
+import validateUpdatedDetails from "../../../Utils/Validation/UpdateDetailsValidation"
 
 function createData(accountValue, value) {
   return { accountValue, value };
