@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../styles/CheckoutForm.module.css";
+import styles from "../Styles/CheckoutForm.module.css";
 import CheckoutInputBox from "../../../shared-components/InputBox/CheckoutInputBox";
 import { toast } from "react-toastify";
 const handleNumbersOnly = (e) => {

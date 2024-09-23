@@ -12,7 +12,7 @@ import PopUpModal from "../../../shared-components/Modal/Modal";
 import CustomButton from "../../../shared-components/Button/CustomButton";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { useDispatch } from "react-redux";
-import { addToCart } from "../../../redux/Cart/CartSlice";
+import { addToCart } from "../../../Redux/Cart/CartSlice";
 
 export default function ItemsTable({ data, }) {
   const [page, setPage] = React.useState(0);

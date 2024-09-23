@@ -5,9 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import "@fontsource/archivo-black";
-import "./styles/SearchPage.css";
+import "./Styles/SearchPage.css";
 
-import DynamicTable from "./components/DynamicTable";
+import DynamicTable from "./Components/DynamicTable";
 import InputBoxWithButton from "../../shared-components/InputBoxWithButton/InputBoxWithButton";
 import "../../shared-components/InputBoxWithButton/InputBoxWithButton.css";
 import { toast } from "react-toastify";
