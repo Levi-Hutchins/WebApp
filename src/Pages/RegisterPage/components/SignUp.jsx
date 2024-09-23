@@ -4,7 +4,7 @@ import InputBox from "../../../shared-components/InputBox/InputBox";
 import PersonIcon from "@mui/icons-material/Person";
 import CustomButton from "../../../shared-components/Button/CustomButton";
 import { toast } from "react-toastify";
-import useForm from "../Hooks//SignUpHook";
+import useForm from "../Hooks/SignUpHook";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 

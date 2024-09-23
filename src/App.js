@@ -1,16 +1,16 @@
 import "./App.css";
 import NavBar from "./shared-components/NavBar/NavBar";
 import { Route, Routes } from "react-router-dom";
-import Home from "./pages/HomePage/Home";
-import SearchPage from "./pages/SearchPage/SearchPage";
-import RegisterPage from "./pages/RegisterPage/RegisterPage";
-import UserAccountPage from "./pages/AccountPage/UserAccountPage";
-import ShoppingCartPage from "./pages/ShoppingCartPage/ShoppingCartPage";
+import Home from "./Pages/HomePage/Home";
+import SearchPage from "./Pages/SearchPage/SearchPage";
+import RegisterPage from "./Pages/RegisterPage/RegisterPage";
+import UserAccountPage from "./Pages/AccountPage/UserAccountPage";
+import ShoppingCartPage from "./Pages/ShoppingCartPage/ShoppingCartPage";
 import video from "./assets/backgroundVideo.mp4";
 import { useEffect, useRef } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import LoginPortal from "./pages/LoginPage/components/LoginPortal";
+import LoginPortal from "./Pages/LoginPage/components/LoginPortal";
 function App() {
   const videoRef = useRef(null);
   useEffect(() => {
