@@ -24,20 +24,20 @@ const CheckOutDetailsTable = ({ customerValues }) => {
   useEffect(() => {
     if (Object.keys(customerValues).length > 0) {
       setRows([
-        createData("Email Address", customerValues.EmailAddress),
-        createData("Phone Number", customerValues.PhoneNumber),
-        createData("Street Address", customerValues.StreetAddress),
-        createData("Post Code", customerValues.PostCode),
-        createData("Suburb", customerValues.Suburb),
-        createData("State", customerValues.State),
-        createData("Card Owner", customerValues.CardOwner),
-        createData("Card Number", customerValues.CardNumber),
-        createData("Expiry Date", customerValues.Expiry),
-        createData("CVV", customerValues.CVV),
+        createData("Email Address", customerValues.Email?? ""),
+        createData("Phone Number", customerValues.PhoneNumber ?? ""),
+        createData("Street Address", customerValues.StreetAddress?? ""),
+        createData("Post Code", customerValues.PostCode?? ""),
+        createData("Suburb", customerValues.Suburb?? ""),
+        createData("State", customerValues.State?? ""),
+        createData("Card Owner", customerValues.CardOwner?? ""),
+        createData("Card Number", customerValues.CardNumber?? ""),
+        createData("Expiry Date", customerValues.Expiry?? ""),
+        createData("CVV", customerValues.CVV?? ""),
       ]);
     }
   }, [customerValues]);
-
+  console.log(rows)
   const [editRowIndex, setEditRowIndex] = useState(null);
   const [editValue, setEditValue] = useState("");
   const [errors, setErrors] = useState({});
@@ -77,16 +77,25 @@ const CheckOutDetailsTable = ({ customerValues }) => {
         width: "500px",
         borderRadius: "16px",
         padding: "16px",
-        backgroundColor: "#fff",
+        backgroundColor: "#2c2c32",  // Dark background
+        color: "#fff",  // Light text color
         maxHeight: "500px", 
         overflowY: "auto", 
       }}
     >
-      <h2 style={{ textAlign: "center", color: "#000", marginBottom: "16px" }}>
+      <h2 style={{ textAlign: "center", color: "#fff", marginBottom: "16px" }}>
         Checkout Details
       </h2>
       <TableContainer>
-        <Table aria-label="user details table">
+        <Table 
+          aria-label="user details table"
+          sx={{
+            '& .MuiTableCell-root': {
+              borderBottom: '1px solid #454545', // Darker border color
+              color: '#fff',  // Light text color
+            },
+          }}
+        >
           <TableHead>
             <TableRow>
               <TableCell>Account Values</TableCell>
@@ -108,6 +117,7 @@ const CheckOutDetailsTable = ({ customerValues }) => {
                         onChange={handleValueChange}
                         sx={{
                           width: "150px",
+                          backgroundColor: "#fff", // Light background for input
                           "& .MuiInputBase-root": {
                             height: "40px",
                             fontSize: "0.870rem",
@@ -115,7 +125,7 @@ const CheckOutDetailsTable = ({ customerValues }) => {
                           "& .MuiOutlinedInput-notchedOutline": {
                             borderColor: errors[editRowIndex]
                               ? "red"
-                              : "#454545",
+                              : "#454545",  // Border color for validation
                           },
                         }}
                       />

@@ -55,6 +55,7 @@ const UserDetailsTable = ({ userValues, isEmployee }) => {
     const updatedRows = rows.map((row, index) =>
       index === editRowIndex ? { ...row, value: editValue } : row
     );
+    console.log("here")
     const validationErrors = isEmployee
       ? EmployeeDetailsValidator(updatedRows, editRowIndex)
       : CustomerDetailsValidator(updatedRows, editRowIndex);
@@ -81,17 +82,25 @@ const UserDetailsTable = ({ userValues, isEmployee }) => {
     <Paper
       sx={{
         width: "500px",
-
+        backgroundColor: "#2c2c32",  
         borderRadius: "16px",
         padding: "16px",
-        backgroundColor: "#fff",
+        color: "#fff",  
       }}
     >
-      <h2 style={{ textAlign: "center", color: "#000", marginBottom: "16px" }}>
+      <h2 style={{ textAlign: "center", color: "#fff", marginBottom: "16px" }}>
         Account Values
       </h2>
       <TableContainer>
-        <Table aria-label="employee details table">
+        <Table 
+          aria-label="employee details table"
+          sx={{
+            '& .MuiTableCell-root': {
+              borderBottom: '1px solid #454545',  
+              color: '#fff',  
+            },
+          }}
+        >
           <TableHead>
             <TableRow>
               <TableCell>Account Values</TableCell>
@@ -113,6 +122,7 @@ const UserDetailsTable = ({ userValues, isEmployee }) => {
                         onChange={handleValueChange}
                         sx={{
                           width: "150px",
+                          backgroundColor: "#fff",  
                           "& .MuiInputBase-root": {
                             height: "40px",
                             fontSize: "0.870rem",
@@ -120,7 +130,7 @@ const UserDetailsTable = ({ userValues, isEmployee }) => {
                           "& .MuiOutlinedInput-notchedOutline": {
                             borderColor: errors[editRowIndex]
                               ? "red"
-                              : "#454545",
+                              : "#454545",  
                           },
                         }}
                       />

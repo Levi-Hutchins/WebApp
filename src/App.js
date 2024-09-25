@@ -19,14 +19,14 @@ function App() {
   useEffect(() => {
     if (videoRef.current) videoRef.current.playbackRate = 0.9;
   });
-  localStorage.setItem(
-    "LogInData",JSON.stringify({EmailAddress: "dewfwef@gmail.com", User: "Employee"})
-
-  )
   // localStorage.setItem(
-  //      "LogInData",JSON.stringify({EmailAddress: "jane.l.j.citizen@somemail.com", User: "Customer"})
+  //   "LogInData",JSON.stringify({EmailAddress: "dewfwef@gmail.com", User: "Employee"})
+
+  // )
+  localStorage.setItem(
+       "LogInData",JSON.stringify({EmailAddress: "jane.l.j.citizen@somemail.com", User: "Customer"})
   
-  //    )
+     )
 
   return (
     <div className="App">
