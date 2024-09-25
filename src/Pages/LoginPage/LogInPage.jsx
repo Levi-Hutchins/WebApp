@@ -12,7 +12,7 @@ const LogInPage = () => {
   const [pword, setPword] = useState('');
   // state for error messaging and success
   const [errMsg, setErrMsg] = useState('');
-  const [success, setSuccess] = useState(false);
+  //const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     userRef.current.focus();
