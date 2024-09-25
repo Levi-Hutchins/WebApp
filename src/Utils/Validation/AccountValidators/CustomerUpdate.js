@@ -1,4 +1,4 @@
-const validateUpdatedDetails = (details, editRowIndex) => {
+const CustomerDetailsValidator = (details, editRowIndex) => {
     //TODO: Find a way to add descriptive error messages for each error encountered in validation
     const errors = {};
   
@@ -32,5 +32,5 @@ const validateUpdatedDetails = (details, editRowIndex) => {
     return errors;
   };
   
-  export default validateUpdatedDetails;
+  export default CustomerDetailsValidator;
   

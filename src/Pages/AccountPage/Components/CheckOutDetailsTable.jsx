@@ -12,7 +12,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import { toast } from "react-toastify";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import validateUpdatedDetails from "../../../Utils/Validation/UpdateDetailsValidation";
+import validateUpdatedDetails from "../../../Utils/Validation/AccountValidators/CustomerUpdate";
 
 function createData(accountValue, value) {
   return { accountValue, value };

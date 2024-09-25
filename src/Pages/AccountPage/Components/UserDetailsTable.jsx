@@ -12,13 +12,14 @@ import SaveIcon from "@mui/icons-material/Save";
 import { toast } from "react-toastify";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import validateUpdatedDetails from "../../../Utils/Validation/UpdateDetailsValidation";
+import CustomerDetailsValidator from "../../../Utils/Validation/AccountValidators/CustomerUpdate";
+import EmployeeDetailsValidator from "../../../Utils/Validation/AccountValidators/EmployeeUpdate";
 
 function createData(accountValue, value) {
   return { accountValue, value };
 }
 
-const EmployeeDetailsTable = ({ userValues, isEmployee }) => {
+const UserDetailsTable = ({ userValues, isEmployee }) => {
   const [rows, setRows] = useState([]);
   const [editRowIndex, setEditRowIndex] = useState(null);
   const [editValue, setEditValue] = useState("");
@@ -54,7 +55,9 @@ const EmployeeDetailsTable = ({ userValues, isEmployee }) => {
     const updatedRows = rows.map((row, index) =>
       index === editRowIndex ? { ...row, value: editValue } : row
     );
-    const validationErrors = validateUpdatedDetails(updatedRows, editRowIndex);
+    const validationErrors = isEmployee
+      ? EmployeeDetailsValidator(updatedRows, editRowIndex)
+      : CustomerDetailsValidator(updatedRows, editRowIndex);
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length === 0) {
@@ -71,14 +74,14 @@ const EmployeeDetailsTable = ({ userValues, isEmployee }) => {
   };
 
   if (rows.length === 0) {
-    return <div>Loading...</div>; 
+    return <div>Loading...</div>;
   }
 
   return (
     <Paper
       sx={{
         width: "500px",
-        
+
         borderRadius: "16px",
         padding: "16px",
         backgroundColor: "#fff",
@@ -148,4 +151,4 @@ const EmployeeDetailsTable = ({ userValues, isEmployee }) => {
   );
 };
 
-export default EmployeeDetailsTable;
+export default UserDetailsTable;
