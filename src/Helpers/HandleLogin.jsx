@@ -11,7 +11,7 @@ async function sha256(message) {
     const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
     return hashHex;
     }
-    1
+    
     
 
 const HandleLogin = (username, password) => {
@@ -22,7 +22,7 @@ const HandleLogin = (username, password) => {
             return sha256(salt + password).then(input => {
                 console.log("Input Hashed: ", input);
                 console.log("Stored PW: ", response.data.HashPW);
-                if (input == response.data.HashPW) {
+                if (input === response.data.HashPW) {
                     console.log("Login successful");
                     return token;
                 }

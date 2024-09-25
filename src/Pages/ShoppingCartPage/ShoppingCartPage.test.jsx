@@ -4,7 +4,6 @@ import '@testing-library/jest-dom';
 
 import "@testing-library/jest-dom"
 import CustomButton from "../../shared-components/Button/CustomButton"
-import CheckoutForm from "./Components/CheckoutForm";
 // Resets DOM after each test case
 afterEach(() => {
     cleanup();
