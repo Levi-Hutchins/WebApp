@@ -30,12 +30,10 @@ const checkoutValidator = (values) => {
   ) {
     errors.emailAddress = true;
   }
-  if (!values.firstName.trim()) {
-    errors.firstName = true;
+  if (!values.suburb.trim()) {
+    errors.suburb = true;
   }
-  if (!values.lastName.trim()) {
-    errors.lastName = true;
-  }
+
 
   if (
     !values.phoneNumber ||

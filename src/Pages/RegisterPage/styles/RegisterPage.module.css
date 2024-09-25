@@ -14,7 +14,7 @@
 .signup-title{
     position: absolute;
     top: 50%; 
-    left: 10%; 
+    left: 8%; 
     transform: translate(-10%, -20%); 
     text-align: left;
 }

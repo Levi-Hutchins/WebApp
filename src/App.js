@@ -11,11 +11,23 @@ import { useEffect, useRef } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import LogInPage from "./Pages/LoginPage/LogInPage";
+import TestPage from "./Pages/TestPage/TestPage";
+
 function App() {
+
   const videoRef = useRef(null);
   useEffect(() => {
     if (videoRef.current) videoRef.current.playbackRate = 0.9;
   });
+  // localStorage.setItem(
+  //   "LogInData",JSON.stringify({EmailAddress: "dewfwef@gmail.com", User: "Employee"})
+
+  // )
+  localStorage.setItem(
+       "LogInData",JSON.stringify({EmailAddress: "jane.l.j.citizen@somemail.com", User: "Customer"})
+  
+     )
+
   return (
     <div className="App">
             <div className="overlay">
@@ -29,6 +41,8 @@ function App() {
                   <Route path="/Search" element={<SearchPage />} />
                   <Route path="/Register" element={<RegisterPage />} />
                   <Route path="/LogIn" element={<LogInPage />} />
+                  <Route path="/Test" element={<TestPage />} />
+
                   <Route path="/UserAccount" element={<UserAccountPage />} />
                   <Route path="/ShoppingCart" element={<ShoppingCartPage />} />
                 </Routes>
