@@ -1,4 +1,4 @@
-import { React } from "react";
+import { React, useState } from "react";
 import styles from "../Styles/SignUp.module.css";
 import InputBox from "../../../shared-components/InputBox/InputBox";
 import PersonIcon from "@mui/icons-material/Person";
@@ -11,6 +11,7 @@ import Checkbox from "@mui/material/Checkbox";
 import signUpValidator from "../../../Utils/Validation/SignUpValidation";
 
 const SignUp = ({ handleNavigation }) => {
+  const [isEmployee, setIsEmployee] = useState(false);
   const initialValues = {
     userName: "",
     emailAddress: "",
@@ -112,6 +113,7 @@ const SignUp = ({ handleNavigation }) => {
             />
           </div>
           <div className={styles["signup-input"]}>
+            {/* TODO: Make these two render only if it is an admin */}
             <FormControlLabel
               control={
                 <Checkbox
@@ -124,12 +126,28 @@ const SignUp = ({ handleNavigation }) => {
                 />
               }
               sx={{ color: "white" }}
-              label="Would you like to be an Admin?"
+              label="Is this person an Employee?"
+              onChange={ () => setIsEmployee(!isEmployee)}
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  sx={{
+                    color: "white",
+                    "&.Mui-checked": {
+                      color: "#5e43f3",
+                    },
+                  }}
+                />
+              }
+              sx={{ color: "white" }}
+              label="Make them an Admin?"
               onChange={handleChangeAdminStatus}
               value={values.adminStatus}
               name="adminStatus"
             />
           </div>
+          
 
           <div className={styles["signup-input"]}>
             <CustomButton

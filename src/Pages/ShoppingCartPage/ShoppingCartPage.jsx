@@ -62,16 +62,16 @@ const ShoppingCartPage = () => {
   }, [cartItems]);
 
   const initialValues = {
-    firstName: "",
-    lastName: "",
     emailAddress: "",
-    phoneNumber: null,
+    phoneNumber: "",
     streetAddress: "",
     postCode: "",
-    cardNumber: null,
+    suburb: "",
+    state: "",
+    cardNumber: "",
     nameOnCard: "",
     expiryDate: "",
-    securityCode: null,
+    securityCode: "",
   };
 
   const { values, errors, handleChange, handleSubmit } = useForm(

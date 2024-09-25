@@ -24,19 +24,22 @@ const CheckoutInputBox = ({ displayValue, handleChange, errorLevel, onKeyPress, 
         }}
         sx={{
           width: width || "100%",
-          input: { color: "black" },
+          input: { color: "white" },
           "& .MuiOutlinedInput-notchedOutline": {
             borderColor: errorLevel ? "red" : "#454545",
-            borderWidth: errorLevel ? "2px" : "1px",
           },
           "& .MuiInputLabel-root": {
-            color: "black",
+            color: "white",
           },
+          
           "& .MuiInputLabel-root.Mui-focused": {
-            color: "black",
+            color: "white",
           },
           "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
             borderColor: errorLevel ? "red" : "#5e43f3",
+            borderWidth: errorLevel ? "1px" : "1px",
+
+
           },
         }}
         onChange={handleChange}  

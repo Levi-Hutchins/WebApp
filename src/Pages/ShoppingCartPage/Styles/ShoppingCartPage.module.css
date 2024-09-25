@@ -15,19 +15,7 @@
 .checkout-button {
     margin-top: 50px; 
   }
-.checkout-panel {
-  position: absolute;
-  top: 55%;
-  left: 30%;
-  transform: translate(-50%, -50%);
-  border: 2px solid #c3bfbff5;
-  padding: 40px;
-  border-radius: 40px;
-  background-color: #ffffff;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-  width: 650px;
-  height: 700px;
-}
+
 
 .cart-items {
   color: white;

@@ -63,7 +63,7 @@ const useForm = (initialValues, signUpValidator, toast) => {
                 }
               }).then((user) => {
                 if (user){
-                  toast.success("Sign Up Successful !", {
+                  toast.success("User Created !", {
                     position: "bottom-right",
                   });
                 }
