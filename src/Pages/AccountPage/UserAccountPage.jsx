@@ -5,7 +5,6 @@ import UserDetailsTable from "./Components/UserDetailsTable";
 import OrdersTable from "./Components/OrdersTable";
 import useCustomerDetails from "./Hooks/useCustomerDetails";
 import useEmployeeDetails from "./Hooks/useEmployeeDetails";
-
  // TODO: hook up products table to backend
 const UserAccountPage = () => {
   const [isEmployee, setIsEmployee] = useState(false);

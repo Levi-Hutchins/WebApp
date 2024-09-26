@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import validateUpdatedDetails from "../../../Utils/Validation/AccountValidators/CustomerUpdate";
+import useUpdateCheckoutDetails from "../Hooks/useUpdateCheckoutDetails"; // Ensure correct import
 
 function createData(accountValue, value) {
   return { accountValue, value };
@@ -20,27 +21,29 @@ function createData(accountValue, value) {
 
 const CheckOutDetailsTable = ({ customerValues }) => {
   const [rows, setRows] = useState([]);
-  
   useEffect(() => {
     if (Object.keys(customerValues).length > 0) {
       setRows([
-        createData("Email Address", customerValues.Email?? ""),
+        createData("Email Address", customerValues.Email ?? ""),
         createData("Phone Number", customerValues.PhoneNumber ?? ""),
-        createData("Street Address", customerValues.StreetAddress?? ""),
-        createData("Post Code", customerValues.PostCode?? ""),
-        createData("Suburb", customerValues.Suburb?? ""),
-        createData("State", customerValues.State?? ""),
-        createData("Card Owner", customerValues.CardOwner?? ""),
-        createData("Card Number", customerValues.CardNumber?? ""),
-        createData("Expiry Date", customerValues.Expiry?? ""),
-        createData("CVV", customerValues.CVV?? ""),
+        createData("Street Address", customerValues.StreetAddress ?? ""),
+        createData("Post Code", customerValues.PostCode ?? ""),
+        createData("Suburb", customerValues.Suburb ?? ""),
+        createData("State", customerValues.State ?? ""),
+        createData("Card Owner", customerValues.CardOwner ?? ""),
+        createData("Card Number", customerValues.CardNumber ?? ""),
+        createData("Expiry Date", customerValues.Expiry ?? ""),
+        createData("CVV", customerValues.CVV ?? ""),
       ]);
     }
   }, [customerValues]);
-  console.log(rows)
+
   const [editRowIndex, setEditRowIndex] = useState(null);
   const [editValue, setEditValue] = useState("");
   const [errors, setErrors] = useState({});
+  
+  // Destructure the update function and loading/error states from the hook
+  const { updateCheckoutDetails, loading, error } = useUpdateCheckoutDetails();
 
   const handleEditClick = (index) => {
     setEditRowIndex(index);
@@ -51,7 +54,7 @@ const CheckOutDetailsTable = ({ customerValues }) => {
     setEditValue(event.target.value);
   };
 
-  const handleSaveClick = () => {
+  const handleSaveClick = async () => {
     const updatedRows = rows.map((row, index) =>
       index === editRowIndex ? { ...row, value: editValue } : row
     );
@@ -59,11 +62,20 @@ const CheckOutDetailsTable = ({ customerValues }) => {
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length === 0) {
-      setRows(updatedRows);
-      setEditRowIndex(null);
-      toast.success("Details Updated !", {
-        position: "bottom-right",
-      });
+      try {
+        // Pass the relevant data to your custom hook function
+        await updateCheckoutDetails(updatedRows,customerValues.ID ); // Call the correct function
+        setRows(updatedRows);
+        setEditRowIndex(null);
+        toast.success("Details Updated!", {
+          position: "bottom-right",
+        });
+      } catch (err) {
+        console.error(err);
+        toast.error("Error updating details!", {
+          position: "bottom-right",
+        });
+      }
     } else {
       toast.error("Please correct highlighted fields", {
         position: "bottom-right",
@@ -77,17 +89,17 @@ const CheckOutDetailsTable = ({ customerValues }) => {
         width: "500px",
         borderRadius: "16px",
         padding: "16px",
-        backgroundColor: "#2c2c32",  // Dark background
-        color: "#fff",  // Light text color
-        maxHeight: "500px", 
-        overflowY: "auto", 
+        backgroundColor: "#2c2c32", // Dark background
+        color: "#fff", // Light text color
+        maxHeight: "500px",
+        overflowY: "auto",
       }}
     >
       <h2 style={{ textAlign: "center", color: "#fff", marginBottom: "16px" }}>
         Checkout Details
       </h2>
       <TableContainer>
-        <Table 
+        <Table
           aria-label="user details table"
           sx={{
             '& .MuiTableCell-root': {
@@ -117,10 +129,11 @@ const CheckOutDetailsTable = ({ customerValues }) => {
                         onChange={handleValueChange}
                         sx={{
                           width: "150px",
-                          backgroundColor: "#fff", // Light background for input
+                          backgroundColor: "#2c2c32",
                           "& .MuiInputBase-root": {
                             height: "40px",
                             fontSize: "0.870rem",
+                            color: "white",
                           },
                           "& .MuiOutlinedInput-notchedOutline": {
                             borderColor: errors[editRowIndex]

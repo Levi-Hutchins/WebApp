@@ -122,10 +122,11 @@ const UserDetailsTable = ({ userValues, isEmployee }) => {
                         onChange={handleValueChange}
                         sx={{
                           width: "150px",
-                          backgroundColor: "#fff",  
+                          backgroundColor: "#2c2c32",
                           "& .MuiInputBase-root": {
                             height: "40px",
                             fontSize: "0.870rem",
+                            color: "white"
                           },
                           "& .MuiOutlinedInput-notchedOutline": {
                             borderColor: errors[editRowIndex]
