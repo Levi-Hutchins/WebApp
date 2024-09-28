@@ -7,6 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+// TODO: Figure ouit how to query the orders
 
 const columns = [
   { id: 'productName', label: 'Product Name', minWidth: 170 },

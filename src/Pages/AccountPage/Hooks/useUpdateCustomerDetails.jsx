@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 
-const useUpdateCheckoutDetails = () => {
+const useUpdateCustomerDetails = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -31,8 +31,38 @@ const useUpdateCheckoutDetails = () => {
       setLoading(false);
     }
   };
+  const updateAccountDetails = async (updatedData, ID) => {
+    setLoading(true);
+    setError(null);
+    const transformData = transformRowsToData(updatedData)
+    console.log(transformData);
+    
+    const newData = {
+      Email: transformData.EmailAddress,
+      Name: transformData.FullName
+    }
+    try {
+      const response = await axios.patch(`http://localhost:8080/api/v1/db/data/v1/inft3050/Patrons/${ID}`, newData,{
+        headers: {
+          "xc-token": process.env.REACT_APP_APIKEY,
+        }
+      });
+      console.log("UPDATED")
+      return response.data;
+    } catch (err) {
+      setError('Error updating customer details');
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  
+  
+  
+  
+  }
 
-  return { updateCheckoutDetails, loading, error };
+  return { updateCheckoutDetails, updateAccountDetails, loading, error };
 };
 
-export default useUpdateCheckoutDetails;
+
+export default useUpdateCustomerDetails;

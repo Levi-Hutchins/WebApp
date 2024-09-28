@@ -29,14 +29,24 @@ const CustomerDetailsValidator = (details, editRowIndex) => {
     { value: cardOwner },
     { value: cardNumber },
     { value: expiryDate },
-    { value: cvv }
+    { value: cvv },
   ] = details;
 
-  if (editRowIndex === 0 && (!emailAddress.trim() || !/^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$/.test(emailAddress.trim()))) {
+  if (
+    editRowIndex === 0 &&
+    (!emailAddress.trim() ||
+      !/^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$/.test(emailAddress.trim()))
+  ) {
     errors[editRowIndex] = true;
   }
 
-  if (editRowIndex === 1 && (!phoneNumber || !/^(\+?\(61\)|\(\+?61\)|\+?61|\(0[1-9]\)|0[1-9]) ?-?[0-9]{7,9}$/.test(phoneNumber))) {
+  if (
+    editRowIndex === 1 &&
+    (!phoneNumber ||
+      !/^(\+?\(61\)|\(\+?61\)|\+?61|\(0[1-9]\)|0[1-9]) ?-?[0-9]{7,9}$/.test(
+        phoneNumber
+      ))
+  ) {
     errors[editRowIndex] = true;
   }
 
@@ -52,7 +62,10 @@ const CustomerDetailsValidator = (details, editRowIndex) => {
     errors[editRowIndex] = true;
   }
 
-  if (editRowIndex === 5 && (!state.trim() || !(new Set(["NSW", "QLD"]).has(state)))) {
+  if (
+    editRowIndex === 5 &&
+    (!state.trim() || !new Set(["NSW", "QLD"]).has(state))
+  ) {
     errors[editRowIndex] = true;
   }
 
@@ -60,7 +73,10 @@ const CustomerDetailsValidator = (details, editRowIndex) => {
     errors[editRowIndex] = true;
   }
 
-  if (editRowIndex === 7 && (!cardNumber || !/^(?:\d{4}[- ]?){3}\d{4}$/.test(cardNumber))) {
+  if (
+    editRowIndex === 7 &&
+    (!cardNumber || !/^(?:\d{4}[- ]?){3}\d{4}$/.test(cardNumber))
+  ) {
     errors[editRowIndex] = true;
   }
 
@@ -76,4 +92,3 @@ const CustomerDetailsValidator = (details, editRowIndex) => {
 };
 
 export default CustomerDetailsValidator;
-  

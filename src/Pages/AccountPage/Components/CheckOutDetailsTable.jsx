@@ -12,8 +12,8 @@ import SaveIcon from "@mui/icons-material/Save";
 import { toast } from "react-toastify";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import validateUpdatedDetails from "../../../Utils/Validation/AccountValidators/CustomerUpdate";
-import useUpdateCheckoutDetails from "../Hooks/useUpdateCheckoutDetails"; // Ensure correct import
+import validateUpdatedDetails from "../../../Utils/Validation/AccountValidators/CheckoutDetailsValidation";
+import useUpdateCustomerDetails from "../Hooks/useUpdateCustomerDetails"; 
 
 function createData(accountValue, value) {
   return { accountValue, value };
@@ -42,8 +42,7 @@ const CheckOutDetailsTable = ({ customerValues }) => {
   const [editValue, setEditValue] = useState("");
   const [errors, setErrors] = useState({});
   
-  // Destructure the update function and loading/error states from the hook
-  const { updateCheckoutDetails, loading, error } = useUpdateCheckoutDetails();
+  const { updateCheckoutDetails } = useUpdateCustomerDetails();
 
   const handleEditClick = (index) => {
     setEditRowIndex(index);
@@ -63,15 +62,13 @@ const CheckOutDetailsTable = ({ customerValues }) => {
 
     if (Object.keys(validationErrors).length === 0) {
       try {
-        // Pass the relevant data to your custom hook function
-        await updateCheckoutDetails(updatedRows,customerValues.ID ); // Call the correct function
+        await updateCheckoutDetails(updatedRows,customerValues.ID ); 
         setRows(updatedRows);
         setEditRowIndex(null);
         toast.success("Details Updated!", {
           position: "bottom-right",
         });
       } catch (err) {
-        console.error(err);
         toast.error("Error updating details!", {
           position: "bottom-right",
         });
@@ -89,8 +86,8 @@ const CheckOutDetailsTable = ({ customerValues }) => {
         width: "500px",
         borderRadius: "16px",
         padding: "16px",
-        backgroundColor: "#2c2c32", // Dark background
-        color: "#fff", // Light text color
+        backgroundColor: "#2c2c32", 
+        color: "#fff", 
         maxHeight: "500px",
         overflowY: "auto",
       }}
@@ -103,8 +100,8 @@ const CheckOutDetailsTable = ({ customerValues }) => {
           aria-label="user details table"
           sx={{
             '& .MuiTableCell-root': {
-              borderBottom: '1px solid #454545', // Darker border color
-              color: '#fff',  // Light text color
+              borderBottom: '1px solid #454545', 
+              color: '#fff',  
             },
           }}
         >
@@ -138,7 +135,7 @@ const CheckOutDetailsTable = ({ customerValues }) => {
                           "& .MuiOutlinedInput-notchedOutline": {
                             borderColor: errors[editRowIndex]
                               ? "red"
-                              : "#454545",  // Border color for validation
+                              : "#454545",  
                           },
                         }}
                       />

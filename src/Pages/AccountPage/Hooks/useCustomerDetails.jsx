@@ -36,6 +36,7 @@ const useCustomerDetails = (loggedInUser) => {
 
         const patronData = patronResponse.data;
         setUserDetails({
+          ID: patronData.UserID,
           Email: patronData.Email,
           Name: patronData.Name,
         });

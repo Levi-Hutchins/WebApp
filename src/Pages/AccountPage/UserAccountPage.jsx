@@ -27,7 +27,6 @@ const UserAccountPage = () => {
     <div>
       {isEmployee ? (
         <div>
-          {/* Render employee details here if necessary */}
           <UserDetailsTable userValues={employeeDetails} isEmployee={isEmployee} />
         </div>
       ) : (
