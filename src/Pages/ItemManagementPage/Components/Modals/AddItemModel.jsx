@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { Modal, Box, Typography } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
+import CloseIcon from '@mui/icons-material/Close'; 
+import IconButton from '@mui/material/IconButton';
+
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import styles from "../../Styles/AddItemModal.module.css";
@@ -80,8 +83,20 @@ const AddItemModal = ({ open, onClose }) => {
   const availableSubGenres = itemDetails.Genre ? subGenres[itemDetails.Genre] : [];
 
   return (
-    <Modal open={open} onClose={onClose}>
+    <Modal open={open}>
       <Box className={styles["modal-box"]}>
+      <IconButton 
+          aria-label="close" 
+          onClick={onClose} 
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            color: 'white', 
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
         <Typography
           variant="h6"
           component="h2"

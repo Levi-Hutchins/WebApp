@@ -1,4 +1,4 @@
-import {React, useEffect} from 'react';
+import {React} from 'react';
 import { Modal, Box, Typography } from '@mui/material';
 import '../../Styles/AddItemModal.module.css';  
 
