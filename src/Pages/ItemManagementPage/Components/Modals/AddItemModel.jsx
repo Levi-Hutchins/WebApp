@@ -1,18 +1,19 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import { Modal, Box, Typography } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import CloseIcon from '@mui/icons-material/Close'; 
 import IconButton from '@mui/material/IconButton';
-
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import styles from "../../Styles/AddItemModal.module.css";
 import InputBox from "../../../../shared-components/InputBox/InputBox";
 import CustomButton from "../../../../shared-components/Button/CustomButton";
-
+import AddItemValidator from "../../../../Utils/Validation/ItemManagementValidators/AddItemValidator"
+import useAddItem from "../../Hooks/useAddItem";
 const AddItemModal = ({ open, onClose }) => {
-
+    const [errors, setErrors] = useState({});
     const [itemDetails, setItemDetails] = useState({
     Name: "",
     Author: "",
@@ -20,9 +21,12 @@ const AddItemModal = ({ open, onClose }) => {
     Genre: "",
     SubGenre: "",
     Published: "",
-    LastUpdatedBy: "",
-    LastUpdated: new Date().toISOString().split("T")[0],
+    LastUpdatedBy: "storeManager", //TODO: this needs to be the employee logged in (their username)
+    LastUpdated: new Date().toISOString(),
   });
+
+  const { addItem } = useAddItem();  
+
 
   // When an item is selceted it gets te corresponding value (1,2,3)
   // and maps through the items below to render subgenres for the next dropdown
@@ -66,7 +70,14 @@ const AddItemModal = ({ open, onClose }) => {
 
     ],
   };
-
+  // Converts the inputted date dd/mm/yyyy to iso standard
+  // since thats whats in the databse
+  const convertToISO = (dateString) => {
+    const [day, month, year] = dateString.split('/').map(Number);
+    const isoDate = new Date(year, month - 1, day);
+    return isoDate.toISOString(); 
+  };
+  
 
   const handleChange = (e) => {
     // Extract the name and value from the component and update the 
@@ -76,7 +87,39 @@ const AddItemModal = ({ open, onClose }) => {
       ...prevDetails,
       [name]: value,
     }));
-    console.log(itemDetails);
+
+  };
+  const handleSubmit = async () => {
+
+    const validationErrors = AddItemValidator(itemDetails);
+
+    setErrors(validationErrors);
+
+    // Check if validation passed
+    if (Object.keys(validationErrors).length === 0) {
+        const isoPublishedDate = convertToISO(itemDetails.Published);
+        const updatedItemDetails = {
+            ...itemDetails,
+            Published: isoPublishedDate,
+          };
+        
+      try {
+        await addItem(updatedItemDetails); 
+        toast.success("Item Created!", {
+          position: "bottom-right",
+        });
+        onClose();
+      } catch (error) {
+        toast.error("Oops! An error occurred", {
+          position: "bottom-right",
+        });
+      }
+    } else {
+      toast.error("Please fix the highlighted fields", {
+        position: "bottom-right",
+      });
+      return;
+    }
   };
 
   // Get the available sub-genres based on the selected genre
@@ -112,18 +155,23 @@ const AddItemModal = ({ open, onClose }) => {
           name="Name"
           value={itemDetails.Name}
           handleChange={handleChange}
+          errorLevel={!!errors.Name}
         />
         <InputBox
           displayValue={"Author"}
           name="Author"
           value={itemDetails.Author}
           handleChange={handleChange}
+          errorLevel={!!errors.Author}
+
         />
         <InputBox
           displayValue={"Description"}
           name="Description"
           value={itemDetails.Description}
           handleChange={handleChange}
+          errorLevel={!!errors.Description}
+
         />
 
         <FormControl
@@ -146,6 +194,9 @@ const AddItemModal = ({ open, onClose }) => {
               backgroundColor: "#24242c",
               color: "white",
               borderRadius: "5px",
+              "& .MuiOutlinedInput-notchedOutline": {
+                borderColor: errors.Genre ? "red" : "#454545",
+              },
               ".MuiOutlinedInput-notchedOutline": {
                 borderColor: "#454545",
               },
@@ -184,8 +235,8 @@ const AddItemModal = ({ open, onClose }) => {
               backgroundColor: "#24242c",
               color: "white",
               borderRadius: "5px",
-              ".MuiOutlinedInput-notchedOutline": {
-                borderColor: "#454545",
+              "& .MuiOutlinedInput-notchedOutline": {
+                borderColor: errors.SubGenre ? "red" : "#454545",
               },
               "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
                 borderColor: "#5e43f3",
@@ -205,13 +256,15 @@ const AddItemModal = ({ open, onClose }) => {
         </FormControl>
 
         <InputBox
-          displayValue={"Published Date"}
+          displayValue={"Published Date (DD/MM/YYYY)"}
           name="Published"
           value={itemDetails.Published}
           handleChange={handleChange}
+          errorLevel={!!errors.Published}
+
         />
 
-        <CustomButton displayValue={"Add Item"} />
+        <CustomButton displayValue={"Add Item"} onClick={handleSubmit} />
       </Box>
     </Modal>
   );

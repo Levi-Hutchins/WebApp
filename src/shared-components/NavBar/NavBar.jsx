@@ -8,8 +8,7 @@ import CustomBadge from "../Badge/CustomBadge";
 
 const NavBar = () => {
   const navigate = useNavigate();
-  const [adminMode, setAdminMode] = useState(false);
-  setAdminMode(true)
+  const [adminMode, setAdminMode] = useState(true);
   return (
     <div className="nav">
       <div className="left-section">
