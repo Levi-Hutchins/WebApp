@@ -7,7 +7,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import styles from "../../Styles/AddItemModal.module.css";
+import styles from "../../Styles/Modals.module.css";
 import InputBox from "../../../../shared-components/InputBox/InputBox";
 import CustomButton from "../../../../shared-components/Button/CustomButton";
 import AddItemValidator from "../../../../Utils/Validation/ItemManagementValidators/AddItemValidator"

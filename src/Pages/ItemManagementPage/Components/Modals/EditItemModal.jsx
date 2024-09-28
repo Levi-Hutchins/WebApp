@@ -1,6 +1,6 @@
 import {React} from 'react';
 import { Modal, Box, Typography } from '@mui/material';
-import '../../Styles/AddItemModal.module.css';  
+import '../../Styles/Modals.module.css';  
 
 const EditItemModal = ({ open, onClose, }) => {
 
