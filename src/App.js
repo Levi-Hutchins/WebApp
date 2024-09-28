@@ -24,7 +24,7 @@ function App() {
 
   // )
   localStorage.setItem(
-       "LogInData",JSON.stringify({EmailAddress: "jane.l.j.citizen@somemail.com", User: "Customer"})
+       "LogInData",JSON.stringify({EmailAddress: "jane.l.j.citizen@somemail.com.au", User: "Customer"})
   
      )
 

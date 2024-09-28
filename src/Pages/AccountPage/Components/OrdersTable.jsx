@@ -7,6 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+// TODO: Figure ouit how to query the orders
 
 const columns = [
   { id: 'productName', label: 'Product Name', minWidth: 170 },
@@ -55,8 +56,8 @@ export default function OrdersTable() {
       sx={{ 
         width: "100%", 
         maxWidth: "600px", 
-        backgroundColor: "white", 
-        color: "#fff", 
+        backgroundColor: "#2c2c32",  
+        color: "#fff",  
         borderRadius: "16px", 
         overflow: "hidden", 
         boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.25)", 
@@ -66,12 +67,15 @@ export default function OrdersTable() {
       <TableContainer 
         sx={{ 
           maxHeight: 440, 
-          backgroundColor: "white", 
+          backgroundColor: "#2c2c32",  
+          color: "#fff",  
           borderRadius: "16px", 
           overflow: "auto", 
         }}
       >
-        <Table stickyHeader aria-label="sticky table">
+        <Table stickyHeader aria-label="sticky table" sx={{borderCollapse: 'collapse',
+    '& .MuiTableCell-root': {
+      borderBottom: '1px solid #454545'}}}>
           <TableHead>
             <TableRow>
               {columns.map((column) => (
@@ -81,8 +85,8 @@ export default function OrdersTable() {
                   style={{ 
                     top: 0, 
                     minWidth: column.minWidth, 
-                    backgroundColor: 'white', 
-                    color: 'black', 
+                    backgroundColor: '#2c2c32', 
+                    color: 'white',  
                     zIndex: 1000,
                   }}
                 >
@@ -100,7 +104,7 @@ export default function OrdersTable() {
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
-                        <TableCell key={column.id} align={column.align} sx={{ color: 'black' }}>
+                        <TableCell key={column.id} align={column.align} sx={{ color: '#fff' }}>
                           {column.format && typeof value === 'number'
                             ? column.format(value)
                             : value}
@@ -121,7 +125,7 @@ export default function OrdersTable() {
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
-        sx={{ backgroundColor: "white", color: "black" }}
+        sx={{ backgroundColor: "#2c2c32", color: "#fff" }}  
       />
     </Paper>
   );

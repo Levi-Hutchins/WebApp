@@ -12,17 +12,22 @@ import SaveIcon from "@mui/icons-material/Save";
 import { toast } from "react-toastify";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import validateUpdatedDetails from "../../../Utils/Validation/UpdateDetailsValidation";
+import AccountDetailsValidation from "../../../Utils/Validation/AccountValidators/AccountDetailsValidation";
+import EmployeeDetailsValidator from "../../../Utils/Validation/AccountValidators/EmployeeUpdate";
+import useUpdateCustomerDetails from "../Hooks/useUpdateCustomerDetails"; 
+
 
 function createData(accountValue, value) {
   return { accountValue, value };
 }
 
-const EmployeeDetailsTable = ({ userValues, isEmployee }) => {
+const UserDetailsTable = ({ userValues, isEmployee }) => {
   const [rows, setRows] = useState([]);
   const [editRowIndex, setEditRowIndex] = useState(null);
   const [editValue, setEditValue] = useState("");
   const [errors, setErrors] = useState({});
+
+  const { updateAccountDetails} = useUpdateCustomerDetails();
 
   useEffect(() => {
     if (Object.keys(userValues).length > 0) {
@@ -50,14 +55,19 @@ const EmployeeDetailsTable = ({ userValues, isEmployee }) => {
     setEditValue(event.target.value);
   };
 
-  const handleSaveClick = () => {
+  const handleSaveClick = async () => {
     const updatedRows = rows.map((row, index) =>
       index === editRowIndex ? { ...row, value: editValue } : row
     );
-    const validationErrors = validateUpdatedDetails(updatedRows, editRowIndex);
+    console.log(updatedRows)
+    const validationErrors = isEmployee
+      ? EmployeeDetailsValidator(updatedRows, editRowIndex)
+      : AccountDetailsValidation(updatedRows, editRowIndex);
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length === 0) {
+      console.log(updatedRows, userValues.ID)
+      await updateAccountDetails(updatedRows, userValues.ID)
       setRows(updatedRows);
       setEditRowIndex(null);
       toast.success("Details Updated!", {
@@ -71,24 +81,32 @@ const EmployeeDetailsTable = ({ userValues, isEmployee }) => {
   };
 
   if (rows.length === 0) {
-    return <div>Loading...</div>; 
+    return <div>Loading...</div>;
   }
 
   return (
     <Paper
       sx={{
         width: "500px",
-        
+        backgroundColor: "#2c2c32",  
         borderRadius: "16px",
         padding: "16px",
-        backgroundColor: "#fff",
+        color: "#fff",  
       }}
     >
-      <h2 style={{ textAlign: "center", color: "#000", marginBottom: "16px" }}>
+      <h2 style={{ textAlign: "center", color: "#fff", marginBottom: "16px" }}>
         Account Values
       </h2>
       <TableContainer>
-        <Table aria-label="employee details table">
+        <Table 
+          aria-label="employee details table"
+          sx={{
+            '& .MuiTableCell-root': {
+              borderBottom: '1px solid #454545',  
+              color: '#fff',  
+            },
+          }}
+        >
           <TableHead>
             <TableRow>
               <TableCell>Account Values</TableCell>
@@ -110,14 +128,16 @@ const EmployeeDetailsTable = ({ userValues, isEmployee }) => {
                         onChange={handleValueChange}
                         sx={{
                           width: "150px",
+                          backgroundColor: "#2c2c32",
                           "& .MuiInputBase-root": {
                             height: "40px",
                             fontSize: "0.870rem",
+                            color: "white"
                           },
                           "& .MuiOutlinedInput-notchedOutline": {
                             borderColor: errors[editRowIndex]
                               ? "red"
-                              : "#454545",
+                              : "#454545",  
                           },
                         }}
                       />
@@ -148,4 +168,4 @@ const EmployeeDetailsTable = ({ userValues, isEmployee }) => {
   );
 };
 
-export default EmployeeDetailsTable;
+export default UserDetailsTable;
