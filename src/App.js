@@ -12,6 +12,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import LogInPage from "./Pages/LoginPage/LogInPage";
 import TestPage from "./Pages/TestPage/TestPage";
+import AdminDashboardPage from "./Pages/ItemManagementPage/ItemManagementPage";
 
 function App() {
 
@@ -42,7 +43,7 @@ function App() {
                   <Route path="/Register" element={<RegisterPage />} />
                   <Route path="/LogIn" element={<LogInPage />} />
                   <Route path="/Test" element={<TestPage />} />
-
+                  <Route path="/Admin" element={<AdminDashboardPage />} />
                   <Route path="/UserAccount" element={<UserAccountPage />} />
                   <Route path="/ShoppingCart" element={<ShoppingCartPage />} />
                 </Routes>

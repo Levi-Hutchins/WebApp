@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import "./NavBar.css";
 import Button from "@mui/material/Button";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -7,7 +8,7 @@ import CustomBadge from "../Badge/CustomBadge";
 
 const NavBar = () => {
   const navigate = useNavigate();
-
+  const [adminMode, setAdminMode] = useState(true);
   return (
     <div className="nav">
       <div className="left-section">
@@ -21,19 +22,22 @@ const NavBar = () => {
             }}
           />
         </Link>
+        {adminMode ? (   <Link to="/Admin" className="homepage">
+          ADMIN
+        </Link>) : (<></>)}
+
         <Link to="/" className="homepage">
           HOME
         </Link>
+        <Link to="/Search" className="nav-item">
+          ITEM SEARCH
+        </Link>
+        <Link to="/Test" className="nav-item">
+          TEST
+        </Link>
       </div>
 
-      <ul>
-        <li>
-          <Link to="/Search">ITEM SEARCH</Link>
-        </li>
-        <li>
-          <Link to="/Test">TEST</Link>
-        </li>
-
+      <ul className="right-section">
         <li className="register-button-container">
           <Button
             className="register-button"
