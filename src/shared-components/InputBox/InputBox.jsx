@@ -33,6 +33,10 @@ const InputBox = ({ displayValue, handleChange, errorLevel, isPassword, value, n
           "& .MuiInputLabel-root.Mui-focused": {
             color: "white",
           },
+          "&:hover .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#5e43f3", 
+          },
+
           "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
             {
               borderColor: "#5e43f3",

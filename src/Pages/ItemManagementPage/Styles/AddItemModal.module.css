@@ -4,9 +4,14 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: 400px;
-    background-color: #ffffff; 
-    border: 2px solid #000000;
+    background-color: #3b3b3f;
+    border: 1px solid #626262;
     box-shadow: 24px 24px 48px rgba(0, 0, 0, 0.2);
-    padding: 16px; 
+    padding: 16px;
+    
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
   }
   
