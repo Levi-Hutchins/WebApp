@@ -23,10 +23,10 @@ function App() {
   //   "LogInData",JSON.stringify({EmailAddress: "dewfwef@gmail.com", User: "Employee"})
 
   // )
-  localStorage.setItem(
-       "LogInData",JSON.stringify({EmailAddress: "jane.l.j.citizen@somemail.com.au", User: "Customer"})
+  // localStorage.setItem(
+  //      "LogInData",JSON.stringify({EmailAddress: "jane.l.j.citizen@somemail.com.au", User: "Customer"})
   
-     )
+  //    )
 
   return (
     <div className="App">

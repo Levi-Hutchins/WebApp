@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./NavBar.css";
 import Button from "@mui/material/Button";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -7,11 +7,46 @@ import CustomBadge from "../Badge/CustomBadge";
 
 const NavBar = () => {
   const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track login status
+
+  // Check if the user is logged in when the component mounts
+  useEffect(() => {
+    const loggedIn = localStorage.getItem("LogInData"); // Get login status from localStorage
+
+    if (loggedIn) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  // Handle Log In/Log Out button click
+  const handleLoginLogoutClick = () => {
+    if (isLoggedIn) {
+      // Log out the user
+      localStorage.removeItem("LogInData");
+      setIsLoggedIn(false); // Update the state to reflect the logout
+      navigate("/"); 
+    } else {
+      // Navigate to login page if not logged in
+      navigate("/LogIn");
+    }
+  };
+
+  const checkLogIn = () =>  {
+    const UserLoggedIn = localStorage.getItem("LogInData"); //check if user is logged in
+
+    if (UserLoggedIn){
+      console.log("User Account")
+      navigate("/UserAccount"); // If logged in, navigate to account page    }
+    }
+    else {
+      navigate("/LogIn"); // If not logged in, redirect to login page
+    }
+  };
 
   return (
     <div className="nav">
       <div className="left-section">
-        <Link to="/UserAccount" className="account-link">
+        <div className="account-link" onClick={checkLogIn}>
           <AccountCircleIcon
             fontSize="large"
             sx={{
@@ -20,7 +55,7 @@ const NavBar = () => {
               borderRadius: "50%",
             }}
           />
-        </Link>
+        </div>
         <Link to="/" className="homepage">
           HOME
         </Link>
@@ -53,18 +88,20 @@ const NavBar = () => {
         <li className="login-button-container">
           <Button
             className="login-button"
-            variant="outlined"
-            onClick={() => navigate("/LogIn")}
+            variant={isLoggedIn ? "contained" : "outlined"}
+            onClick={handleLoginLogoutClick}
             sx={{
               fontFamily: "Andale Mono, monospace",
-              borderColor: "#5e43f3",
-              color: "white",
+              borderColor: isLoggedIn ? "transparent" : "#5e43f3", // Remove border if logged in
+              backgroundColor: isLoggedIn ? "#5e43f3" : "transparent", // Change background if logged in
+              color: isLoggedIn ? "white" : "#5e43f3", // Change color for Log Out button
               "&:hover": {
-                borderColor: "#4e3ac0",
+                backgroundColor: isLoggedIn ? "#4e3ac0" : "transparent",
+                borderColor: isLoggedIn ? "transparent" : "#4e3ac0",
               },
             }}
           >
-            Log In
+            {isLoggedIn ? "Log Out" : "Log In"} 
           </Button>
         </li>
         <li className="shop-button-container">
