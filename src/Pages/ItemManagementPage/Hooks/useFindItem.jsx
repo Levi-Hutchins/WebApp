@@ -2,10 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 
 const useFindItem = () => {
-  const [error, setError] = useState(false);
 
   const findItemByID = async (id) => {
-    setError(null);
     try {
       const item = await axios.get(
         "http://localhost:8080/api/v1/db/data/v1/inft3050/Product/find-one?",
@@ -20,11 +18,9 @@ const useFindItem = () => {
       );
       return item.data;
     } catch (err) {
-      setError(true);
     }
   };
   const findItemByName = async (name) => {
-    setError(null);
     try {
       const encodedName = encodeURIComponent(name);
 
@@ -38,12 +34,10 @@ const useFindItem = () => {
       );
       return item.data;
     } catch (err) {
-      setError(true);
       console.error("Error fetching item:", err);
     }
   };
   const findItemByAuthor = async (author) => {
-    setError(null);
     try {
       const encodedAuthor = encodeURIComponent(author);
 
@@ -58,11 +52,10 @@ const useFindItem = () => {
       console.log(item.data);
       return item.data;
     } catch (err) {
-      setError(true);
       console.error("Error fetching item:", err);
     }
   };
-  return { findItemByID, findItemByName, findItemByAuthor, error };
+  return { findItemByID, findItemByName, findItemByAuthor};
 };
 
 export default useFindItem;

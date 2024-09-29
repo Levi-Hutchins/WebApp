@@ -40,31 +40,60 @@ const DeleteItemModal = ({ open, onClose }) => {
   };
 
   const handleSubmit = async () => {
-    let item = null;
-    console.log(searchBy);
-    switch (searchBy) {
-      case "ID":
-        item = await findItemByID(searchValue);
-        break;
-      case "Name":
-        item = await findItemByName(searchValue);
-        break;
-      case "Author":
-        item = await findItemByAuthor(searchValue);
-        break;
-      default:
-        item = "No results";
-        break;
-    }
-    if (Object.keys(item).length == 0) {
-      toast.warn("No Items found", {
+    if (searchBy === "ID") {
+      if (!/^\d+$/.test(searchValue)) {
+        toast.error("ID must be a number", {
+          position: "bottom-right",
+        });
+        return;
+      }
+    } else if (searchBy === "Name" || searchBy === "Author") {
+      if (searchValue.trim() === "") {
+        toast.error(`${searchBy} cannot be empty`, {
+          position: "bottom-right",
+        });
+        return;
+      }
+    } else {
+      toast.error("Please select a search option", {
         position: "bottom-right",
       });
       return;
     }
-    console.log("itrm FOUND", item);
-    setItemFound(item);
+  
+    let item = null;
+    try {
+      switch (searchBy) {
+        case "ID":
+          item = await findItemByID(searchValue);
+          break;
+        case "Name":
+          item = await findItemByName(searchValue);
+          break;
+        case "Author":
+          item = await findItemByAuthor(searchValue);
+          break;
+        default:
+          item = "No results";
+          break;
+      }
+  
+      if (Object.keys(item).length === 0) {
+        toast.warn("No Items found", {
+          position: "bottom-right",
+        });
+        return;
+      }
+  
+      setItemFound(item);
+    } catch (error) {
+      toast.error("An error occurred while fetching the item", {
+        position: "bottom-right",
+      });
+      console.error("Error fetching item:", error);
+    }
   };
+  
 
   const handleDeleteClick = () => {
     setDeleteConfirm(true);
