@@ -1,18 +1,10 @@
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-}
-
 .nav {
   background-color: rgba(33, 34, 36, 0.8) !important;
   color: white;
   height: 70px;
   display: flex;
   justify-content: space-between;
-  align-items: center; 
+  align-items: center;
   padding: 0 1rem;
   font-family: "Andale Mono, monospace";
   font-size: large;
@@ -21,7 +13,12 @@ body {
 .left-section {
   display: flex;
   align-items: center;
-  gap: 0.5rem; 
+  gap: 1rem; 
+}
+.right-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .nav ul {
@@ -45,10 +42,10 @@ body {
   display: flex;
   align-items: center;
   background-color: unset !important;
-
 }
 
-.homepage {
+.homepage,
+.nav-item {
   display: flex;
   align-items: center;
   margin-left: 15px;
@@ -61,8 +58,9 @@ body {
 
 .nav li:hover,
 .homepage:hover,
+.nav-item:hover,
 .account-link:hover {
-  background-color: #777;
+  background-color: #777; /* Adding hover effect for all nav items */
 }
 
 .register-button-container,
