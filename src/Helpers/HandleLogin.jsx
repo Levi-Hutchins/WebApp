@@ -45,6 +45,7 @@ async function sha256(message) {
                     position: "bottom-right"
                 });
                 localStorage.setItem("LogInData",JSON.stringify({EmailAddress: response.data.Email, User: "Employee"}))
+                localStorage.setItem("IsAdmin", false)
 
                 console.log("Admin")
                 if (isAdmin === true){
@@ -75,6 +76,7 @@ async function sha256(message) {
                     toast.success("Login successful", {
                         position: "bottom-right"
                     });
+                    localStorage.setItem("IsAdmin", false)
                     localStorage.setItem("LogInData",JSON.stringify({EmailAddress: patronResponse.data.Email, User: "Customer"}))
                     console.log("User is a Patron:", patronResponse.data);
                     return token; // return token if both login and Patron check are successful

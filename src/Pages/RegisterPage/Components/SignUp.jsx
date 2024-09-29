@@ -20,7 +20,7 @@ const SignUp = ({ handleNavigation }) => {
     confirmPassword: "",
     streetAddress: "",
     phoneNumber: "",
-    adminStatus: false,
+    adminStatus: true,
   };
   const { values, setValues, errors, handleChange, handleSubmit } = useForm(
     initialValues,

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useState } from "react";
 import "./NavBar.css";
 import Button from "@mui/material/Button";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -9,10 +8,12 @@ import CustomBadge from "../Badge/CustomBadge";
 const NavBar = () => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track login status
+  const [adminMode, setAdminMode] = useState(false);
 
   // Check if the user is logged in when the component mounts
   useEffect(() => {
     const loggedIn = localStorage.getItem("LogInData"); // Get login status from localStorage
+    setAdminMode(localStorage.getItem("IsAdmin"));
 
     if (loggedIn) {
       setIsLoggedIn(true);
@@ -44,8 +45,7 @@ const NavBar = () => {
     }
   };
 
-  const [adminMode, setAdminMode] = useState(true);
-  
+
   return (
     <div className="nav">
       <div className="left-section">
