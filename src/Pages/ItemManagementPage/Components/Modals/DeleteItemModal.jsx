@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import { Modal, Box, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
@@ -13,7 +14,7 @@ const DeleteItemModal = ({ open, onClose }) => {
   const [searchBy, setSearchBy] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const [itemFound, setItemFound] = useState({});
-  const [deleteConfirm, setDeleteConfirm] = useState(false); 
+  const [deleteConfirm, setDeleteConfirm] = useState(false);
   const { findItemByID, findItemByAuthor, findItemByName } = useFindItem();
 
   const handleButtonClick = (buttonValue) => {
@@ -40,20 +41,33 @@ const DeleteItemModal = ({ open, onClose }) => {
 
   const handleSubmit = async () => {
     let item = null;
-    switch(searchBy) {
-        case "ID":   item = await findItemByID(searchValue);
-        case "Name":   item = await findItemByName(searchValue);
-        case "Author":   item = await findItemByAuthor(searchValue);
-        default: item = "No results"
-
+    console.log(searchBy);
+    switch (searchBy) {
+      case "ID":
+        item = await findItemByID(searchValue);
+        break;
+      case "Name":
+        item = await findItemByName(searchValue);
+        break;
+      case "Author":
+        item = await findItemByAuthor(searchValue);
+        break;
+      default:
+        item = "No results";
+        break;
     }
-   
-    console.log(item);
+    if (Object.keys(item).length == 0) {
+      toast.warn("No Items found", {
+        position: "bottom-right",
+      });
+      return;
+    }
+    console.log("itrm FOUND", item);
     setItemFound(item);
   };
 
   const handleDeleteClick = () => {
-    setDeleteConfirm(true); 
+    setDeleteConfirm(true);
   };
 
   const handleCancelDelete = () => {
@@ -63,9 +77,9 @@ const DeleteItemModal = ({ open, onClose }) => {
   const handleConfirmDelete = () => {
     console.log("Item deleted");
     setDeleteConfirm(false);
-    setSearchBy("")
-    setItemFound({})
-    onClose(); 
+    setSearchBy("");
+    setItemFound({});
+    onClose();
   };
 
   return (
@@ -179,7 +193,11 @@ const DeleteItemModal = ({ open, onClose }) => {
               fontSize={"16px"}
               sx={{ marginTop: "10px" }}
             >
-              <strong>ID:</strong> {itemFound.ID}
+              {searchBy == "Author" ? (
+                <strong>Author: {itemFound.Author}</strong>
+              ) : (
+                <strong>ID: {itemFound.ID}</strong>
+              )}
             </Typography>
             <Typography
               variant="body1"
