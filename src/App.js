@@ -12,12 +12,9 @@ import video from "./assets/backgroundVideo.mp4";
 import { useEffect, useRef } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-<<<<<<< Updated upstream
+import Login from "./Pages/LoginPage/LogInPage";
 import AuthProvider from "./Components/AuthProvider/AuthProvider";
 
-=======
-import Login from "./Pages/LoginPage/LogInPage";
->>>>>>> Stashed changes
 function App() {
   const videoRef = useRef(null);
   useEffect(() => {
@@ -37,11 +34,7 @@ function App() {
                   <Route path="/Search" element={<SearchPage />} />
                   <Route path="/Test" element={<TestPage />} />
                   <Route path="/Register" element={<RegisterPage />} />
-<<<<<<< Updated upstream
-                  <Route path="/LogIn" element={<LogInPage />} />
-=======
                   <Route path="/LogIn" element={<Login />} />
->>>>>>> Stashed changes
                   <Route path="/UserAccount" element={<UserAccountPage />} />
                   <Route path="/ShoppingCart" element={<ShoppingCartPage />} />
                 </Routes>

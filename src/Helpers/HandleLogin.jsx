@@ -28,11 +28,29 @@ const HandleLogin = async (username, password) => {
         }
       ).then(response => {
             var salt = response.data.Salt;
-            return sha256(salt + password).then(input => {
+            var isAdmin = response.data.isAdmin;
+            var hashedPassword = response.data.HashPW;
+            
+            return sha256(salt + password).then(async input => {
                 console.log("Input Hashed: ", input);
                 console.log("Stored PW: ", response.data.HashPW);
-                if (input === response.data.HashPW) {
+                if (input === hashedPassword) {
                     console.log("Login successful");
+                    console.log(response.data);
+                    localStorage.setItem("EmailLoggedIn", response.data.Email);
+
+                    await axios.get(
+                      "http://localhost:8080/api/v1/db/data/v1/inft3050/Patrons/find-one",
+                      {
+                        headers: {
+                          "xc-token": process.env.REACT_APP_APIKEY,
+                        },
+                        params: {
+                          where: `(Email,eq,${username})`,
+                        },
+                      }
+                    ).then(response)
+
                     return token;
                 }
                 else {

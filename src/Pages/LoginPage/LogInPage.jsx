@@ -1,12 +1,7 @@
-<<<<<<< Updated upstream
-import React from 'react'
-import { useRef, useState, useEffect } from "react"
-import Login from '../../Components/Login/LoginPortal';
-=======
 import { Box, FormControl, FormGroup, TextField, Button } from "@mui/material";
 import { useState } from "react";
 import HandleLogin from "../../Helpers/HandleLogin";
->>>>>>> Stashed changes
+
 
 const Login = () => {
 
