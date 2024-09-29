@@ -11,7 +11,7 @@ import styles from "../../Styles/Modals.module.css";
 import InputBox from "../../../../shared-components/InputBox/InputBox";
 import CustomButton from "../../../../shared-components/Button/CustomButton";
 import AddItemValidator from "../../../../Utils/Validation/ItemManagementValidators/AddItemValidator"
-import useAddItem from "../../Hooks/useAddItem";
+import useItemMutations from "../../Hooks/useItemMutations";
 const AddItemModal = ({ open, onClose }) => {
     const [errors, setErrors] = useState({});
     const [itemDetails, setItemDetails] = useState({
@@ -25,7 +25,7 @@ const AddItemModal = ({ open, onClose }) => {
     LastUpdated: new Date().toISOString(),
   });
 
-  const { addItem } = useAddItem();  
+  const { addItem } = useItemMutations();  
 
 
   // When an item is selceted it gets te corresponding value (1,2,3)

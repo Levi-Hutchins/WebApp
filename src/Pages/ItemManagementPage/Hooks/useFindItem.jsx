@@ -1,8 +1,5 @@
-import { useState } from "react";
 import axios from "axios";
-
 const useFindItem = () => {
-
   const findItemByID = async (id) => {
     try {
       const item = await axios.get(

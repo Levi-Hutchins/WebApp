@@ -9,14 +9,14 @@ import CustomButton from "../../../../shared-components/Button/CustomButton";
 import styles from "../../Styles/Modals.module.css";
 import InputBox from "../../../../shared-components/InputBox/InputBox";
 import useFindItem from "../../Hooks/useFindItem";
-
+import useItemMutations from "../../Hooks/useItemMutations";
 const DeleteItemModal = ({ open, onClose }) => {
   const [searchBy, setSearchBy] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const [itemFound, setItemFound] = useState({});
   const [deleteConfirm, setDeleteConfirm] = useState(false);
   const { findItemByID, findItemByAuthor, findItemByName } = useFindItem();
-
+const {deleteItem} = useItemMutations();
   const handleButtonClick = (buttonValue) => {
     setSearchBy(buttonValue);
     setItemFound({});
@@ -103,8 +103,14 @@ const DeleteItemModal = ({ open, onClose }) => {
     setDeleteConfirm(false);
   };
 
-  const handleConfirmDelete = () => {
-    console.log("Item deleted");
+  const handleConfirmDelete = async () => {
+    const deleted = await deleteItem(itemFound)
+    console.log(deleted);
+    if (deleted == 1){
+        toast.success("Item deleted successfully", {
+            position: "bottom-right",
+          });
+    }
     setDeleteConfirm(false);
     setSearchBy("");
     setItemFound({});
@@ -222,7 +228,7 @@ const DeleteItemModal = ({ open, onClose }) => {
               fontSize={"16px"}
               sx={{ marginTop: "10px" }}
             >
-              {searchBy == "Author" ? (
+              {searchBy === "Author" ? (
                 <strong>Author: {itemFound.Author}</strong>
               ) : (
                 <strong>ID: {itemFound.ID}</strong>
