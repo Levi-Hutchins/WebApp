@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal, Box, Typography } from "@mui/material";
-import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
+import Button from "@mui/material/Button";
+import ButtonGroup from "@mui/material/ButtonGroup";
 import CloseIcon from "@mui/icons-material/Close";
 import IconButton from "@mui/material/IconButton";
 import CustomButton from "../../../../shared-components/Button/CustomButton";
@@ -10,29 +10,62 @@ import InputBox from "../../../../shared-components/InputBox/InputBox";
 import useFindItem from "../../Hooks/useFindItem";
 
 const DeleteItemModal = ({ open, onClose }) => {
-  const [searchBy, setSearchBy] = useState(""); 
-const [searchValue, setSearchValue] = useState("")
-  const {findItemByID, errors} = useFindItem();
+  const [searchBy, setSearchBy] = useState("");
+  const [searchValue, setSearchValue] = useState("");
+  const [itemFound, setItemFound] = useState({});
+  const [deleteConfirm, setDeleteConfirm] = useState(false); 
+  const { findItemByID, findItemByAuthor, findItemByName } = useFindItem();
 
   const handleButtonClick = (buttonValue) => {
     setSearchBy(buttonValue);
+    setItemFound({});
   };
 
   const renderDisplayValue = () => {
-    switch (searchBy){
-        case "ID": return "Enter Item ID";
-        case "Name": return "Enter Item Name";
-        case "Author": return "Enter Item Author";
-        default: return ""; 
+    switch (searchBy) {
+      case "ID":
+        return "Enter Item ID";
+      case "Name":
+        return "Enter Item Name";
+      case "Author":
+        return "Enter Item Author";
+      default:
+        return "";
     }
   };
+
   const handleSearchValueChange = (e) => {
-    setSearchValue(e.target.value)
-    console.log(searchValue)
-  }
+    setSearchValue(e.target.value);
+  };
 
   const handleSubmit = async () => {
-    await findItemByID(searchValue)
+    let item = null;
+    switch(searchBy) {
+        case "ID":   item = await findItemByID(searchValue);
+        case "Name":   item = await findItemByName(searchValue);
+        case "Author":   item = await findItemByAuthor(searchValue);
+        default: item = "No results"
+
+    }
+   
+    console.log(item);
+    setItemFound(item);
+  };
+
+  const handleDeleteClick = () => {
+    setDeleteConfirm(true); 
+  };
+
+  const handleCancelDelete = () => {
+    setDeleteConfirm(false);
+  };
+
+  const handleConfirmDelete = () => {
+    console.log("Item deleted");
+    setDeleteConfirm(false);
+    setSearchBy("")
+    setItemFound({})
+    onClose(); 
   };
 
   return (
@@ -70,7 +103,11 @@ const [searchValue, setSearchValue] = useState("")
         >
           Search By
         </Typography>
-        <ButtonGroup variant="contained" aria-label="Basic button group"           sx={{ gap: "10px" }} // Add spacing between buttons in the group
+
+        <ButtonGroup
+          variant="contained"
+          aria-label="Basic button group"
+          sx={{ gap: "10px", marginTop: "10px" }}
         >
           <Button
             onClick={() => handleButtonClick("ID")}
@@ -107,13 +144,113 @@ const [searchValue, setSearchValue] = useState("")
           </Button>
         </ButtonGroup>
 
-        {
-          searchBy !== "" && (
-            <InputBox displayValue={renderDisplayValue()} handleChange={handleSearchValueChange} />
-          )
-        }
+        {searchBy !== "" &&
+          itemFound &&
+          Object.keys(itemFound).length === 0 && (
+            <>
+              <InputBox
+                displayValue={renderDisplayValue()}
+                handleChange={handleSearchValueChange}
+              />
 
-        <CustomButton displayValue={"Find Item"} onClick={handleSubmit} />
+              <div className={styles["find-item"]}>
+                <CustomButton
+                  displayValue={"Find Item"}
+                  onClick={handleSubmit}
+                />
+              </div>
+            </>
+          )}
+
+        {itemFound && Object.keys(itemFound).length > 0 && (
+          <div className={styles["item-found-panel"]}>
+            <Typography
+              variant="h6"
+              color={"white"}
+              fontWeight={"bold"}
+              fontSize={"18px"}
+              sx={{ marginTop: "20px" }}
+            >
+              Item Details
+            </Typography>
+            <Typography
+              variant="body1"
+              color={"white"}
+              fontSize={"16px"}
+              sx={{ marginTop: "10px" }}
+            >
+              <strong>ID:</strong> {itemFound.ID}
+            </Typography>
+            <Typography
+              variant="body1"
+              color={"white"}
+              fontSize={"16px"}
+              sx={{ marginTop: "10px" }}
+            >
+              <strong>Name:</strong> {itemFound.Name}
+            </Typography>
+            <Typography
+              variant="body1"
+              color={"white"}
+              fontSize={"16px"}
+              sx={{ marginTop: "10px" }}
+            >
+              <strong>Description:</strong>{" "}
+              {itemFound.Description.slice(
+                0,
+                itemFound.Description.indexOf(".") + 1
+              )}
+            </Typography>
+
+            {!deleteConfirm ? (
+              <div className={styles["button-container"]}>
+                <Button
+                  variant="contained"
+                  className={styles["delete-button"]}
+                  sx={{
+                    backgroundColor: "red",
+                    "&:hover": {
+                      backgroundColor: "darkred",
+                    },
+                  }}
+                  onClick={handleDeleteClick}
+                >
+                  DELETE
+                </Button>
+              </div>
+            ) : (
+              <>
+                <Typography
+                  variant="body1"
+                  color={"white"}
+                  fontWeight={"bold"}
+                  fontSize={"16px"}
+                  sx={{ marginTop: "20px", textAlign: "center" }}
+                >
+                  Are you sure you want to delete this item?
+                </Typography>
+                <div className={styles["button-container"]}>
+                  <Button
+                    variant="contained"
+                    color="error"
+                    sx={{ margin: "10px" }}
+                    onClick={handleConfirmDelete}
+                  >
+                    YES
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    sx={{ margin: "10px" }}
+                    onClick={handleCancelDelete}
+                  >
+                    CANCEL
+                  </Button>
+                </div>
+              </>
+            )}
+          </div>
+        )}
       </Box>
     </Modal>
   );
