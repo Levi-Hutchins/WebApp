@@ -16,7 +16,7 @@ const DeleteItemModal = ({ open, onClose }) => {
   const [itemFound, setItemFound] = useState({});
   const [deleteConfirm, setDeleteConfirm] = useState(false);
   const { findItemByID, findItemByAuthor, findItemByName } = useFindItem();
-const {deleteItem} = useItemMutations();
+  const { deleteItem } = useItemMutations();
   const handleButtonClick = (buttonValue) => {
     setSearchBy(buttonValue);
     setItemFound({});
@@ -60,7 +60,7 @@ const {deleteItem} = useItemMutations();
       });
       return;
     }
-  
+
     let item = null;
     try {
       switch (searchBy) {
@@ -77,14 +77,14 @@ const {deleteItem} = useItemMutations();
           item = "No results";
           break;
       }
-  
+
       if (Object.keys(item).length === 0) {
         toast.warn("No Items found", {
           position: "bottom-right",
         });
         return;
       }
-  
+
       setItemFound(item);
     } catch (error) {
       toast.error("An error occurred while fetching the item", {
@@ -93,7 +93,6 @@ const {deleteItem} = useItemMutations();
       console.error("Error fetching item:", error);
     }
   };
-  
 
   const handleDeleteClick = () => {
     setDeleteConfirm(true);
@@ -104,17 +103,29 @@ const {deleteItem} = useItemMutations();
   };
 
   const handleConfirmDelete = async () => {
-    const deleted = await deleteItem(itemFound)
-    console.log(deleted);
-    if (deleted == 1){
+    try {
+      const deleted = await deleteItem(itemFound);
+      if (deleted === 1) {
         toast.success("Item deleted successfully", {
-            position: "bottom-right",
-          });
+          position: "bottom-right",
+        });
+        setDeleteConfirm(false);
+        setSearchBy("");
+        setItemFound({});
+        onClose();
+      } else {
+        toast.error("Failed to delete item. Please try again.", {
+          position: "bottom-right",
+        });
+      }
+    } catch (error) {
+      toast.error("An error occurred while deleting the item", {
+        position: "bottom-right",
+      });
+      console.error("Error deleting item:", error);
+    } finally {
+      setDeleteConfirm(false);
     }
-    setDeleteConfirm(false);
-    setSearchBy("");
-    setItemFound({});
-    onClose();
   };
 
   return (

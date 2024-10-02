@@ -3,18 +3,17 @@ import { toast } from "react-toastify";
 import { Modal, Box, Typography } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import CloseIcon from '@mui/icons-material/Close'; 
-import IconButton from '@mui/material/IconButton';
+import CloseIcon from "@mui/icons-material/Close";
+import IconButton from "@mui/material/IconButton";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import styles from "../../Styles/Modals.module.css";
 import InputBox from "../../../../shared-components/InputBox/InputBox";
 import CustomButton from "../../../../shared-components/Button/CustomButton";
-import AddItemValidator from "../../../../Utils/Validation/ItemManagementValidators/AddItemValidator"
 import useItemMutations from "../../Hooks/useItemMutations";
+import useValidation from "../../Hooks/useValidation";
 const AddItemModal = ({ open, onClose }) => {
-    const [errors, setErrors] = useState({});
-    const [itemDetails, setItemDetails] = useState({
+  const [itemDetails, setItemDetails] = useState({
     Name: "",
     Author: "",
     Description: "",
@@ -25,8 +24,8 @@ const AddItemModal = ({ open, onClose }) => {
     LastUpdated: new Date().toISOString(),
   });
 
-  const { addItem } = useItemMutations();  
-
+  const { addItem } = useItemMutations();
+  const { validateAddItem } = useValidation();
 
   // When an item is selceted it gets te corresponding value (1,2,3)
   // and maps through the items below to render subgenres for the next dropdown
@@ -67,75 +66,64 @@ const AddItemModal = ({ open, onClose }) => {
       { name: "Sports", value: 12 },
       { name: "First-person shooter", value: 13 },
       { name: "Fighting", value: 14 },
-
     ],
   };
   // Converts the inputted date dd/mm/yyyy to iso standard
   // since thats whats in the databse
   const convertToISO = (dateString) => {
-    const [day, month, year] = dateString.split('/').map(Number);
+    const [day, month, year] = dateString.split("/").map(Number);
     const isoDate = new Date(year, month - 1, day);
-    return isoDate.toISOString(); 
+    return isoDate.toISOString();
   };
-  
 
   const handleChange = (e) => {
-    // Extract the name and value from the component and update the 
+    // Extract the name and value from the component and update the
     // state object with the previous detaisl using a deep copy and new values
     const { name, value } = e.target;
     setItemDetails((prevDetails) => ({
       ...prevDetails,
       [name]: value,
     }));
-
   };
   const handleSubmit = async () => {
+    if (!validateAddItem(itemDetails)) {
+      return;
+    }
+    const isoPublishedDate = convertToISO(itemDetails.Published);
+    const updatedItemDetails = {
+      ...itemDetails,
+      Published: isoPublishedDate,
+    };
 
-    const validationErrors = AddItemValidator(itemDetails);
-
-    setErrors(validationErrors);
-
-    // Check if validation passed
-    if (Object.keys(validationErrors).length === 0) {
-        const isoPublishedDate = convertToISO(itemDetails.Published);
-        const updatedItemDetails = {
-            ...itemDetails,
-            Published: isoPublishedDate,
-          };
-        
-      try {
-        await addItem(updatedItemDetails); 
-        toast.success("Item Created!", {
-          position: "bottom-right",
-        });
-        onClose();
-      } catch (error) {
-        toast.error("Oops! An error occurred", {
-          position: "bottom-right",
-        });
-      }
-    } else {
-      toast.error("Please fix the highlighted fields", {
+    try {
+      await addItem(updatedItemDetails);
+      toast.success("Item Created!", {
         position: "bottom-right",
       });
-      return;
+      onClose();
+    } catch (error) {
+      toast.error("Oops! An error occurred", {
+        position: "bottom-right",
+      });
     }
   };
 
   // Get the available sub-genres based on the selected genre
-  const availableSubGenres = itemDetails.Genre ? subGenres[itemDetails.Genre] : [];
+  const availableSubGenres = itemDetails.Genre
+    ? subGenres[itemDetails.Genre]
+    : [];
 
   return (
     <Modal open={open}>
       <Box className={styles["modal-box"]}>
-      <IconButton 
-          aria-label="close" 
-          onClick={onClose} 
+        <IconButton
+          aria-label="close"
+          onClick={onClose}
           sx={{
-            position: 'absolute',
+            position: "absolute",
             right: 8,
             top: 8,
-            color: 'white', 
+            color: "white",
           }}
         >
           <CloseIcon />
@@ -155,23 +143,18 @@ const AddItemModal = ({ open, onClose }) => {
           name="Name"
           value={itemDetails.Name}
           handleChange={handleChange}
-          errorLevel={!!errors.Name}
         />
         <InputBox
           displayValue={"Author"}
           name="Author"
           value={itemDetails.Author}
           handleChange={handleChange}
-          errorLevel={!!errors.Author}
-
         />
         <InputBox
           displayValue={"Description"}
           name="Description"
           value={itemDetails.Description}
           handleChange={handleChange}
-          errorLevel={!!errors.Description}
-
         />
 
         <FormControl
@@ -195,7 +178,6 @@ const AddItemModal = ({ open, onClose }) => {
               color: "white",
               borderRadius: "5px",
               "& .MuiOutlinedInput-notchedOutline": {
-                borderColor: errors.Genre ? "red" : "#454545",
               },
               ".MuiOutlinedInput-notchedOutline": {
                 borderColor: "#454545",
@@ -235,9 +217,7 @@ const AddItemModal = ({ open, onClose }) => {
               backgroundColor: "#24242c",
               color: "white",
               borderRadius: "5px",
-              "& .MuiOutlinedInput-notchedOutline": {
-                borderColor: errors.SubGenre ? "red" : "#454545",
-              },
+ 
               "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
                 borderColor: "#5e43f3",
               },
@@ -245,7 +225,7 @@ const AddItemModal = ({ open, onClose }) => {
                 color: "white",
               },
             }}
-            disabled={!itemDetails.Genre} 
+            disabled={!itemDetails.Genre}
           >
             {availableSubGenres.map((subGenre) => (
               <MenuItem key={subGenre.value} value={subGenre.value}>
@@ -260,8 +240,6 @@ const AddItemModal = ({ open, onClose }) => {
           name="Published"
           value={itemDetails.Published}
           handleChange={handleChange}
-          errorLevel={!!errors.Published}
-
         />
 
         <CustomButton displayValue={"Add Item"} onClick={handleSubmit} />

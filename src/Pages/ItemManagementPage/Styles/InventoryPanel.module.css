@@ -56,7 +56,12 @@
   flex: 1;
   text-align: left;
 }
-
+.inventory-content:hover::-webkit-scrollbar {
+  width: 5px;
+}
+.inventory-content::-webkit-scrollbar {
+  width: 0; 
+}
 .item-quantity {
   flex: 0.3;
   margin-right: 10px;
