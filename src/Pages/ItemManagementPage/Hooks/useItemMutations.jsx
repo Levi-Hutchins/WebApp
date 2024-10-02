@@ -24,7 +24,7 @@ const useItemMutations = () => {
     const deleteItem = async (itemDetails) =>{
         setError(null);
         try {
-          const response = await axios.patch(`http://localhost:8080/api/v1/db/data/v1/inft3050/Product/${itemDetails.ID}`, itemDetails,{
+          const response = await axios.delete(`http://localhost:8080/api/v1/db/data/v1/inft3050/Product/${itemDetails.ID}`,{
             headers: {
                 "xc-token": process.env.REACT_APP_APIKEY,
               },

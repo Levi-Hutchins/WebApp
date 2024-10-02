@@ -104,6 +104,7 @@ const EditItemModal = ({ open, onClose }) => {
     try {
       await updateItem(itemFound.ID, updatedFields);
       toast.success("Item updated successfully!", { position: "bottom-right" });
+      onClose()
     } catch (error) {
       toast.error("Failed to update item", { position: "bottom-right" });
     }
