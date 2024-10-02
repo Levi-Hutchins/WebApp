@@ -85,6 +85,10 @@ const EditItemModal = ({ open, onClose }) => {
   };
 
   const handleSave = async () => {
+
+    //TODO: gets the user logged in and add that to the LastUpdatedBy field when calling API
+    //TODO: get the current time ad add that to the LastUpdated field
+
     if (!validateEditValues(itemFound)) {
       return; 
     }

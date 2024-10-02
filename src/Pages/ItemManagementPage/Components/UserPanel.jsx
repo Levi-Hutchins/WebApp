@@ -1,8 +1,8 @@
 import React from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import PersonIcon from "@mui/icons-material/Person";
-import Button from "@mui/material/Button";
-import styles from '../Styles/UsersPanel.module.css';
+import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';import styles from '../Styles/UsersPanel.module.css';
+import CustomButton from "../../../shared-components/Button/CustomButton";
 
 const UsersPanel = () => {
   const users = [
@@ -28,7 +28,7 @@ const UsersPanel = () => {
           </div>
         ))}
       </div>
-      <Button className={styles["add-button"]}>Add new user</Button>
+      <CustomButton displayValue={"Add New User"} displayIcon={<PersonAddAltIcon/>}className={styles["add-button"]}/>
     </div>
   );
 };
