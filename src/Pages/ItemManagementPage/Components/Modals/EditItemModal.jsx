@@ -5,25 +5,31 @@ import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import CloseIcon from "@mui/icons-material/Close";
 import EditIcon from '@mui/icons-material/Edit';
+import SaveIcon from '@mui/icons-material/Save';
 import CustomButton from "../../../../shared-components/Button/CustomButton";
 import styles from "../../Styles/Modals.module.css";
 import useFindItem from '../../Hooks/useFindItem';
+import useItemMutations from "../../Hooks/useItemMutations"
+import useValidation from '../../Hooks/useValidation';
 import InputBox from "../../../../shared-components/InputBox/InputBox";
 
 const EditItemModal = ({ open, onClose }) => {
   const [searchBy, setSearchBy] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const [itemFound, setItemFound] = useState(null);
+  const [originalItem, setOriginalItem] = useState(null); 
   const [isEditable, setIsEditable] = useState({
-    name: false,
-    author: false,
-    description: false,
-    genre: false,
-    subGenre: false,
-    published: false,
+    Name: false,
+    Author: false,
+    Description: false,
+    Genre: false,
+    SubGenre: false,
+    Published: false,
   });
 
   const { findItemByID, findItemByAuthor, findItemByName } = useFindItem();
+  const { updateItem } = useItemMutations();
+  const { validateEditValues } = useValidation(); 
 
   const handleButtonClick = (buttonValue) => {
     setSearchBy(buttonValue);
@@ -71,26 +77,57 @@ const EditItemModal = ({ open, onClose }) => {
       }
 
       setItemFound(item);
+      setOriginalItem(item); 
     } catch (error) {
       toast.error("An error occurred while fetching the item", { position: "bottom-right" });
       console.error("Error fetching item:", error);
     }
   };
 
+  const handleSave = async () => {
+    if (!validateEditValues(itemFound)) {
+      return; 
+    }
+
+   const updatedFields = {};
+    Object.keys(itemFound).forEach(key => {
+      if (itemFound[key] !== originalItem[key]) {
+        updatedFields[key] = itemFound[key];
+      }
+    });
+
+    if (Object.keys(updatedFields).length === 0) {
+      toast.info("No changes to save", { position: "bottom-right" });
+      return;
+    }
+
+    try {
+      await updateItem(itemFound.ID, updatedFields);
+      toast.success("Item updated successfully!", { position: "bottom-right" });
+    } catch (error) {
+      toast.error("Failed to update item", { position: "bottom-right" });
+    }
+  };
+
   const handleEditClick = (field) => {
     setIsEditable((prevState) => ({
       ...prevState,
-      [field]: !prevState[field],
+      [field]: !prevState[field], 
     }));
   };
 
   const renderEditableField = (label, value, field) => (
     <Box className={styles["editable-field"]} key={field}>
+      {console.log(field)}
       <TextField
         label={label}
         value={value || ''}
-        disabled={!isEditable[field]}
-        onChange={(e) => setItemFound({ ...itemFound, [field]: e.target.value })}
+        disabled={!isEditable[field]} 
+        onChange={(e) => {
+          if (isEditable[field]) { 
+            setItemFound({ ...itemFound, [field]: e.target.value });
+          }
+        }}
         fullWidth
         margin="normal"
         InputLabelProps={{
@@ -100,8 +137,8 @@ const EditItemModal = ({ open, onClose }) => {
           style: { color: 'white' },
           endAdornment: (
             <IconButton onClick={() => handleEditClick(field)} sx={{ color: 'white' }}>
-            <EditIcon />
-          </IconButton>
+              <EditIcon />
+            </IconButton>
           )
         }}
         sx={{
@@ -122,11 +159,8 @@ const EditItemModal = ({ open, onClose }) => {
           },
         }}
       />
-  
     </Box>
   );
-  
-  
 
   return (
     <Modal open={open} onClose={onClose}>
@@ -205,23 +239,23 @@ const EditItemModal = ({ open, onClose }) => {
         {itemFound && (
           <Grid container spacing={2} >
             <Grid item xs={6}>
-              {renderEditableField("Name", itemFound.Name, "name")}
-              {renderEditableField("Genre", itemFound.Genre, "genre")}
+              {renderEditableField("Name", itemFound.Name, "Name")}
+              {renderEditableField("Genre", itemFound.Genre, "Genre")}
             </Grid>
             <Grid item xs={6}>
-              {renderEditableField("Author", itemFound.Author, "author")}
-              {renderEditableField("SubGenre", itemFound.SubGenre, "subGenre")}
+              {renderEditableField("Author", itemFound.Author, "Author")}
+              {renderEditableField("SubGenre", itemFound.SubGenre, "SubGenre")}
             </Grid>
             <Grid item xs={6}>
-              {renderEditableField("Description", itemFound.Description, "description")}
+              {renderEditableField("Description", itemFound.Description, "Description")}
             </Grid>
             <Grid item xs={6}>
-              {renderEditableField("Published", itemFound.Published, "published")}
+              {renderEditableField("Published", itemFound.Published, "Published")}
             </Grid>
 
             <Grid item xs={12}>
               <Box className={styles["button-container"]}>
-                <CustomButton displayValue="Save" onClick={() => { /*TODO: PATCH update here */}} />
+                <CustomButton displayValue="Save" onClick={handleSave} displayIcon={<SaveIcon/>} />
               </Box>
             </Grid>
           </Grid>
