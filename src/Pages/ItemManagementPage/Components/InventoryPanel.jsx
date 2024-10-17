@@ -9,7 +9,6 @@ const InventoryPanel = () => {
   // destructure the function from the hook
   const { getAllInventory } = useInventory(); 
   const [inventory, setInventory] = useState([]); 
-  const [loading, setLoading] = useState(true); 
   const [error, setError] = useState(null); 
   // depending on the resouce type renders different icons
   const handleDisplayIcon = (iconType) => {
@@ -23,10 +22,8 @@ const InventoryPanel = () => {
       try {
         const data = await getAllInventory(); 
         setInventory(data); 
-        setLoading(false); 
       } catch (err) {
         setError("Failed to fetch inventory");
-        setLoading(false);
       }
     };
 
