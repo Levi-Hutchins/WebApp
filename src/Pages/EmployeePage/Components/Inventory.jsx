@@ -10,17 +10,18 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import PopUpModal from "../../../shared-components/Modal/Modal";
 import axios from "axios";
+import TextField from "@mui/material/TextField"; 
 
 export default function InventoryPage({ loggedInUser }) {
   const [data, setData] = useState([]); // Holds inventory data
+  const [filteredData, setFilteredData] = useState([]); // For search results
+  const [searchQuery, setSearchQuery] = useState(""); // Search query state
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null); // Selected item for modal
   const [loading, setLoading] = useState(true); // Loading state
   const [error, setError] = useState(null); // Error state
-
-  //const dispatch = useDispatch();
 
   // Fetch inventory data from backend
   useEffect(() => {
@@ -44,6 +45,7 @@ export default function InventoryPage({ loggedInUser }) {
         }));
 
         setData(productList);
+        setFilteredData(productList);
       } catch (err) {
         setError("Failed to fetch inventory data");
         console.error(err);
@@ -69,6 +71,20 @@ export default function InventoryPage({ loggedInUser }) {
     setPage(0);
   };
 
+  const handleSearch = (event) => {
+    const query = event.target.value.toLowerCase();
+    setSearchQuery(query);
+
+    const filtered = data.filter((item) =>
+      item.name.toLowerCase().includes(query) ||
+      item.format.toLowerCase().includes(query) ||
+      String(item.price).includes(query) ||
+      String(item.quantity).includes(query)
+    );
+    setFilteredData(filtered);
+    setPage(0); // Reset to first page on new search
+  };
+
   const columns = [
     { id: "name", label: "Product Name", minWidth: 170 },
     { id: "format", label: "Format", minWidth: 100 },
@@ -83,6 +99,17 @@ export default function InventoryPage({ loggedInUser }) {
   return (
     <>
       <Paper sx={{ width: "80%", overflow: "hidden", margin: "auto" }}>
+
+      <TextField
+          label="Search Inventory"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={searchQuery}
+          onChange={handleSearch}
+          placeholder="Search by product name, format, price, or quantity"
+        />
+
         <TableContainer sx={{ maxHeight: 440 }}>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
@@ -100,8 +127,8 @@ export default function InventoryPage({ loggedInUser }) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.length > 0 ? (
-                data
+              {filteredData.length > 0 ? (
+                filteredData
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, rowIndex) => (
                     <TableRow
