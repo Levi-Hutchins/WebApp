@@ -18,7 +18,7 @@ const NavBar = () => {
     if (loggedIn) {
       setIsLoggedIn(true);
     }
-  }, []);
+  }, [isLoggedIn, adminMode]);
 
   // Handle Log In/Log Out button click
   const handleLoginLogoutClick = () => {
@@ -71,6 +71,9 @@ const NavBar = () => {
         </Link>
         <Link to="/Test" className="nav-item">
           TEST
+        </Link>
+        <Link to="/Employee" className="nav-item">
+          EMPLOYEE
         </Link>
       </div>
 

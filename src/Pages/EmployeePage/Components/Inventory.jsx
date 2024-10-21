@@ -1,0 +1,153 @@
+import * as React from "react";
+import { useState, useEffect } from "react";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
+import PopUpModal from "../../../shared-components/Modal/Modal";
+import CustomButton from "../../../shared-components/Button/CustomButton";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../../Redux/Cart/CartSlice";
+import axios from "axios";
+
+export default function InventoryPage({ loggedInUser }) {
+  const [data, setData] = useState([]); // Holds inventory data
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(null); // Selected item for modal
+  const [loading, setLoading] = useState(true); // Loading state
+  const [error, setError] = useState(null); // Error state
+
+  const dispatch = useDispatch();
+
+  // Fetch inventory data from backend
+  useEffect(() => {
+    const fetchInventory = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8080/api/v1/db/data/v1/inft3050/Stocktake",
+          {
+            headers: {
+              "xc-token": process.env.REACT_APP_APIKEY,
+            }
+          }
+        );
+
+        const productList = response.data.list.map((item) => ({
+          id: item.Product.ID,
+          name: item.Product.Name,
+          price: item.Price,
+          quantity: item.Quantity,
+          format: item.Source.SourceName,
+        }));
+
+        setData(productList);
+      } catch (err) {
+        setError("Failed to fetch inventory data");
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchInventory();
+  }, [loggedInUser]);
+
+  const handleOpen = (row) => {
+    setSelectedRow(row);
+    setModalOpen(true);
+  };
+
+  const handleClose = () => setModalOpen(false);
+
+  const handleChangePage = (event, newPage) => setPage(newPage);
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+
+  const columns = [
+    { id: "name", label: "Product Name", minWidth: 170 },
+    { id: "format", label: "Format", minWidth: 100 },
+    { id: "quantity", label: "Quantity", minWidth: 100 },
+    { id: "price", label: "Price ($)", minWidth: 100 },
+    
+  ];
+
+  if (loading) return <p>Loading inventory data...</p>;
+  if (error) return <p>{error}</p>;
+
+  return (
+    <>
+      <Paper sx={{ width: "80%", overflow: "hidden", margin: "auto" }}>
+        <TableContainer sx={{ maxHeight: 440 }}>
+          <Table stickyHeader aria-label="sticky table">
+            <TableHead>
+              <TableRow>
+                {columns.map((column) => (
+                  <TableCell
+                    key={column.id}
+                    align="left"
+                    style={{ minWidth: column.minWidth }}
+                    sx={{ fontWeight: "bold" }}
+                  >
+                    {column.label}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {data.length > 0 ? (
+                data
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row, rowIndex) => (
+                    <TableRow
+                      hover
+                      role="checkbox"
+                      tabIndex={-1}
+                      key={`${row.id}-${row.format}`} // Ensures unique keys
+                      onClick={() => handleOpen(row)}
+                    >
+                      <TableCell align="left">{row.name}</TableCell>
+                      <TableCell align="left">{row.format}</TableCell>
+                      <TableCell align="left">{row.quantity}</TableCell>
+                      <TableCell align="left">{"$" + row.price}</TableCell>
+                    </TableRow>
+                  ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={columns.length + 1} align="center">
+                    No Results Found
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[10, 25, 100]}
+          component="div"
+          count={data.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </Paper>
+
+      <PopUpModal
+        open={modalOpen}
+        onClose={handleClose}
+        productTitle={selectedRow ? selectedRow.name : null}
+        productDetails={selectedRow ? selectedRow : "No Data Found"}
+      />
+    </>
+  );
+}
