@@ -9,10 +9,7 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import PopUpModal from "../../../shared-components/Modal/Modal";
-import CustomButton from "../../../shared-components/Button/CustomButton";
-import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../../../Redux/Cart/CartSlice";
 import axios from "axios";
 
 export default function InventoryPage({ loggedInUser }) {
@@ -24,7 +21,7 @@ export default function InventoryPage({ loggedInUser }) {
   const [loading, setLoading] = useState(true); // Loading state
   const [error, setError] = useState(null); // Error state
 
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
 
   // Fetch inventory data from backend
   useEffect(() => {
