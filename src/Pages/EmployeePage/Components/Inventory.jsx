@@ -9,7 +9,6 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import PopUpModal from "../../../shared-components/Modal/Modal";
-import { useDispatch } from "react-redux";
 import axios from "axios";
 
 export default function InventoryPage({ loggedInUser }) {
