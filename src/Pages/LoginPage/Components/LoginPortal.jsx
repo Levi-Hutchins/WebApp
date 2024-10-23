@@ -165,6 +165,23 @@ const LoginPortal = () => {
               Forgot password
             </Button>
           </Box>
+
+          <TextField
+            id="result"
+            disabled
+            label="Authentication Result"
+            value={result}
+            sx={{
+              marginTop: "15px",
+              "& .MuiOutlinedInput-root": {
+                backgroundColor: "#1c1c2b",
+                borderRadius: "5px",
+                width: "80%",
+                paddingLeft: "50px"
+              },
+              input: { color: "#aaa", cursor: "not-allowed" },
+            }}
+          />
         </form>
           {/* Toast Container to display notifications */}
         <ToastContainer />
