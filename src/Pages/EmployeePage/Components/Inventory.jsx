@@ -20,6 +20,7 @@ export default function InventoryPage({ loggedInUser }) {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null); // Selected item for modal
+  const [productDescription, setProductDescription] = useState(""); // Store description
   const [loading, setLoading] = useState(true); // Loading state
   const [error, setError] = useState(null); // Error state
 
@@ -57,10 +58,30 @@ export default function InventoryPage({ loggedInUser }) {
     fetchInventory();
   }, [loggedInUser]);
 
-  const handleOpen = (row) => {
-    setSelectedRow(row);
-    setModalOpen(true);
-  };
+    // Function to handle opening the modal and fetching description
+    const handleOpen = async (row) => {
+        setSelectedRow(row);
+        setModalOpen(true);
+
+        console.log(row.id)
+
+        try {
+        const ProductResponse = await axios.get(
+            `http://localhost:8080/api/v1/db/data/v1/inft3050/Product/${row.id}`, // Fetch product description
+            {
+            headers: {
+                "xc-token": process.env.REACT_APP_APIKEY,
+            },
+            }
+        );
+
+        // Assuming the response contains a 'description' field
+        setProductDescription(ProductResponse.data.description);
+        } catch (err) {
+        console.error("Failed to fetch product description", err);
+        setProductDescription("No description available.");
+        }
+    };
 
   const handleClose = () => setModalOpen(false);
 
@@ -168,9 +189,14 @@ export default function InventoryPage({ loggedInUser }) {
       <PopUpModal
         open={modalOpen}
         onClose={handleClose}
-        productTitle={selectedRow ? selectedRow.name : null}
-        productDetails={selectedRow ? selectedRow : "No Data Found"}
-      />
+        productTitle={selectedRow ? selectedRow.name : ""}
+        productDetails={{
+            ID: selectedRow ? selectedRow.id : "",
+            Description: productDescription ? productDescription : "Loading...",
+            Quantity: selectedRow ? selectedRow.quantity : "N/A",
+            Price: selectedRow ? `$${selectedRow.price}` : "N/A",
+        }}
+        />
     </>
   );
 }
