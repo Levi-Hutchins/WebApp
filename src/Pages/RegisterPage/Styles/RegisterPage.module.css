@@ -8,8 +8,8 @@
     border-radius: 40px;
     background-color: #2c2c32;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    width: 700px;
-    height: 500px;
+    width: 600px;
+    height: 320px;
 }
 .signup-title{
     position: absolute;
@@ -31,20 +31,7 @@
     font-size: 64px;
     color: white
 }
-.success-banner {
-    position: fixed;
-    bottom: -100px; 
-    right: -300px; 
-    z-index: 1000; 
-    width: auto;
-    max-width: 300px; 
-    transition:  right 0.3s ease-in-out; 
-}
 
-.success-banner.show {
-    bottom: 20px; 
-    right: 20px; 
-}
 .sub-title{
     color: white;
     margin-left: 50px;
