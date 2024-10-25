@@ -3,10 +3,13 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { hashPassword } from "../../../Utils/HahingService";
 import useValidation from "./useValidation";
+import { useNavigate } from "react-router-dom";
 
 const useForm = (initialValues) => {
   const [values, setValues] = useState(initialValues);
   const { validateSignUp } = useValidation();
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -59,6 +62,9 @@ const useForm = (initialValues) => {
                     toast.success("User Created !", {
                       position: "bottom-right",
                     });
+                    setTimeout(() => {
+                      navigate("/LogIn");
+                    }, 2000);
                   }
                 })
                 .catch((error) => {

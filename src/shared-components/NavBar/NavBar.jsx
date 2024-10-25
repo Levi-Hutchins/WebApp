@@ -14,7 +14,6 @@ const NavBar = () => {
   useEffect(() => {
     const loggedIn = localStorage.getItem("LogInData"); // Get login status from localStorage
     setAdminMode(localStorage.getItem("IsAdmin"));
-
     if (loggedIn) {
       setIsLoggedIn(true);
     }
