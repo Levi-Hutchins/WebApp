@@ -62,8 +62,44 @@ const useValidation = () => {
     }
     return true;
   };
+  const validateAddUser = (user) => {
+    if (!user.UserName || user.UserName.trim() === "") {
+      toast.error("User must have a username", { position: "bottom-right" });
+      return false;
+    }
+    if (!user.UserName || user.UserName.trim() === "") {
+      toast.error("User must has a username", { position: "bottom-right" });
+      return false;
+    }
+    if (
+      !user.Email?.trim() ||
+      !/^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$/.test(user?.Email)
+    ) {
+      toast.error("Please enter a valid email address", {
+        position: "bottom-right",
+      });
+      return false;
+    }
+    if (!user.Name || user.Name.trim() === "") {
+      toast.error("User must have a name", { position: "bottom-right" });
+      return false;
+    }
+    if (!user.Password || user.Password.trim() === "") {
+      toast.error("Invalid Password", { position: "bottom-right" });
+      return false;
+    }
+    if (!user.ConfirmPassword || user.ConfirmPassword.trim() === "") {
+      toast.error("Invalid Password", { position: "bottom-right" });
+      return false;
+    }
+    if (user.ConfirmPassword != user.Password) {
+      toast.error("Passwords do not match", { position: "bottom-right" });
+      return false;
+    }
+    return true;
+  };
 
-  return { validateEditValues, validateAddItem };
+  return { validateEditValues, validateAddItem, validateAddUser};
 };
 
 export default useValidation;
