@@ -45,7 +45,6 @@ const ShoppingCartPage = () => {
           .filter((item) => item !== null);
 
         setAllProductDetails(productDetails);
-        console.log(productDetails);
       } catch (error) {
         console.error("Error fetching prices:", error);
         toast.error("Failed to load prices.", {

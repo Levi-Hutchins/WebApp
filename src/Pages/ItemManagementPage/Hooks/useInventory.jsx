@@ -58,7 +58,6 @@ const useInventory = () => {
           ItemType: stocktake.Source.SourceName
         };
       });
-      console.log(inventory);
       return inventory;
     } catch (err) {
       console.error("Error fetching inventory:", err);
