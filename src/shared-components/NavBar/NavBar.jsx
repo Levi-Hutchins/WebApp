@@ -68,9 +68,7 @@ const NavBar = () => {
         <Link to="/Search" className="nav-item">
           ITEM SEARCH
         </Link>
-        <Link to="/Test" className="nav-item">
-          TEST
-        </Link>
+
       </div>
 
       <ul className="right-section">
