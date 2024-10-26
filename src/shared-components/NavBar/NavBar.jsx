@@ -8,41 +8,72 @@ import CustomBadge from "../Badge/CustomBadge";
 const NavBar = () => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track login status
-  const [adminMode, setAdminMode] = useState(false);
-
+  const [adminMode, setAdminMode] = useState(false); // State to track admin mode
   // Check if the user is logged in when the component mounts
   useEffect(() => {
     const loggedIn = localStorage.getItem("LogInData"); // Get login status from localStorage
     setAdminMode(localStorage.getItem("IsAdmin"));
     if (loggedIn) {
       setIsLoggedIn(true);
-    }
-  }, []);
+  // Helper function to update login and admin status from localStorage
+  const updateLoginStatus = () => {
+    const loginData = localStorage.getItem("LogInData");
+    const isAdmin = localStorage.getItem("IsAdmin") === "true"; // Check if admin status is true
 
-  // Handle Log In/Log Out button click
+    // Parse login data and validate it
+    if (loginData) {
+      try {
+        const parsedData = JSON.parse(loginData); // Parse JSON data
+        if (parsedData.EmailAddress) {
+          console.log("SetIsLoggedIn == True")
+          setIsLoggedIn(true); // User is logged in if valid data exists
+        } else {
+          console.log("SetIsLoggedIn == False")
+          setIsLoggedIn(false);
+        }
+      } catch (error) {
+        console.error("Error parsing LogInData", error);
+        setIsLoggedIn(false); // Default to logged out state on error
+      }
+    } else {
+      setIsLoggedIn(false); // Default to logged out if no data found
+    }
+
+    setAdminMode(isAdmin); // Update admin mode state
+  };
+
+  // Check if the user is logged in when the component mounts or localStorage changes
+  useEffect(() => {
+    updateLoginStatus(); // Initial check
+
+    // Add an event listener to detect changes in localStorage
+    window.addEventListener("storage", updateLoginStatus);
+
+    return () => {
+      window.removeEventListener("storage", updateLoginStatus);
+    };
+  }, []); // Empty dependency array to run only once
+
   const handleLoginLogoutClick = () => {
     if (isLoggedIn) {
-      // Log out the user
       localStorage.removeItem("LogInData");
-      setIsLoggedIn(false); // Update the state to reflect the logout
-      navigate("/"); 
+      localStorage.removeItem("IsAdmin");
+      setIsLoggedIn(false);
+      setAdminMode(false);
+      navigate("/"); // Redirect to home after logout
     } else {
-      // Navigate to login page if not logged in
-      navigate("/LogIn");
+      navigate("/LogIn"); // Navigate to login page if not logged in
     }
   };
 
-  const checkLogIn = () =>  {
-    const UserLoggedIn = localStorage.getItem("LogInData"); //check if user is logged in
-
-    if (UserLoggedIn){
-      console.log("User Account")
-      navigate("/UserAccount"); // If logged in, navigate to account page    }
-    }
-    else {
-      navigate("/LogIn"); // If not logged in, redirect to login page
+  const checkLogIn = () => {
+    if (localStorage.getItem("LogInData")) {
+      navigate("/UserAccount"); // Navigate to user account if logged in
+    } else {
+      navigate("/LogIn"); // Redirect to login page if not logged in
     }
   };
+
 
 
   return (
@@ -69,6 +100,9 @@ const NavBar = () => {
           ITEM SEARCH
         </Link>
 
+        <Link to="/Employee" className="nav-item">
+          EMPLOYEE
+        </Link>
       </div>
 
       <ul className="right-section">

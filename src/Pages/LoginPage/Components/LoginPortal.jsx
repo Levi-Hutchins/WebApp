@@ -1,85 +1,193 @@
-import "../Styles/Login.css"
-import { Link } from "react-router-dom";
+import { Box, FormControl, FormGroup, TextField, Button } from "@mui/material";
 import { useState } from "react";
-import { useAuth } from "../../../shared-components/AuthProvider/AuthProvider";
+import HandleLogin from "../../../Helpers/HandleLogin";
+import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 const LoginPortal = () => {
-  const [input, setInput] = useState({
-    username: "",
-    password: "",
-  });
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [result, setResult] = useState("");
+  const navigate = useNavigate();
 
-  const auth = useAuth();
-  const handleSubmitEvent = (e) => {
-    e.preventDefault();
-    if (input.username !== "" && input.password !== "") {
-      auth.loginAction(input);
-      return;
+  async function handleSubmit(event) {
+    event.preventDefault(); //Prevent reloading of the page
+
+    const token = await HandleLogin(username, password);
+    console.log("token: ", token);
+    if (token) {
+      console.log("Inside if token")
+      // Authenticated successful
+      setResult("Authentication successful");
+      navigate("/UserAccount");
+    } else {
+      // Authentication failed
+      setResult("Authentication failed");
     }
-    alert("Please proide a valid input");
-  };    
+  }
 
-  // Handle changes in input fields
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setInput((prevInput) => ({
-      ...prevInput,
-      [name]: value,
-    }));
+  const handleUsernameChange = (event) => {
+    setUsername(event.target.value);
+  };
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+  };
+
+  // Toast notification for password reset
+  const handleForgotPassword = () => {
+    toast.success("Reset password sent to email", {
+      position: "bottom-right", 
+    });
   };
 
   return (
-      <form className="login" onSubmit={{handleSubmitEvent}}>
-        <h3>Log In</h3>
-        <div className="mb-3">
-          <label>Email address</label>
-          <input
-            type="email"
-            className="form-control"
-            placeholder="Enter email"
-            value={input.username}  // Bind input to state
-            onChange={handleChange}  // Update state when the user types
-          />
-        </div>
-        <div className="mb-3">
-          <label>Password</label>
-          <input
-            type="password"
-            className="form-control"
-            placeholder="Enter password"
-            value={input.password}  // Bind input to state
-            onChange={handleChange}  // Update state when the user types
-          />
-        </div>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        minHeight: "100vh",
+      }}
+    >
+      <Box
+        sx={{
+          backgroundColor: "#28293d", // Same form background color
+          borderRadius: "8px",
+          padding: "40px",
+          width: "500px",
+          boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)", // Same box shadow
+        }}
+      >
+        <h1 style={{ color: "white", textAlign: "center", marginBottom: "20px" }}>
+          Login
+        </h1>
 
-        <div className="mb-3">
-          <div className="custom-control custom-checkbox">
-            <input
-              type="checkbox"
-              className="custom-control-input"
-              id="customCheck1"
-            />
-            <label className="custom-control-label" htmlFor="customCheck1">
-              Remember me
-            </label>
-          </div>
-        </div>
-        
-        <div className="d-grid">
-          <button type="submit" className="btn btn-primary">
-            Submit
-          </button>
-        </div>
-        <p className="forgot-password text-centre">
-        <Link to="/" classname="ms-2">Forgot your password?</Link> {/*TODO: Fix this later*/}
+        <form method="post" onSubmit={handleSubmit} style={{ marginRight: "0px" }}>
+          <FormControl sx={{ width: "100%" }}>
+            <FormGroup sx={{ marginBottom: "15px" }}>
+              <TextField
+                id="username-field"
+                label="Enter your e-mail"
+                variant="outlined"
+                value={username}
+                onChange={handleUsernameChange}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    backgroundColor: "#1c1c2b", // Input background to match SignUp
+                    color: "white", // Input text color
+                    borderRadius: "5px",
+                    "&:hover fieldset": {
+                      borderColor: "#5e43f3", // Same hover color as SignUp
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#5e43f3", // Focus border color
+                    },
+                  },
+                  input: {
+                    color: "white", // Text color in the input
+                  },
+                  "& .MuiInputLabel-root": {
+                    color: "#aaa", // Placeholder and label color
+                  },
+                }}
+              />
+            </FormGroup>
 
-        </p>
-        <p className="Sign-up text-right">
-          <Link to="/Register" classname="ms-2">Sign up</Link>
-        </p>
-      </form>
-      );
-    }
+            <FormGroup sx={{ marginBottom: "15px" }}>
+              <TextField
+                id="password-field"
+                label="Password"
+                variant="outlined"
+                type="password"
+                value={password}
+                onChange={handlePasswordChange}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    backgroundColor: "#1c1c2b", // Same background as SignUp
+                    color: "white",
+                    borderRadius: "5px",
+                    "&:hover fieldset": {
+                      borderColor: "#5e43f3",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#5e43f3",
+                    },
+                  },
+                  input: {
+                    color: "white",
+                  },
+                  "& .MuiInputLabel-root": {
+                    color: "#aaa",
+                  },
+                }}
+              />
+            </FormGroup>
+          </FormControl>
+
+          <Box sx={{ marginTop: "10px" }}>
+            <Button
+              type="submit"
+              variant="contained"
+              sx={{
+                width: "50%",
+                padding: "12px",
+                backgroundColor: "#6c63ff", // Matching button color
+                borderRadius: "5px",
+                fontSize: "16px",
+                "&:hover": {
+                  backgroundColor: "#5a54e0", // Hover effect to match
+                },
+              }}
+            >
+              Submit
+            </Button>
+          </Box>
+
+          <Box sx={{ marginTop: "10px" }}>
+            <Button
+              type="button"
+              variant="contained"
+              onClick={handleForgotPassword}
+              sx={{
+                width: "50%",
+                padding: "12px",
+                backgroundColor: "#6c63ff", // Matching button color
+                borderRadius: "5px",
+                fontSize: "16px",
+                "&:hover": {
+                  backgroundColor: "#5a54e0", // Hover effect to match
+                },
+              }}
+            >
+              Forgot password
+            </Button>
+          </Box>
+
+          <TextField
+            id="result"
+            disabled
+            label="Authentication Result"
+            value={result}
+            sx={{
+              marginTop: "15px",
+              "& .MuiOutlinedInput-root": {
+                backgroundColor: "#1c1c2b",
+                borderRadius: "5px",
+                width: "80%",
+                paddingLeft: "50px"
+              },
+              input: { color: "#aaa", cursor: "not-allowed" },
+            }}
+          />
+        </form>
+          {/* Toast Container to display notifications */}
+        <ToastContainer />
+      </Box>
+    </Box>
+  );
+};
 
     export default LoginPortal;
