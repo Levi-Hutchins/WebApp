@@ -21,9 +21,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 
 const CustomBadge = ({ onClick}) => {
   const cartItems = useSelector((state) => state.cart.cartItems)
-  console.log("ITEMS ",cartItems)
   const itemCount = cartItems.reduce((a ,b) => a + b.cartQuantity, 0)
-  console.log(itemCount)
   return (
     <IconButton aria-label="cart" onClick={onClick}>
       <StyledBadge badgeContent={itemCount} color="secondary">
