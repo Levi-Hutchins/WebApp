@@ -11,10 +11,9 @@ const InputBoxWithButton = ({displayValue, onSubmit, onChange}) => {
 
 
   return (
-    <>
+    
       <form>
         <Box
-          component="form"
           className="input-box"
           noValidate
           autoComplete="off"
@@ -44,7 +43,7 @@ const InputBoxWithButton = ({displayValue, onSubmit, onChange}) => {
 
         </Box>
       </form>
-    </>
+    
   );
 };
 

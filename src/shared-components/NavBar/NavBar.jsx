@@ -9,7 +9,12 @@ const NavBar = () => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track login status
   const [adminMode, setAdminMode] = useState(false); // State to track admin mode
-
+  // Check if the user is logged in when the component mounts
+  useEffect(() => {
+    const loggedIn = localStorage.getItem("LogInData"); // Get login status from localStorage
+    setAdminMode(localStorage.getItem("IsAdmin"));
+    if (loggedIn) {
+      setIsLoggedIn(true);
   // Helper function to update login and admin status from localStorage
   const updateLoginStatus = () => {
     const loginData = localStorage.getItem("LogInData");
@@ -94,9 +99,7 @@ const NavBar = () => {
         <Link to="/Search" className="nav-item">
           ITEM SEARCH
         </Link>
-        <Link to="/Test" className="nav-item">
-          TEST
-        </Link>
+
         <Link to="/Employee" className="nav-item">
           EMPLOYEE
         </Link>

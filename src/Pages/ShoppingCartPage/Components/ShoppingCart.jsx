@@ -7,19 +7,19 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import styles from "../Styles/ShoppingCart.module.css";
 import { useDispatch } from "react-redux";
-import { removeFromCart } from "../../../Redux/Cart/CartSlice";
-
-
+import { removeFromCart, addToCart } from "../../../Redux/Cart/CartSlice";
 
 const ShoppingCart = ({ cartItems, productDetailsById, handleSubmit }) => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-
-    const handleRemoveFromCart= (event, value) => {
-        event.stopPropagation();
-        dispatch(removeFromCart(value))
-    
-      };
+  const handleRemoveFromCart = (event, value) => {
+    event.stopPropagation();
+    dispatch(removeFromCart(value));
+  };
+  const handleAddToCart = (event, value) => {
+    event.stopPropagation();
+    dispatch(addToCart(value));
+  };
   return (
     <div className={styles["cart-summary-panel"]}>
       <h1 className={styles["order-summary-title"]}>Order Summary</h1>
@@ -36,7 +36,9 @@ const ShoppingCart = ({ cartItems, productDetailsById, handleSubmit }) => {
                         {cartItem.cartQuantity} x {cartItem.Name}
                       </span>
                     ) : (
-                      <span className={styles["item-name"]}>{cartItem.Name}</span>
+                      <span className={styles["item-name"]}>
+                        {cartItem.Name}
+                      </span>
                     )}
                     <span className={styles["item-price"]}>
                       ${cartItem.cartQuantity * productDetail.Price.toFixed(2)}
@@ -65,15 +67,17 @@ const ShoppingCart = ({ cartItems, productDetailsById, handleSubmit }) => {
                       }}
                       color="secondary"
                       aria-label="add"
-                      onClick={() => alert("Increased: "+ cartItem.Name)}
-
+                      onClick={(event) => handleAddToCart(event, cartItem)}
                     >
                       <AddIcon fontSize="small" />
                     </Fab>
                   </div>
                 </div>
 
-                <Divider sx={{ borderColor: "white", margin: "8px 0" }} component="li" />
+                <Divider
+                  sx={{ borderColor: "white", margin: "8px 0" }}
+                  component="li"
+                />
               </li>
             );
           } else {
