@@ -6,7 +6,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 1rem;
-  font-family: "Andale Mono, monospace";
+  font-family: Andale Mono,monospace; 
+
   font-size: large;
 }
 

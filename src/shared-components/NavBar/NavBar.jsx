@@ -126,9 +126,9 @@ const NavBar = () => {
             onClick={handleLoginLogoutClick}
             sx={{
               fontFamily: "Andale Mono, monospace",
-              borderColor: isLoggedIn ? "transparent" : "#5e43f3", // Remove border if logged in
-              backgroundColor: isLoggedIn ? "#5e43f3" : "transparent", // Change background if logged in
-              color: isLoggedIn ? "white" : "#5e43f3", // Change color for Log Out button
+              borderColor: isLoggedIn ? "transparent" : "#5e43f3", 
+              backgroundColor: isLoggedIn ? "#5e43f3" : "transparent", 
+              color: isLoggedIn ? "white" : "#5e43f3", 
               "&:hover": {
                 backgroundColor: isLoggedIn ? "#4e3ac0" : "transparent",
                 borderColor: isLoggedIn ? "transparent" : "#4e3ac0",
