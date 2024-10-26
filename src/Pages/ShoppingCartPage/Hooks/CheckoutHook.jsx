@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { emptyCart } from "../../../Redux/Cart/CartSlice"; // Adjust the path
 
@@ -8,6 +9,8 @@ const useForm = (initialValues, checkoutValidator, toast) => {
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.cartItems);
+
 
 
   // Handle input changes
@@ -97,7 +100,13 @@ const useForm = (initialValues, checkoutValidator, toast) => {
 
   // Handle form submission
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); 
+    if(cartItems.length === 0){
+      toast.error("No Items In Cart !",{
+        position: "bottom-right",
+      })
+      return;
+    }
 
     const validationErrors = checkoutValidator(values);
     setErrors(validationErrors);
