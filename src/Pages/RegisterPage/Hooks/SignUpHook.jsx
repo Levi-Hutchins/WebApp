@@ -47,27 +47,29 @@ const useForm = (initialValues) => {
               Salt: passwordSalt.salt,
               HashPW: passwordSalt.hash,
             };
-            axios.post(
-              "http://localhost:8080/api/v1/db/data/v1/inft3050/Patrons",
-              userToAdd,
-              {
-                headers: {
-                  "xc-token": process.env.REACT_APP_APIKEY,
-                },
-              }
-            );
             axios
               .post(
-                "http://localhost:8080/api/v1/db/data/v1/inft3050/TO",
-                {Email: userToAdd.Email},
+                "http://localhost:8080/api/v1/db/data/v1/inft3050/Patrons",
+                userToAdd,
                 {
                   headers: {
                     "xc-token": process.env.REACT_APP_APIKEY,
                   },
                 }
               )
+
               .then((user) => {
                 if (user) {
+                  console.log(user);
+                  axios.post(
+                    "http://localhost:8080/api/v1/db/data/v1/inft3050/TO",
+                    { PatronId: user.data.UserID, Email: userToAdd.Email },
+                    {
+                      headers: {
+                        "xc-token": process.env.REACT_APP_APIKEY,
+                      },
+                    }
+                  );
                   toast.success("User Created !", {
                     position: "bottom-right",
                   });

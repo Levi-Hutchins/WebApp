@@ -41,21 +41,17 @@ const cartSlice = createSlice({
       localStorage.setItem("ShoppingCart", JSON.stringify(state.cartItems));
     },
     removeFromCart(state, action) {
-      // First find the item in the cart that has the ID of the payload ID
       const itemIndex = state.cartItems.findIndex(
         (item) => item.ID === action.payload.ID
       );
       if (itemIndex >= 0) {
         const removedItem = state.cartItems[itemIndex];
-        
 
-          // Decrease quantity if more than 1
-          if (removedItem.cartQuantity > 1) {
-            // Remoce all the global cart properties
+        if (removedItem.cartQuantity > 1) {
           removedItem.cartQuantity -= 1;
           state.cartTotalQuantity -= 1;
           state.cartTotalAmount -= removedItem.price;
-          
+
           toast.info(
             action.payload.Name + " quantity reduced to " + removedItem.cartQuantity,
             {
@@ -63,13 +59,12 @@ const cartSlice = createSlice({
             }
           );
         } else {
-          // Remove item from cart if quantity is 1
           state.cartItems = state.cartItems.filter(
             (item) => item.ID !== action.payload.ID
           );
           state.cartTotalQuantity -= 1;
           state.cartTotalAmount -= removedItem.price;
-          
+
           toast.info(
             action.payload.Name + " was removed from your cart!",
             {
@@ -77,15 +72,20 @@ const cartSlice = createSlice({
             }
           );
         }
-    
-        // Update localStorage since we are storing it within there for cross page management
+
         localStorage.setItem("ShoppingCart", JSON.stringify(state.cartItems));
-      }}
+      }
+    },
+    emptyCart(state) {
+      state.cartItems = [];
+      state.cartTotalQuantity = 0;
+      state.cartTotalAmount = 0;
+
+      localStorage.setItem("ShoppingCart", JSON.stringify(state.cartItems));
+    },
   },
 });
 
-// Exporting the reduces for other pages to use
-export const { addToCart } = cartSlice.actions;
-export const { removeFromCart } = cartSlice.actions;
+export const { addToCart, removeFromCart, emptyCart } = cartSlice.actions;
 
 export default cartSlice.reducer;
