@@ -15,7 +15,7 @@ const NavBar = () => {
     setAdminMode(localStorage.getItem("IsAdmin"));
     if (loggedIn) {
       setIsLoggedIn(true);
-  // Helper function to update login and admin status from localStorage
+  }})  // Helper function to update login and admin status from localStorage
   const updateLoginStatus = () => {
     const loginData = localStorage.getItem("LogInData");
     const isAdmin = localStorage.getItem("IsAdmin") === "true"; // Check if admin status is true
@@ -151,5 +151,5 @@ const NavBar = () => {
     </div>
   );
 };
-
+  
 export default NavBar;
