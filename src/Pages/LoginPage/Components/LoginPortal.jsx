@@ -2,7 +2,7 @@ import { Box, FormControl, FormGroup, TextField, Button } from "@mui/material";
 import { useState } from "react";
 import HandleLogin from "../../../Helpers/HandleLogin";
 import { useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 
@@ -183,8 +183,7 @@ const LoginPortal = () => {
             }}
           />
         </form>
-          {/* Toast Container to display notifications */}
-        <ToastContainer />
+
       </Box>
     </Box>
   );
