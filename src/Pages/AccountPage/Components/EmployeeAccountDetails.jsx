@@ -106,6 +106,13 @@ const EmployeeAccountDetails = ({ loggedInUser, setLoading }) => {
             },
             "& .MuiInputLabel-root": { color: "#ffffff !important" },
             "& .MuiInputLabel-root.Mui-focused": { color: "#ffffff" },
+            "& .MuiOutlinedInput-root.Mui-disabled": {
+      "& input": {
+        color: "#ffffff", 
+        WebkitTextFillColor: "#ffffff", // For Safari
+
+      },
+    },
           }}
         />
       ))}

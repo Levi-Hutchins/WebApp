@@ -117,6 +117,13 @@ const CheckoutDetails = ({ loggedInUser, setLoading }) => {
               },
               "& .MuiInputLabel-root": { color: "#ffffff" },
               "& .MuiInputLabel-root.Mui-focused": { color: "#ffffff" },
+              "& .MuiOutlinedInput-root.Mui-disabled": {
+                "& input": {
+                  color: "#ffffff",
+                  WebkitTextFillColor: "#ffffff",
+
+                },
+              },
             }}
           />
         )
