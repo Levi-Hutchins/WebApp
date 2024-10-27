@@ -158,11 +158,13 @@ const NavBar = () => {
             {isLoggedIn ? "Log Out" : "Log In"} 
           </Button>
         </li>
+        
         <li className="shop-button-container">
-          <CustomBadge
+        {!adminMode ? (<CustomBadge
             className="shop-button"
             onClick={() => navigate("/ShoppingCart")}
-          />
+          />) : (<></>)
+        }
         </li>
       </ul>
     </div>

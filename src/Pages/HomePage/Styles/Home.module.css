@@ -1,39 +1,73 @@
-.home-title{
-    position: absolute;
-    top: 40%; 
-    left: 10%; 
-    transform: translate(-10%, -20%); 
-    text-align: left;
-}
-.home-info{
+/* Styles/Home.module.css */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap');
 
 
-    position: absolute;
-    top: 55%; 
-    left: 10%; 
-    transform: translate(-10%, -20%); 
-
-}
-.home-info-text{
+.home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    padding: 20px;
+  }
+  
+  /* Title row on top, centered horizontally */
+  .title-row {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 1px;
+  }
+  
+  .home-title-secondary {
+    font-size: 4.5rem;
+    font-family: 'Dancing Script', cursive;
     color: white;
-    font-family: 'Archivo Black';
-    display: inline;
-    text-align: left;
-
-
-}
-.home-title-primary{
-    display: inline;
-    font-family: 'Archivo Black';
-    font-size: 80;
-    color: #5e43f3
-}
-.home-title-secondary{
-    display: inline;
-    font-family: 'Archivo Black';
-    font-size: 80;
-    color: white
-}
-.home-animation{
-    margin-left: 650px;
-}
+    margin: 0;
+  }
+  
+  /* Content row: Image on left, animation on right in one column */
+  .content-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 80%; /* Adjust this as needed */
+    gap: 20px; /* Space between image and animation */
+    margin-top: 20px;
+  }
+  
+  /* Image section */
+  .image-container {
+    flex: 0 0 45%; /* Image takes up 45% of the row */
+    display: flex;
+    justify-content: center;
+  }
+  
+  .home-image {
+    width: 100%; /* Ensure the image fits its container */
+    height: auto;
+    object-fit: contain; /* Maintain aspect ratio */
+    border-radius: 10px; /* Optional rounded corners */
+    margin-top: 150px;
+  }
+  
+  /* Animation section in a column layout */
+  .animation-container {
+    flex: 0 0 45%; /* Animation takes up 45% of the row */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  /* Footer info */
+  .home-info {
+    margin-top: 30px;
+  }
+  
+  .home-info-text {
+    font-size: 1.5rem;
+    color: white;
+    font-family: 'Great Vibes', cursive;
+    margin: 0px;
+  }
+  
