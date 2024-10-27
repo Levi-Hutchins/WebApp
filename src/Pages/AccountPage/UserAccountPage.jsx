@@ -10,16 +10,16 @@ import { toast } from "react-toastify";
 const UserAccountPage = () => {
   const [isEmployee, setIsEmployee] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState(null);
-  const [loading, setLoading] = useState(true); // New loading state
+  const [loading, setLoading] = useState(true);
+  
+  // Initialize both employee and customer details hooks at the top level
+  const { userDetails: employeeDetails } = useEmployeeDetails(loggedInUser, setLoading);
+  const { userDetails: customerDetails, checkOutDetails } = useCustomerDetails(loggedInUser, setLoading);
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("LogInData"));
-    if (storedUser && storedUser.User === "Employee") {
-      setIsEmployee(true);
-    } else {
-      setIsEmployee(false);
-    }
     setLoggedInUser(storedUser);
+    setIsEmployee(storedUser?.User === "Employee");
   }, []);
 
   useEffect(() => {
@@ -29,9 +29,6 @@ const UserAccountPage = () => {
       toast.dismiss();
     }
   }, [loading]);
-
-  const { userDetails: customerDetails, checkOutDetails } = useCustomerDetails(loggedInUser, setLoading);
-  const { userDetails: employeeDetails } = useEmployeeDetails(loggedInUser, setLoading);
 
   return (
     <div>

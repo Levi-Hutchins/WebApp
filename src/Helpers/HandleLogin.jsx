@@ -23,7 +23,9 @@ const HandleLogin = async (email, password) => {
         );
 
         if (userResponse.data) {
-            const { Salt, isAdmin, HashPW, Email } = userResponse.data;
+            console.log(userResponse.data)
+            const { Salt, IsAdmin, HashPW, Email } = userResponse.data;
+            console.log(IsAdmin);
             if (!Salt) {
                 console.error("Salt is undefined in Users table response.");
             } else {
@@ -32,9 +34,9 @@ const HandleLogin = async (email, password) => {
                     toast.success("Login successful", { position: "bottom-right" });
                     localStorage.setItem("LogInData", JSON.stringify({
                         EmailAddress: Email,
-                        User: isAdmin ? "Admin" : "Employee"
+                        User: IsAdmin ? "Admin" : "Employee"
                     }));
-                    localStorage.setItem("IsAdmin", isAdmin);
+                    localStorage.setItem("IsAdmin", IsAdmin);
                     return token;
                 }
             }
