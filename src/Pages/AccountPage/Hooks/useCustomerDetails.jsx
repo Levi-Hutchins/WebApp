@@ -1,8 +1,9 @@
+// useCustomerDetails.js
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const useCustomerDetails = (loggedInUser, setLoading) => {
+const useCustomerDetails = (loggedInUser, setLoading = () => {}) => {
   const [userDetails, setUserDetails] = useState({});
   const [checkOutDetails, setCheckOutDetails] = useState({});
 
@@ -12,6 +13,8 @@ const useCustomerDetails = (loggedInUser, setLoading) => {
         setLoading(false);
         return;
       }
+
+      setLoading(true); 
 
       try {
         const patronResponse = await axios.get(
@@ -53,7 +56,7 @@ const useCustomerDetails = (loggedInUser, setLoading) => {
           CardOwner: toData.CardOwner,
           PhoneNumber: toData.PhoneNumber,
           StreetAddress: toData.StreetAddress,
-          ExpiryDate: toData.Expiry,
+          Expiry: toData.Expiry,
           CVV: toData.CVV,
         });
       } catch (error) {
