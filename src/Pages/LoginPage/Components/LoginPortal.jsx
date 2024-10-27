@@ -9,7 +9,6 @@ import "react-toastify/dist/ReactToastify.css";
 const LoginPortal = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [result, setResult] = useState("");
   const navigate = useNavigate();
 
   async function handleSubmit(event) {
