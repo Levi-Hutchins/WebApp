@@ -1,4 +1,5 @@
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
+import axios from 'axios';
 import { toast } from 'react-toastify';
 import { Modal, Box, Typography, TextField, IconButton, Grid } from "@mui/material";
 import Button from "@mui/material/Button";
@@ -14,6 +15,7 @@ import useValidation from '../../Hooks/useValidation';
 import InputBox from "../../../../shared-components/InputBox/InputBox";
 
 const EditItemModal = ({ open, onClose }) => {
+  const [loggedInUserName, setLoggedInUserName] = useState("");
   const [searchBy, setSearchBy] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const [itemFound, setItemFound] = useState(null);
@@ -26,6 +28,44 @@ const EditItemModal = ({ open, onClose }) => {
     SubGenre: false,
     Published: false,
   });
+  useEffect(() => {
+    const fetchUserName = async () => {
+      const userEmail = JSON.parse(localStorage.getItem("LogInData"))?.EmailAddress;
+      console.log(userEmail);
+      if (!userEmail) return;
+  
+      try {
+        const response = await axios.get(
+          "http://localhost:8080/api/v1/db/data/v1/inft3050/User/find-one",
+          {
+            headers: {
+              "xc-token": process.env.REACT_APP_APIKEY,
+            },
+            params: {
+              where: `(Email,eq,${userEmail})`,
+            },
+          }
+        );
+        if (response.data) {
+          setLoggedInUserName(response.data.UserName);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+  
+    fetchUserName();
+  }, []);
+
+  useEffect(() => {
+    // Only update itemFound if it has been initialized (i.e., not null)
+    if (itemFound) {
+      setItemFound((prevDetails) => ({
+        ...prevDetails,
+        LastUpdatedBy: loggedInUserName,
+      }));
+    }
+  }, [loggedInUserName, itemFound]);
 
   const { findItemByID, findItemByAuthor, findItemByName } = useFindItem();
   const { updateItem } = useItemMutations();
@@ -85,7 +125,6 @@ const EditItemModal = ({ open, onClose }) => {
   };
 
   const handleSave = async () => {
-
     //TODO: gets the user logged in and add that to the LastUpdatedBy field when calling API
     //TODO: get the current time ad add that to the LastUpdated field
 
@@ -123,7 +162,6 @@ const EditItemModal = ({ open, onClose }) => {
 
   const renderEditableField = (label, value, field) => (
     <Box className={styles["editable-field"]} key={field}>
-      {console.log(field)}
       <TextField
         label={label}
         value={value || ''}
