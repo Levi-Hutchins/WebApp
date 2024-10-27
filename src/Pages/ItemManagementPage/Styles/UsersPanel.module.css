@@ -53,10 +53,14 @@
 }
 
 .edit-icon {
+  margin-right: 10px;
   color: white;
   cursor: pointer;
 }
+.delete-icon{
+  cursor: pointer;
 
+}
 .add-button {
   background-color: #2c2c32;
   color: white;

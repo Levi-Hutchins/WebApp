@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { toast } from "react-toastify";
 import { Modal, Box, Typography } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
@@ -12,7 +13,9 @@ import InputBox from "../../../../shared-components/InputBox/InputBox";
 import CustomButton from "../../../../shared-components/Button/CustomButton";
 import useItemMutations from "../../Hooks/useItemMutations";
 import useValidation from "../../Hooks/useValidation";
+
 const AddItemModal = ({ open, onClose }) => {
+  const [loggedInUserName, setLoggedInUserName] = useState("");
   const [itemDetails, setItemDetails] = useState({
     Name: "",
     Author: "",
@@ -20,15 +23,50 @@ const AddItemModal = ({ open, onClose }) => {
     Genre: "",
     SubGenre: "",
     Published: "",
-    LastUpdatedBy: "storeManager", //TODO: this needs to be the employee logged in (their username)
+    LastUpdatedBy: "",
     LastUpdated: new Date().toISOString(),
   });
+
+  useEffect(() => {
+    const fetchUserName = async () => {
+      const userEmail = JSON.parse(localStorage.getItem("LogInData"))?.EmailAddress;
+      console.log(userEmail);
+      if (!userEmail) return;
+  
+      try {
+        const response = await axios.get(
+          "http://localhost:8080/api/v1/db/data/v1/inft3050/User/find-one",
+          {
+            headers: {
+              "xc-token": process.env.REACT_APP_APIKEY,
+            },
+            params: {
+              where: `(Email,eq,${userEmail})`,
+            },
+          }
+        );
+        if (response.data) {
+          setLoggedInUserName(response.data.UserName);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+  
+    fetchUserName();
+  }, []);
+
+  useEffect(() => {
+    // Update LastUpdatedBy in itemDetails when loggedInUserName changes
+    setItemDetails((prevDetails) => ({
+      ...prevDetails,
+      LastUpdatedBy: loggedInUserName,
+    }));
+  }, [loggedInUserName]);
 
   const { addItem } = useItemMutations();
   const { validateAddItem } = useValidation();
 
-  // When an item is selceted it gets te corresponding value (1,2,3)
-  // and maps through the items below to render subgenres for the next dropdown
   const subGenres = {
     1: [
       { name: "Fiction", value: 1 },
@@ -68,8 +106,7 @@ const AddItemModal = ({ open, onClose }) => {
       { name: "Fighting", value: 14 },
     ],
   };
-  // Converts the inputted date dd/mm/yyyy to iso standard
-  // since thats whats in the databse
+
   const convertToISO = (dateString) => {
     const [day, month, year] = dateString.split("/").map(Number);
     const isoDate = new Date(year, month - 1, day);
@@ -77,14 +114,13 @@ const AddItemModal = ({ open, onClose }) => {
   };
 
   const handleChange = (e) => {
-    // Extract the name and value from the component and update the
-    // state object with the previous detaisl using a deep copy and new values
     const { name, value } = e.target;
     setItemDetails((prevDetails) => ({
       ...prevDetails,
       [name]: value,
     }));
   };
+
   const handleSubmit = async () => {
     if (!validateAddItem(itemDetails)) {
       return;
@@ -108,7 +144,6 @@ const AddItemModal = ({ open, onClose }) => {
     }
   };
 
-  // Get the available sub-genres based on the selected genre
   const availableSubGenres = itemDetails.Genre
     ? subGenres[itemDetails.Genre]
     : [];
@@ -177,8 +212,7 @@ const AddItemModal = ({ open, onClose }) => {
               backgroundColor: "#24242c",
               color: "white",
               borderRadius: "5px",
-              "& .MuiOutlinedInput-notchedOutline": {
-              },
+              "& .MuiOutlinedInput-notchedOutline": {},
               ".MuiOutlinedInput-notchedOutline": {
                 borderColor: "#454545",
               },
@@ -217,7 +251,6 @@ const AddItemModal = ({ open, onClose }) => {
               backgroundColor: "#24242c",
               color: "white",
               borderRadius: "5px",
- 
               "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
                 borderColor: "#5e43f3",
               },

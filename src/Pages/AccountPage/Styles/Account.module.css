@@ -1,0 +1,22 @@
+.panel {
+    background-color: #28293d;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 400px;
+    height: 500px;
+    margin: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    overflow-y: auto; 
+    align-items: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+
+.panel::-webkit-scrollbar {
+    display: none; 
+}
