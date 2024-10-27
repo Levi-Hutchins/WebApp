@@ -90,6 +90,7 @@ const NavBar = () => {
     <div className="nav">
       <div className="left-section">
         <div className="account-link" onClick={checkLogIn}>
+        {!adminMode ? (
           <AccountCircleIcon
             fontSize="large"
             sx={{
@@ -97,7 +98,9 @@ const NavBar = () => {
               backgroundColor: "white",
               borderRadius: "50%",
             }}
-          />
+          />) : (<></>)}
+
+
           </div>
         {adminMode ? (   
           <Link to="/Admin" className="homepage">

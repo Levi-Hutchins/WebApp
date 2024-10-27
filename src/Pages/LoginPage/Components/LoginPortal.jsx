@@ -19,7 +19,11 @@ const LoginPortal = () => {
     if (token) {
       console.log("Inside if token")
       // Authenticated successful
-      navigate("/UserAccount");
+      const IsAdmin = localStorage.getItem("IsAdmin") === "true";
+      if (IsAdmin){
+        navigate("/Admin");
+      }else{
+      navigate("/UserAccount");}
     } else {
       // Authentication failed
       toast.error("Authentication failed. Please try again.", {
