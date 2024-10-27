@@ -24,7 +24,6 @@ const useUserMutations = () => {
         return false;
       };
  const updateUser = async (ID, userDetails) => {
-    console.log(JSON.stringify(userDetails))
     try {
         const response = await axios.patch(`http://localhost:8080/api/v1/db/data/v1/inft3050/User/${ID}`, (userDetails),{
           headers: {

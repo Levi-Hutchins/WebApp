@@ -6,6 +6,7 @@ import useCustomerDetails from "./Hooks/useCustomerDetails";
 import { toast } from "react-toastify";
 import styles from './Styles/UserDashboard.module.css';
 import Orders from "./Components/Orders";
+import EmployeeAccountDetails from "./Components/EmployeeAccountDetails";
 
 const UserAccountPage = () => {
   const [isEmployee, setIsEmployee] = useState(false);
@@ -15,7 +16,7 @@ const UserAccountPage = () => {
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("LogInData"));
     setLoggedInUser(storedUser);
-    setIsEmployee(storedUser?.User === "Employee");
+    setIsEmployee(storedUser?.User === "Employee" || storedUser?.User === "Admin");
 
   }, []);
 
@@ -29,9 +30,13 @@ const UserAccountPage = () => {
 
   return (
     <div className={styles["dashboard"]}>
-      <AccountDetails loggedInUser={loggedInUser} setLoading={setLoading} />
+      {isEmployee ? 
+      <>
+      <EmployeeAccountDetails loggedInUser={loggedInUser} setLoading={setLoading}/>
+      </>: <><AccountDetails loggedInUser={loggedInUser} setLoading={setLoading} />
       <CheckoutDetails loggedInUser={loggedInUser} setLoading={setLoading} />
-      <Orders loggedInUser={loggedInUser}/>
+      <Orders loggedInUser={loggedInUser}/></>}
+      
     </div>
   );
 };
