@@ -99,8 +99,6 @@ const NavBar = () => {
               borderRadius: "50%",
             }}
           />) : (<></>)}
-
-
           </div>
         {adminMode ? (   
           <Link to="/Admin" className="homepage">
