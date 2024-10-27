@@ -40,7 +40,7 @@ const useForm = (initialValues) => {
         )
         .then((user) => {
           if (!Object.keys(user.data).length) {
-            const passwordSalt = hashPassword(values.password);
+            const passwordSalt = hashPassword(values.Password);
             const userToAdd = {
               Email: values.Email,
               Name: values.Name,

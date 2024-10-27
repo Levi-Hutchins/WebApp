@@ -107,7 +107,7 @@ export default function InventoryPage({ loggedInUser }) {
   };
 
   const columns = [
-    { id: "name", label: "Product Name", minWidth: 170 },
+    { id: "name", label: "Product Name", minWidth: 120 },
     { id: "format", label: "Format", minWidth: 100 },
     { id: "quantity", label: "Quantity", minWidth: 100 },
     { id: "price", label: "Price ($)", minWidth: 100 },
@@ -119,7 +119,7 @@ export default function InventoryPage({ loggedInUser }) {
 
   return (
     <>
-      <Paper sx={{ width: "80%", overflow: "hidden", margin: "auto" }}>
+      <Paper sx={{ width: "40%", overflow: "hidden", margin: "auto" }}>
 
       <TextField
           label="Search Inventory"

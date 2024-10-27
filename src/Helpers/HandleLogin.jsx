@@ -31,10 +31,9 @@ async function sha256(message) {
                 }
             );
     
-            console.log(response.data)
-            const { Salt, isAdmin, HashPW } = response.data;
+            const { Salt, IsAdmin, HashPW } = response.data;
             const inputHashed = await sha256(Salt + password);
-
+            
             
             
             console.log("Input Hashed: ", inputHashed);
@@ -45,12 +44,12 @@ async function sha256(message) {
                     position: "bottom-right"
                 });
                 localStorage.setItem("LogInData",JSON.stringify({EmailAddress: response.data.Email, User: "Employee"}))
-                localStorage.setItem("IsAdmin", false)
-
-                console.log("Admin")
-                if (isAdmin === true){
+                
+                if (IsAdmin === true){
                     localStorage.setItem("LogInData",JSON.stringify({EmailAddress: response.data.Email, User: "Admin"}))
                     localStorage.setItem("IsAdmin", true)
+                }else{
+                    localStorage.setItem("IsAdmin", false)
                 }
 
                 return token } //???????????????????????????

@@ -8,17 +8,21 @@ import CustomBadge from "../Badge/CustomBadge";
 const NavBar = () => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track login status
-  const [adminMode, setAdminMode] = useState(false); // State to track admin mode
+  const [adminMode, setAdminMode] = useState(false); // State to track if user is an admin
+  const [isEmployee, setIsEmployee] = useState(false); //State to track if user is employee
+  const [isCustomer, setIsCustomer] = useState(false); // State to track if user is a customer
+
   // Check if the user is logged in when the component mounts
   useEffect(() => {
     const loggedIn = localStorage.getItem("LogInData"); // Get login status from localStorage
-    setAdminMode(localStorage.getItem("IsAdmin"));
     if (loggedIn) {
       setIsLoggedIn(true);
-  }})  // Helper function to update login and admin status from localStorage
+  }})  
+  
+  // Helper function to update login and admin status from localStorage
   const updateLoginStatus = () => {
     const loginData = localStorage.getItem("LogInData");
-    const isAdmin = localStorage.getItem("IsAdmin") === "true"; // Check if admin status is true
+    const isAdmin = localStorage.getItem("IsAdmin"); // Check if admin status is true
 
     // Parse login data and validate it
     if (loginData) {
@@ -27,9 +31,15 @@ const NavBar = () => {
         if (parsedData.EmailAddress) {
           console.log("SetIsLoggedIn == True")
           setIsLoggedIn(true); // User is logged in if valid data exists
+          setIsEmployee(parsedData.User === "Employee"); // check if user is employee
+          setIsCustomer(parsedData.User === "Customer") // check if user is customer
+          setAdminMode(isAdmin === "true")
+
         } else {
           console.log("SetIsLoggedIn == False")
           setIsLoggedIn(false);
+          setIsEmployee(false)
+          setIsCustomer(false)
         }
       } catch (error) {
         console.error("Error parsing LogInData", error);
@@ -38,8 +48,6 @@ const NavBar = () => {
     } else {
       setIsLoggedIn(false); // Default to logged out if no data found
     }
-
-    setAdminMode(isAdmin); // Update admin mode state
   };
 
   // Check if the user is logged in when the component mounts or localStorage changes
@@ -49,10 +57,10 @@ const NavBar = () => {
     // Add an event listener to detect changes in localStorage
     window.addEventListener("storage", updateLoginStatus);
 
-    return () => {
+    return () => { 
       window.removeEventListener("storage", updateLoginStatus);
     };
-  }, []); // Empty dependency array to run only once
+  });
 
   const handleLoginLogoutClick = () => {
     if (isLoggedIn) {
@@ -60,6 +68,8 @@ const NavBar = () => {
       localStorage.removeItem("IsAdmin");
       setIsLoggedIn(false);
       setAdminMode(false);
+      setIsEmployee(false);
+      setIsCustomer(false);
       navigate("/"); // Redirect to home after logout
     } else {
       navigate("/LogIn"); // Navigate to login page if not logged in
@@ -89,24 +99,30 @@ const NavBar = () => {
             }}
           />
           </div>
-        {adminMode ? (   <Link to="/Admin" className="homepage">
-          ADMIN
-        </Link>) : (<></>)}
-
+        {adminMode ? (   
+          <Link to="/Admin" className="homepage">
+            ADMIN
+          </Link>) : (<></>)
+        } 
+        {isEmployee ? (
+          <Link to="/Employee" className="nav-item">
+            EMPLOYEE
+          </Link>) : (<></>)
+        }
         <Link to="/" className="homepage">
           HOME
         </Link>
+
+        {!adminMode ? (
         <Link to="/Search" className="nav-item">
           ITEM SEARCH
-        </Link>
-
-        <Link to="/Employee" className="nav-item">
-          EMPLOYEE
-        </Link>
+        </Link>) : (<></>)
+        }
       </div>
 
       <ul className="right-section">
         <li className="register-button-container">
+          {!isLoggedIn ?(
           <Button
             className="register-button"
             variant="contained"
@@ -120,7 +136,8 @@ const NavBar = () => {
             }}
           >
             Register
-          </Button>
+          </Button>) : (<></>)
+        }
         </li>
         <li className="login-button-container">
           <Button

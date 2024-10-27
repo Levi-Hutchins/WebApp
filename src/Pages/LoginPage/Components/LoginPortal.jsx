@@ -20,11 +20,12 @@ const LoginPortal = () => {
     if (token) {
       console.log("Inside if token")
       // Authenticated successful
-      setResult("Authentication successful");
       navigate("/UserAccount");
     } else {
       // Authentication failed
-      setResult("Authentication failed");
+      toast.error("Authentication failed. Please try again.", {
+        position: "bottom-right",
+      });
     }
   }
 
@@ -165,23 +166,6 @@ const LoginPortal = () => {
               Forgot password
             </Button>
           </Box>
-
-          <TextField
-            id="result"
-            disabled
-            label="Authentication Result"
-            value={result}
-            sx={{
-              marginTop: "15px",
-              "& .MuiOutlinedInput-root": {
-                backgroundColor: "#1c1c2b",
-                borderRadius: "5px",
-                width: "80%",
-                paddingLeft: "50px"
-              },
-              input: { color: "#aaa", cursor: "not-allowed" },
-            }}
-          />
         </form>
 
       </Box>
