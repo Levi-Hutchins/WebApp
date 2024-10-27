@@ -4,6 +4,7 @@ import Button from "@mui/material/Button";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Link, useNavigate } from "react-router-dom";
 import CustomBadge from "../Badge/CustomBadge";
+import { toast } from "react-toastify";
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -70,6 +71,8 @@ const NavBar = () => {
       setAdminMode(false);
       setIsEmployee(false);
       setIsCustomer(false);
+      toast.success("Successfully logged out", {
+        position: "bottom-right",})
       navigate("/"); // Redirect to home after logout
     } else {
       navigate("/LogIn"); // Navigate to login page if not logged in
