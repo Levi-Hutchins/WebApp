@@ -15,7 +15,7 @@ const LoginPortal = () => {
   async function handleSubmit(event) {
     event.preventDefault(); //Prevent reloading of the page
 
-    const token = await HandleLogin(username, password);
+    const token = await HandleLogin(username, password.trim());
     console.log("token: ", token);
     if (token) {
       console.log("Inside if token")
