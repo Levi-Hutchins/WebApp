@@ -9,7 +9,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TablePagination from "@mui/material/TablePagination";
 import TextField from "@mui/material/TextField";
-import PopUpModal from "../../../shared-components/Modal/Modal"; // Modal for Customer Details
+import ViewAccountModal from "./Modals/ViewAccountModal";
 
 export default function CustomerAccounts() {
   const [customers, setCustomers] = useState([]);
@@ -19,19 +19,15 @@ export default function CustomerAccounts() {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
-  const [orderDetails, setOrderDetails] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch customers data on component mount
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8080/api/v1/db/data/v1/inft3050/Patrons", 
-          {
-            headers: { "xc-token": process.env.REACT_APP_APIKEY },
-          }
+          "http://localhost:8080/api/v1/db/data/v1/inft3050/Patrons",
+          { headers: { "xc-token": process.env.REACT_APP_APIKEY } }
         );
         setCustomers(response.data.list);
         setFilteredCustomers(response.data.list);
@@ -46,7 +42,6 @@ export default function CustomerAccounts() {
     fetchCustomers();
   }, []);
 
-  // Handle search input
   const handleSearch = (event) => {
     const query = event.target.value.toLowerCase();
     setSearchQuery(query);
@@ -56,26 +51,12 @@ export default function CustomerAccounts() {
       customer.Email.toLowerCase().includes(query)
     );
     setFilteredCustomers(filtered);
-    setPage(0); // Reset pagination on search
+    setPage(0);
   };
 
-  // Fetch customer's orders when a customer row is clicked
-  const handleOpen = async (customer) => {
+  const handleOpen = (customer) => {
     setSelectedCustomer(customer);
     setModalOpen(true);
-
-    try {
-      const response = await axios.get(
-        `http://localhost:8080/api/v1/db/data/v1/inft3050/Orders/${customer.UserID}/orders`, // Retrieve orders for the customer
-        {
-          headers: { "xc-token": process.env.REACT_APP_APIKEY },
-        }
-      );
-      setOrderDetails(response.data.list);
-    } catch (err) {
-      console.error("Failed to fetch customer orders", err);
-      setOrderDetails([]);
-    }
   };
 
   const handleClose = () => setModalOpen(false);
@@ -96,7 +77,16 @@ export default function CustomerAccounts() {
 
   return (
     <>
-      <Paper sx={{ width: "20%", overflow: "hidden", margin: "auto" }}>
+      <Paper
+        sx={{
+          backgroundColor: "#28293d",
+          color: "white",
+          width: "80%",
+          margin: "40px auto",
+          borderRadius: "8px",
+          boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)",
+        }}
+      >
         <TextField
           label="Search Customers"
           variant="outlined"
@@ -105,10 +95,31 @@ export default function CustomerAccounts() {
           value={searchQuery}
           onChange={handleSearch}
           placeholder="Search by name or email"
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              backgroundColor: "#1c1c2b",
+              color: "white",
+              "& fieldset": {
+                borderColor: "#5e43f3",
+              },
+              "&:hover fieldset": {
+                borderColor: "#5a54e0",
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: "#6c63ff",
+              },
+            },
+            input: {
+              color: "white",
+            },
+            "& .MuiInputLabel-root": {
+              color: "#aaa",
+            },
+          }}
         />
 
         <TableContainer sx={{ maxHeight: 440 }}>
-          <Table stickyHeader aria-label="sticky table">
+          <Table stickyHeader aria-label="customer table">
             <TableHead>
               <TableRow>
                 {columns.map((column) => (
@@ -116,7 +127,11 @@ export default function CustomerAccounts() {
                     key={column.id}
                     align="left"
                     style={{ minWidth: column.minWidth }}
-                    sx={{ fontWeight: "bold" }}
+                    sx={{
+                      backgroundColor: "#1c1c2b",
+                      color: "#6c63ff",
+                      fontWeight: "bold",
+                    }}
                   >
                     {column.label}
                   </TableCell>
@@ -134,9 +149,19 @@ export default function CustomerAccounts() {
                       tabIndex={-1}
                       key={customer.UserID}
                       onClick={() => handleOpen(customer)}
+                      sx={{
+                        backgroundColor: "#1c1c2b",
+                        "&:hover": {
+                          backgroundColor: "#323247",
+                        },
+                      }}
                     >
-                      <TableCell align="left">{customer.Name}</TableCell>
-                      <TableCell align="left">{customer.Email}</TableCell>
+                      <TableCell align="left" sx={{ color: "white" }}>
+                        {customer.Name}
+                      </TableCell>
+                      <TableCell align="left" sx={{ color: "white" }}>
+                        {customer.Email}
+                      </TableCell>
                     </TableRow>
                   ))
               ) : (
@@ -149,6 +174,7 @@ export default function CustomerAccounts() {
             </TableBody>
           </Table>
         </TableContainer>
+
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
@@ -157,23 +183,23 @@ export default function CustomerAccounts() {
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
+          sx={{
+            backgroundColor: "#28293d",
+            color: "white",
+            "& .MuiSelect-icon": {
+              color: "white",
+            },
+            "& .MuiInputBase-root": {
+              color: "white",
+            },
+          }}
         />
       </Paper>
 
-      <PopUpModal
+      <ViewAccountModal
         open={modalOpen}
         onClose={handleClose}
-        productTitle={selectedCustomer ? selectedCustomer.Name : ""}
-        productDetails={{
-          Email: selectedCustomer ? selectedCustomer.Email : "N/A",
-          Orders: orderDetails.length
-            ? orderDetails.map((order) => (
-                <p key={order.orderID}>
-                  Order ID: {order.orderID} - {order.StreetAddress}, {order.Suburb}, {order.State}
-                </p>
-              ))
-            : "No Orders Found",
-        }}
+        customer={selectedCustomer}
       />
     </>
   );

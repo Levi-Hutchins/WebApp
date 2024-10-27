@@ -15,4 +15,13 @@
     flex: 1; /* Ensure both components take equal space */
     min-width: 45%; /* Prevent shrinking below 45% width */
   }
+
+  h1 {
+    font-size: 48px; /* Large, bold header */
+    color: #ffffff; /* Accent color to match buttons and inputs */
+    margin-bottom: 20px;
+    text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4); 
+    font-weight: bold;
+    text-align: center;
+  }
   

@@ -8,23 +8,22 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import PopUpModal from "../../../shared-components/Modal/Modal";
+import ViewProductModal from "./Modals/ViewProductModal";
 import axios from "axios";
-import TextField from "@mui/material/TextField"; 
+import TextField from "@mui/material/TextField";
 
 export default function InventoryPage({ loggedInUser }) {
-  const [data, setData] = useState([]); // Holds inventory data
-  const [filteredData, setFilteredData] = useState([]); // For search results
-  const [searchQuery, setSearchQuery] = useState(""); // Search query state
+  const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedRow, setSelectedRow] = useState(null); // Selected item for modal
-  const [productDescription, setProductDescription] = useState(""); // Store description
-  const [loading, setLoading] = useState(true); // Loading state
-  const [error, setError] = useState(null); // Error state
+  const [selectedRow, setSelectedRow] = useState(null);
+  const [productDescription, setProductDescription] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Fetch inventory data from backend
   useEffect(() => {
     const fetchInventory = async () => {
       try {
@@ -33,7 +32,7 @@ export default function InventoryPage({ loggedInUser }) {
           {
             headers: {
               "xc-token": process.env.REACT_APP_APIKEY,
-            }
+            },
           }
         );
 
@@ -58,30 +57,25 @@ export default function InventoryPage({ loggedInUser }) {
     fetchInventory();
   }, [loggedInUser]);
 
-    // Function to handle opening the modal and fetching description
-    const handleOpen = async (row) => {
-        setSelectedRow(row);
-        setModalOpen(true);
+  const handleOpen = async (row) => {
+    setSelectedRow(row);
+    setModalOpen(true);
 
-        console.log(row.id)
-
-        try {
-        const ProductResponse = await axios.get(
-            `http://localhost:8080/api/v1/db/data/v1/inft3050/Product/${row.id}`, // Fetch product description
-            {
-            headers: {
-                "xc-token": process.env.REACT_APP_APIKEY,
-            },
-            }
-        );
-
-        // Assuming the response contains a 'description' field
-        setProductDescription(ProductResponse.data.description);
-        } catch (err) {
-        console.error("Failed to fetch product description", err);
-        setProductDescription("No description available.");
+    try {
+      const ProductResponse = await axios.get(
+        `http://localhost:8080/api/v1/db/data/v1/inft3050/Product/${row.id}`,
+        {
+          headers: {
+            "xc-token": process.env.REACT_APP_APIKEY,
+          },
         }
-    };
+      );
+      setProductDescription(ProductResponse.data.Description);
+    } catch (err) {
+      console.error("Failed to fetch product description", err);
+      setProductDescription("No description available.");
+    }
+  };
 
   const handleClose = () => setModalOpen(false);
 
@@ -103,7 +97,7 @@ export default function InventoryPage({ loggedInUser }) {
       String(item.quantity).includes(query)
     );
     setFilteredData(filtered);
-    setPage(0); // Reset to first page on new search
+    setPage(0);
   };
 
   const columns = [
@@ -111,7 +105,6 @@ export default function InventoryPage({ loggedInUser }) {
     { id: "format", label: "Format", minWidth: 100 },
     { id: "quantity", label: "Quantity", minWidth: 100 },
     { id: "price", label: "Price ($)", minWidth: 100 },
-    
   ];
 
   if (loading) return <p>Loading inventory data...</p>;
@@ -119,9 +112,17 @@ export default function InventoryPage({ loggedInUser }) {
 
   return (
     <>
-      <Paper sx={{ width: "40%", overflow: "hidden", margin: "auto" }}>
-
-      <TextField
+      <Paper
+        sx={{
+          backgroundColor: "#28293d",
+          color: "white",
+          width: "80%",
+          margin: "40px auto",
+          borderRadius: "8px",
+          boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)",
+        }}
+      >
+        <TextField
           label="Search Inventory"
           variant="outlined"
           fullWidth
@@ -129,10 +130,31 @@ export default function InventoryPage({ loggedInUser }) {
           value={searchQuery}
           onChange={handleSearch}
           placeholder="Search by product name, format, price, or quantity"
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              backgroundColor: "#1c1c2b",
+              color: "white",
+              "& fieldset": {
+                borderColor: "#5e43f3",
+              },
+              "&:hover fieldset": {
+                borderColor: "#5a54e0",
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: "#6c63ff",
+              },
+            },
+            input: {
+              color: "white",
+            },
+            "& .MuiInputLabel-root": {
+              color: "#aaa",
+            },
+          }}
         />
 
         <TableContainer sx={{ maxHeight: 440 }}>
-          <Table stickyHeader aria-label="sticky table">
+          <Table stickyHeader aria-label="inventory table">
             <TableHead>
               <TableRow>
                 {columns.map((column) => (
@@ -140,7 +162,11 @@ export default function InventoryPage({ loggedInUser }) {
                     key={column.id}
                     align="left"
                     style={{ minWidth: column.minWidth }}
-                    sx={{ fontWeight: "bold" }}
+                    sx={{
+                      backgroundColor: "#1c1c2b",
+                      color: "#6c63ff",
+                      fontWeight: "bold",
+                    }}
                   >
                     {column.label}
                   </TableCell>
@@ -151,23 +177,37 @@ export default function InventoryPage({ loggedInUser }) {
               {filteredData.length > 0 ? (
                 filteredData
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row, rowIndex) => (
+                  .map((row) => (
                     <TableRow
                       hover
                       role="checkbox"
                       tabIndex={-1}
-                      key={`${row.id}-${row.format}`} // Ensures unique keys
+                      key={`${row.id}-${row.format}`}
                       onClick={() => handleOpen(row)}
+                      sx={{
+                        backgroundColor: "#1c1c2b",
+                        "&:hover": {
+                          backgroundColor: "#323247",
+                        },
+                      }}
                     >
-                      <TableCell align="left">{row.name}</TableCell>
-                      <TableCell align="left">{row.format}</TableCell>
-                      <TableCell align="left">{row.quantity}</TableCell>
-                      <TableCell align="left">{"$" + row.price}</TableCell>
+                      <TableCell align="left" sx={{ color: "white" }}>
+                        {row.name}
+                      </TableCell>
+                      <TableCell align="left" sx={{ color: "white" }}>
+                        {row.format}
+                      </TableCell>
+                      <TableCell align="left" sx={{ color: "white" }}>
+                        {row.quantity}
+                      </TableCell>
+                      <TableCell align="left" sx={{ color: "white" }}>
+                        {"$" + row.price}
+                      </TableCell>
                     </TableRow>
                   ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={columns.length + 1} align="center">
+                  <TableCell colSpan={columns.length} align="center">
                     No Results Found
                   </TableCell>
                 </TableRow>
@@ -175,6 +215,7 @@ export default function InventoryPage({ loggedInUser }) {
             </TableBody>
           </Table>
         </TableContainer>
+
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
@@ -183,20 +224,30 @@ export default function InventoryPage({ loggedInUser }) {
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
+          sx={{
+            backgroundColor: "#28293d",
+            color: "white",
+            "& .MuiSelect-icon": {
+              color: "white",
+            },
+            "& .MuiInputBase-root": {
+              color: "white",
+            },
+          }}
         />
       </Paper>
 
-      <PopUpModal
+      <ViewProductModal
         open={modalOpen}
         onClose={handleClose}
         productTitle={selectedRow ? selectedRow.name : ""}
         productDetails={{
-            ID: selectedRow ? selectedRow.id : "",
-            Description: productDescription ? productDescription : "Loading...",
-            Quantity: selectedRow ? selectedRow.quantity : "N/A",
-            Price: selectedRow ? `$${selectedRow.price}` : "N/A",
+          ID: selectedRow ? selectedRow.id : "",
+          Description: productDescription || "Loading...",
+          Quantity: selectedRow ? selectedRow.quantity : "N/A",
+          Price: selectedRow ? `$${selectedRow.price}` : "N/A",
         }}
-        />
+      />
     </>
   );
 }

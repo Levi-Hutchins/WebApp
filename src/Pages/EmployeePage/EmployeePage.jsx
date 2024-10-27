@@ -6,7 +6,7 @@ import './Styles/EmployeePage.css';
 const EmployeePage = () => {
   return (
     <div className="employee-page-container">
-      <h1>Employee Inventory Page</h1>
+      <h1>Employee</h1>
       <div className="tables-container">
         <Inventory />
         <CustomerAccounts />
