@@ -23,6 +23,12 @@
     flex-wrap: nowrap; 
     
 }
+.checkout-table:hover::-webkit-scrollbar {
+    width: 5px;
+  }
+.checkout-table::-webkit-scrollbar {
+    width: 0; 
+  }
 
 .orders-table,
 .details-table,

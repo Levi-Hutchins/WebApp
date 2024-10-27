@@ -5,10 +5,12 @@ import UserDetailsTable from "./Components/UserDetailsTable";
 import OrdersTable from "./Components/OrdersTable";
 import useCustomerDetails from "./Hooks/useCustomerDetails";
 import useEmployeeDetails from "./Hooks/useEmployeeDetails";
- // TODO: hook up products table to backend
+import { toast } from "react-toastify";
+
 const UserAccountPage = () => {
   const [isEmployee, setIsEmployee] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState(null);
+  const [loading, setLoading] = useState(true); // New loading state
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("LogInData"));
@@ -20,8 +22,16 @@ const UserAccountPage = () => {
     setLoggedInUser(storedUser);
   }, []);
 
-  const { userDetails: customerDetails, checkOutDetails } = useCustomerDetails(loggedInUser);
-  const { userDetails: employeeDetails } = useEmployeeDetails(loggedInUser);
+  useEffect(() => {
+    if (loading) {
+      toast.loading("Loading data...", { position: "bottom-right", autoClose: false });
+    } else {
+      toast.dismiss();
+    }
+  }, [loading]);
+
+  const { userDetails: customerDetails, checkOutDetails } = useCustomerDetails(loggedInUser, setLoading);
+  const { userDetails: employeeDetails } = useEmployeeDetails(loggedInUser, setLoading);
 
   return (
     <div>
