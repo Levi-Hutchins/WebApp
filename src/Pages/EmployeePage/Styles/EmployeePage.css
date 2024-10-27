@@ -1,0 +1,27 @@
+.employee-page-container {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .tables-container {
+    display: flex;
+    justify-content: space-between; /* Spread the components evenly */
+    align-items: flex-start; /* Align the components at the top */
+    gap: 20px; /* Add space between the two components */
+    margin-top: 20px;
+  }
+  
+  .tables-container > div {
+    flex: 1; /* Ensure both components take equal space */
+    min-width: 45%; /* Prevent shrinking below 45% width */
+  }
+
+  h1 {
+    font-size: 48px; /* Large, bold header */
+    color: #ffffff; /* Accent color to match buttons and inputs */
+    margin-bottom: 20px;
+    text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4); 
+    font-weight: bold;
+    text-align: center;
+  }
+  

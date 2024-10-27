@@ -1,25 +1,20 @@
+// useCustomerDetails.js
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const useCustomerDetails = (loggedInUser) => {
+const useCustomerDetails = (loggedInUser, setLoading = () => {}) => {
   const [userDetails, setUserDetails] = useState({});
   const [checkOutDetails, setCheckOutDetails] = useState({});
 
   useEffect(() => {
     const fetchCustomerData = async () => {
-      const loadingToast = toast.loading("Loading customer data...", {
-        position: "bottom-right",
-        autoClose: false,
-        closeOnClick: false,
-      });
-
       if (!loggedInUser || !loggedInUser.EmailAddress) {
-        setTimeout(() => {
-          toast.dismiss(loadingToast);
-        }, 1000);
+        setLoading(false);
         return;
       }
+
+      setLoading(true); 
 
       try {
         const patronResponse = await axios.get(
@@ -54,7 +49,6 @@ const useCustomerDetails = (loggedInUser) => {
         );
 
         const toData = toResponse.data;
-        console.log(toData.Email);
         setCheckOutDetails({
           ID: toData.CustomerID,
           Email: toData.Email,
@@ -62,21 +56,18 @@ const useCustomerDetails = (loggedInUser) => {
           CardOwner: toData.CardOwner,
           PhoneNumber: toData.PhoneNumber,
           StreetAddress: toData.StreetAddress,
-          ExpiryDate: toData.Expiry,
+          Expiry: toData.Expiry,
           CVV: toData.CVV,
         });
-
-        toast.dismiss(loadingToast);
       } catch (error) {
-        toast.dismiss(loadingToast);
-        toast.error("Error fetching customer data", {
-          position: "bottom-right",
-        });
+        toast.error("Error fetching customer data", { position: "bottom-right" });
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchCustomerData();
-  }, [loggedInUser]);
+  }, [loggedInUser, setLoading]);
 
   return { userDetails, checkOutDetails };
 };

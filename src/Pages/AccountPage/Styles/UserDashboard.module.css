@@ -1,0 +1,10 @@
+.dashboard {
+    display: flex;
+    justify-content: center; 
+    align-items: center;     
+    gap: 2rem;               
+    padding: 20px;
+    background-color: rgba(33, 34, 36, 0.183);
+    height: 100vh;
+  }
+  

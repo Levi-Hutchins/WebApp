@@ -1,113 +1,78 @@
-import * as React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import ViewProductModal from "./Modals/ViewProductModal";
-import axios from "axios";
+import TablePagination from "@mui/material/TablePagination";
 import TextField from "@mui/material/TextField";
+import ViewAccountModal from "./Modals/ViewAccountModal";
 
-export default function InventoryPage({ loggedInUser }) {
-  const [data, setData] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
+export default function CustomerAccounts() {
+  const [customers, setCustomers] = useState([]);
+  const [filteredCustomers, setFilteredCustomers] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedRow, setSelectedRow] = useState(null);
-  const [productDescription, setProductDescription] = useState("");
+  const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchInventory = async () => {
+    const fetchCustomers = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8080/api/v1/db/data/v1/inft3050/Stocktake",
-          {
-            headers: {
-              "xc-token": process.env.REACT_APP_APIKEY,
-            },
-          }
+          "http://localhost:8080/api/v1/db/data/v1/inft3050/Patrons",
+          { headers: { "xc-token": process.env.REACT_APP_APIKEY } }
         );
-
-        const productList = response.data.list.map((item) => ({
-          id: item.Product.ID,
-          name: item.Product.Name,
-          price: item.Price,
-          quantity: item.Quantity,
-          format: item.Source.SourceName,
-        }));
-
-        setData(productList);
-        setFilteredData(productList);
+        setCustomers(response.data.list);
+        setFilteredCustomers(response.data.list);
       } catch (err) {
-        setError("Failed to fetch inventory data");
-        console.error(err);
+        console.error("Failed to fetch customers data", err);
+        setError("Failed to fetch customers data");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchInventory();
-  }, [loggedInUser]);
-
-  const handleOpen = async (row) => {
-    setSelectedRow(row);
-    setModalOpen(true);
-
-    try {
-      const ProductResponse = await axios.get(
-        `http://localhost:8080/api/v1/db/data/v1/inft3050/Product/${row.id}`,
-        {
-          headers: {
-            "xc-token": process.env.REACT_APP_APIKEY,
-          },
-        }
-      );
-      setProductDescription(ProductResponse.data.Description);
-    } catch (err) {
-      console.error("Failed to fetch product description", err);
-      setProductDescription("No description available.");
-    }
-  };
-
-  const handleClose = () => setModalOpen(false);
-
-  const handleChangePage = (event, newPage) => setPage(newPage);
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
+    fetchCustomers();
+  }, []);
 
   const handleSearch = (event) => {
     const query = event.target.value.toLowerCase();
     setSearchQuery(query);
 
-    const filtered = data.filter((item) =>
-      item.name.toLowerCase().includes(query) ||
-      item.format.toLowerCase().includes(query) ||
-      String(item.price).includes(query) ||
-      String(item.quantity).includes(query)
+    const filtered = customers.filter((customer) =>
+      customer.Name.toLowerCase().includes(query) ||
+      customer.Email.toLowerCase().includes(query)
     );
-    setFilteredData(filtered);
+    setFilteredCustomers(filtered);
+    setPage(0);
+  };
+
+  const handleOpen = (customer) => {
+    setSelectedCustomer(customer);
+    setModalOpen(true);
+  };
+
+  const handleClose = () => setModalOpen(false);
+
+  const handleChangePage = (event, newPage) => setPage(newPage);
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
     setPage(0);
   };
 
   const columns = [
-    { id: "name", label: "Product Name", minWidth: 120 },
-    { id: "format", label: "Format", minWidth: 100 },
-    { id: "quantity", label: "Quantity", minWidth: 100 },
-    { id: "price", label: "Price ($)", minWidth: 100 },
+    { id: "Name", label: "Customer Name", minWidth: 140 },
+    { id: "Email", label: "Email", minWidth: 140 },
   ];
 
-  if (loading) return <p>Loading inventory data...</p>;
+  if (loading) return <p>Loading customer data...</p>;
   if (error) return <p>{error}</p>;
 
   return (
@@ -123,13 +88,13 @@ export default function InventoryPage({ loggedInUser }) {
         }}
       >
         <TextField
-          label="Search Inventory"
+          label="Search Customers"
           variant="outlined"
           fullWidth
           margin="normal"
           value={searchQuery}
           onChange={handleSearch}
-          placeholder="Search by product name, format, price, or quantity"
+          placeholder="Search by name or email"
           sx={{
             "& .MuiOutlinedInput-root": {
               backgroundColor: "#1c1c2b",
@@ -154,7 +119,7 @@ export default function InventoryPage({ loggedInUser }) {
         />
 
         <TableContainer sx={{ maxHeight: 440 }}>
-          <Table stickyHeader aria-label="inventory table">
+          <Table stickyHeader aria-label="customer table">
             <TableHead>
               <TableRow>
                 {columns.map((column) => (
@@ -174,16 +139,16 @@ export default function InventoryPage({ loggedInUser }) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {filteredData.length > 0 ? (
-                filteredData
+              {filteredCustomers.length > 0 ? (
+                filteredCustomers
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => (
+                  .map((customer) => (
                     <TableRow
                       hover
                       role="checkbox"
                       tabIndex={-1}
-                      key={`${row.id}-${row.format}`}
-                      onClick={() => handleOpen(row)}
+                      key={customer.UserID}
+                      onClick={() => handleOpen(customer)}
                       sx={{
                         backgroundColor: "#1c1c2b",
                         "&:hover": {
@@ -192,23 +157,17 @@ export default function InventoryPage({ loggedInUser }) {
                       }}
                     >
                       <TableCell align="left" sx={{ color: "white" }}>
-                        {row.name}
+                        {customer.Name}
                       </TableCell>
                       <TableCell align="left" sx={{ color: "white" }}>
-                        {row.format}
-                      </TableCell>
-                      <TableCell align="left" sx={{ color: "white" }}>
-                        {row.quantity}
-                      </TableCell>
-                      <TableCell align="left" sx={{ color: "white" }}>
-                        {"$" + row.price}
+                        {customer.Email}
                       </TableCell>
                     </TableRow>
                   ))
               ) : (
                 <TableRow>
                   <TableCell colSpan={columns.length} align="center">
-                    No Results Found
+                    No Customers Found
                   </TableCell>
                 </TableRow>
               )}
@@ -219,7 +178,7 @@ export default function InventoryPage({ loggedInUser }) {
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
-          count={data.length}
+          count={customers.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
@@ -237,16 +196,10 @@ export default function InventoryPage({ loggedInUser }) {
         />
       </Paper>
 
-      <ViewProductModal
+      <ViewAccountModal
         open={modalOpen}
         onClose={handleClose}
-        productTitle={selectedRow ? selectedRow.name : ""}
-        productDetails={{
-          ID: selectedRow ? selectedRow.id : "",
-          Description: productDescription || "Loading...",
-          Quantity: selectedRow ? selectedRow.quantity : "N/A",
-          Price: selectedRow ? `$${selectedRow.price}` : "N/A",
-        }}
+        customer={selectedCustomer}
       />
     </>
   );

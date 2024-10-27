@@ -1,47 +1,42 @@
+// UserAccountPage.js
 import React, { useEffect, useState } from "react";
-import styles from "./Styles/UserAccountPage.module.css";
-import CheckOutDetailsTable from "./Components/CheckOutDetailsTable";
-import UserDetailsTable from "./Components/UserDetailsTable";
-import OrdersTable from "./Components/OrdersTable";
+import AccountDetails from "./Components/AccountDetails";
+import CheckoutDetails from "./Components/CheckoutDetails";
 import useCustomerDetails from "./Hooks/useCustomerDetails";
-import useEmployeeDetails from "./Hooks/useEmployeeDetails";
- // TODO: hook up products table to backend
+import { toast } from "react-toastify";
+import styles from './Styles/UserDashboard.module.css';
+import Orders from "./Components/Orders";
+import EmployeeAccountDetails from "./Components/EmployeeAccountDetails";
+
 const UserAccountPage = () => {
   const [isEmployee, setIsEmployee] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("LogInData"));
-    if (storedUser && storedUser.User === "Employee") {
-      setIsEmployee(true);
-    } else {
-      setIsEmployee(false);
-    }
     setLoggedInUser(storedUser);
+    setIsEmployee(storedUser?.User === "Employee" || storedUser?.User === "Admin");
+
   }, []);
 
-  const { userDetails: customerDetails, checkOutDetails } = useCustomerDetails(loggedInUser);
-  const { userDetails: employeeDetails } = useEmployeeDetails(loggedInUser);
+  useEffect(() => {
+    if (loading) {
+      toast.loading("Loading data...", { position: "bottom-right", autoClose: false });
+    } else {
+      toast.dismiss();
+    }
+  }, [loading]);
 
   return (
-    <div>
-      {isEmployee ? (
-        <div>
-          <UserDetailsTable userValues={employeeDetails} isEmployee={isEmployee} />
-        </div>
-      ) : (
-        <div className={styles["details-orders-container"]}>
-          <div className={styles["customer-view"]}>
-            <UserDetailsTable userValues={customerDetails} isEmployee={isEmployee} />
-            <div className="checkout-table">
-              <CheckOutDetailsTable customerValues={checkOutDetails} />
-            </div>
-          </div>
-          <div className={styles["orders-table"]}>
-            <OrdersTable />
-          </div>
-        </div>
-      )}
+    <div className={styles["dashboard"]}>
+      {isEmployee ? 
+      <>
+      <EmployeeAccountDetails loggedInUser={loggedInUser} setLoading={setLoading}/>
+      </>: <><AccountDetails loggedInUser={loggedInUser} setLoading={setLoading} />
+      <CheckoutDetails loggedInUser={loggedInUser} setLoading={setLoading} />
+      <Orders loggedInUser={loggedInUser}/></>}
+      
     </div>
   );
 };

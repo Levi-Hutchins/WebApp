@@ -33,7 +33,8 @@ const useUsers = () => {
           },
         }
       );
-      if (response.data) {
+      if (Object.keys(response.data).length > 0) {
+        console.log(response.data);
         return true;
       }
     } catch (err) {
@@ -48,17 +49,17 @@ const useUsers = () => {
       })
       return false;
     }
-    const passwordSalt = hashPassword(user.Password);
-
+    const passwordSalt = await hashPassword(user.Password);
+    console.log(passwordSalt);
     const userValues = {
       UserName: user.UserName,
       Email: user.Email,
       Name: user.Name,
       IsAdmin: JSON.stringify(user.IsAdmin),
       Salt: passwordSalt.salt,
-      HashedPW: passwordSalt.hash,
+      HashPW: passwordSalt.hash,
     };
-    console.log(userValues);
+
     try {
       const users = await axios.post(
         "http://localhost:8080/api/v1/db/data/v1/inft3050/User",

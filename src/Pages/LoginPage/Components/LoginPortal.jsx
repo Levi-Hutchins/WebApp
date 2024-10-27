@@ -2,29 +2,33 @@ import { Box, FormControl, FormGroup, TextField, Button } from "@mui/material";
 import { useState } from "react";
 import HandleLogin from "../../../Helpers/HandleLogin";
 import { useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 
 const LoginPortal = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [result, setResult] = useState("");
   const navigate = useNavigate();
 
   async function handleSubmit(event) {
     event.preventDefault(); //Prevent reloading of the page
 
-    const token = await HandleLogin(username, password);
+    const token = await HandleLogin(username, password.trim());
     console.log("token: ", token);
     if (token) {
       console.log("Inside if token")
       // Authenticated successful
-      setResult("Authentication successful");
-      navigate("/UserAccount");
+      const IsAdmin = localStorage.getItem("IsAdmin") === "true";
+      if (IsAdmin){
+        navigate("/Admin");
+      }else{
+      navigate("/UserAccount");}
     } else {
       // Authentication failed
-      setResult("Authentication failed");
+      toast.error("Authentication failed. Please try again.", {
+        position: "bottom-right",
+      });
     }
   }
 
@@ -165,26 +169,8 @@ const LoginPortal = () => {
               Forgot password
             </Button>
           </Box>
-
-          <TextField
-            id="result"
-            disabled
-            label="Authentication Result"
-            value={result}
-            sx={{
-              marginTop: "15px",
-              "& .MuiOutlinedInput-root": {
-                backgroundColor: "#1c1c2b",
-                borderRadius: "5px",
-                width: "80%",
-                paddingLeft: "50px"
-              },
-              input: { color: "#aaa", cursor: "not-allowed" },
-            }}
-          />
         </form>
-          {/* Toast Container to display notifications */}
-        <ToastContainer />
+
       </Box>
     </Box>
   );

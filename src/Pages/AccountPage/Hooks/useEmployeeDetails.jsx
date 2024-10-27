@@ -2,21 +2,13 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const useEmployeeDetails = (loggedInUser) => {
+const useEmployeeDetails = (loggedInUser, setLoading) => {
   const [userDetails, setUserDetails] = useState({});
 
   useEffect(() => {
     const fetchEmployeeData = async () => {
-      const loadingToast = toast.loading("Loading employee data...", {
-        position: "bottom-right",
-        autoClose: false,
-        closeOnClick: false,
-      });
-
       if (!loggedInUser || !loggedInUser.EmailAddress) {
-        setTimeout(() => {
-          toast.dismiss(loadingToast);
-        }, 1000);
+        setLoading(false);
         return;
       }
 
@@ -39,18 +31,15 @@ const useEmployeeDetails = (loggedInUser) => {
           Name: userData.Name,
           UserName: userData.UserName,
         });
-
-        toast.dismiss(loadingToast);
       } catch (error) {
-        toast.dismiss(loadingToast);
-        toast.error("Error fetching employee data", {
-          position: "bottom-right",
-        });
+        toast.error("Error fetching employee data", { position: "bottom-right" });
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchEmployeeData();
-  }, [loggedInUser]);
+  }, [loggedInUser, setLoading]);
 
   return { userDetails };
 };
