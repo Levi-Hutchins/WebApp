@@ -55,7 +55,7 @@ const EmployeeAccountDetails = ({ loggedInUser, setLoading }) => {
                 { accountValue: "FullName", value: Name },
                 { accountValue: "EmailAddress", value: Email }
             ],
-            previousID // Pass the previous `UserName` as the unique identifier
+            previousID 
         );
 
         const loginData = JSON.parse(localStorage.getItem("LogInData"));
@@ -109,7 +109,7 @@ const EmployeeAccountDetails = ({ loggedInUser, setLoading }) => {
             "& .MuiOutlinedInput-root.Mui-disabled": {
       "& input": {
         color: "#ffffff", 
-        WebkitTextFillColor: "#ffffff", // For Safari
+        WebkitTextFillColor: "#ffffff",
 
       },
     },

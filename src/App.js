@@ -1,3 +1,4 @@
+// src/App.js
 import "./App.css";
 import NavBar from "./shared-components/NavBar/NavBar";
 import { Route, Routes } from "react-router-dom";
@@ -13,38 +14,42 @@ import "react-toastify/dist/ReactToastify.css";
 import LogInPage from "./Pages/LoginPage/LogInPage";
 import AdminDashboardPage from "./Pages/ItemManagementPage/ItemManagementPage";
 import EmployeePage from "./Pages/EmployeePage/EmployeePage";
+import PrivateRoute from "./shared-components/NavBar/PrivateRoute";
 
 function App() {
-
   const videoRef = useRef(null);
   useEffect(() => {
     if (videoRef.current) videoRef.current.playbackRate = 0.9;
   });
 
-
   return (
     <div className="App">
-            <div className="overlay">
-              <NavBar />
-              <video ref={videoRef} src={video} autoPlay loop muted />
-              <ToastContainer autoClose={2000} />
+      <div className="overlay">
+        <NavBar />
+        <video ref={videoRef} src={video} autoPlay loop muted />
+        <ToastContainer autoClose={2000} />
 
-              <div className="container">
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/Search" element={<SearchPage />} />
-                  <Route path="/Register" element={<RegisterPage />} />
-                  <Route path="/LogIn" element={<LogInPage />} />
-                  <Route path="/Admin" element={<AdminDashboardPage />} />
-                  <Route path="/UserAccount" element={<UserAccountPage />} />
-                  <Route path="/ShoppingCart" element={<ShoppingCartPage />} />
-                  <Route path="/Employee" element={<EmployeePage/>} />
-                </Routes>
-              </div>
+        <div className="container">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/Search" element={<SearchPage />} />
+            <Route path="/Register" element={<RegisterPage />} />
+            <Route path="/LogIn" element={<LogInPage />} />
 
+            <Route element={<PrivateRoute role="Admin" />}>
+              <Route path="/Admin" element={<AdminDashboardPage />} />
+            </Route>
+
+            <Route element={<PrivateRoute role="Employee" />}>
+              <Route path="/Employee" element={<EmployeePage />} />
+            </Route>
+
+            <Route path="/UserAccount" element={<UserAccountPage />} />
+            <Route path="/ShoppingCart" element={<ShoppingCartPage />} />
+          </Routes>
+        </div>
+      </div>
     </div>
-    </div>
-
   );
 }
 

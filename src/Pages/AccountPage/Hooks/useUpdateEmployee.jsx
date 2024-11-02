@@ -20,12 +20,12 @@ const useUpdateEmployee = () => {
         const newData = {
             Email: transformedData.EmailAddress,
             Name: transformedData.FullName,
-            UserName: transformedData.UserName, // Include UserName in the request data
+            UserName: transformedData.UserName, 
         };
 
         try {
             const response = await axios.patch(
-                `http://localhost:8080/api/v1/db/data/v1/inft3050/User/${previousID}`, // Use previousID here
+                `http://localhost:8080/api/v1/db/data/v1/inft3050/User/${previousID}`, 
                 newData,
                 {
                     headers: {
