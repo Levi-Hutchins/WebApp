@@ -2,7 +2,6 @@ import React from "react";
 import { Modal, Box, Typography, IconButton } from "@mui/material";
 import Button from '@mui/material/Button';
 import CloseIcon from "@mui/icons-material/Close";
-import DeleteIcon from "@mui/icons-material/Delete";
 import styles from "../../Styles/Modals.module.css";
 
 const DeleteUserModal = ({ open, onClose, user, onDeleteConfirm }) => {

@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import AccountDetails from "./Components/AccountDetails";
 import CheckoutDetails from "./Components/CheckoutDetails";
-import useCustomerDetails from "./Hooks/useCustomerDetails";
 import { toast } from "react-toastify";
 import styles from './Styles/UserDashboard.module.css';
 import Orders from "./Components/Orders";

@@ -41,7 +41,7 @@ const ShoppingCart = ({ cartItems, productDetailsById, handleSubmit }) => {
                       </span>
                     )}
                     <span className={styles["item-price"]}>
-                      ${cartItem.cartQuantity * productDetail.Price.toFixed(2)}
+                      ${(cartItem.cartQuantity * productDetail.Price).toFixed(2)}
                     </span>
                   </div>
                   <div className={styles["item-buttons"]}>
