@@ -7,13 +7,10 @@ import SaveIcon from "@mui/icons-material/Save";
 import EditIcon from "@mui/icons-material/Edit";
 import styles from "../../Styles/Modals.module.css";
 import CustomButton from "../../../../shared-components/Button/CustomButton";
-import useValidation from "../../Hooks/useValidation";
-import useUsers from "../../Hooks/useUsers";
 import useUserMutations from "../../Hooks/useUserMutations";
 import { toast } from "react-toastify";
 
 const EditUserModal = ({ open, onClose, user }) => {
-  const { validateAddUser } = useValidation();
   const [previousID, setPreviousID] = useState("");
   const { updateUser } = useUserMutations();
   const [userDetails, setUserDetails] = useState({

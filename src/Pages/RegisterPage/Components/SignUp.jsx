@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React } from "react";
 import styles from "../Styles/SignUp.module.css";
 import InputBox from "../../../shared-components/InputBox/InputBox";
 import PersonIcon from "@mui/icons-material/Person";

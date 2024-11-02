@@ -29,7 +29,7 @@ const useValidaton = () => {
             return false;
 
         }
-        if(values.Password != values.ConfirmPassword){
+        if(values.Password !== values.ConfirmPassword){
             toast.error("Passwords do not match", {
                 position: "bottom-right"
             })

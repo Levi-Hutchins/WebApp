@@ -92,7 +92,7 @@ const useValidation = () => {
       toast.error("Invalid Password", { position: "bottom-right" });
       return false;
     }
-    if (user.ConfirmPassword != user.Password) {
+    if (user.ConfirmPassword !== user.Password) {
       toast.error("Passwords do not match", { position: "bottom-right" });
       return false;
     }

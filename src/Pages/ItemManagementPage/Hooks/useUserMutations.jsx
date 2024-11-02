@@ -44,7 +44,7 @@ const useUserMutations = () => {
         "xc-token": process.env.REACT_APP_APIKEY,
       },
     })
-    if(response.data == "1"){
+    if(response.data === "1"){
       return true;
     }
     return false;
@@ -52,6 +52,6 @@ const useUserMutations = () => {
     return false
   }
  }
- return {updateUser, deleteUser}
+ return {updateUser, deleteUser, findUser}
 }
 export default useUserMutations;
