@@ -10,12 +10,16 @@ import { useDispatch } from "react-redux";
 import { removeFromCart, addToCart } from "../../../Redux/Cart/CartSlice";
 
 const ShoppingCart = ({ cartItems, productDetailsById, handleSubmit }) => {
+  // dispatch hook to send states to redux
   const dispatch = useDispatch();
 
+  // handle removing an item from the cart
   const handleRemoveFromCart = (event, value) => {
     event.stopPropagation();
     dispatch(removeFromCart(value));
   };
+
+  // handle adding an item to the cart
   const handleAddToCart = (event, value) => {
     event.stopPropagation();
     dispatch(addToCart(value));
@@ -24,6 +28,7 @@ const ShoppingCart = ({ cartItems, productDetailsById, handleSubmit }) => {
     <div className={styles["cart-summary-panel"]}>
       <h1 className={styles["order-summary-title"]}>Order Summary</h1>
       <ul style={{ listStyle: "none", padding: 0 }}>
+        {/* map through the items in the cart and if there are itekms renders details about the item*/}
         {cartItems.map((cartItem) => {
           const productDetail = productDetailsById[cartItem.ID];
           if (productDetail) {
@@ -41,10 +46,13 @@ const ShoppingCart = ({ cartItems, productDetailsById, handleSubmit }) => {
                       </span>
                     )}
                     <span className={styles["item-price"]}>
-                      ${(cartItem.cartQuantity * productDetail.Price).toFixed(2)}
+                      $
+                      {(cartItem.cartQuantity * productDetail.Price).toFixed(2)}
                     </span>
                   </div>
                   <div className={styles["item-buttons"]}>
+                    {/* icon buttons to tie the redux mutations*/}
+
                     <Fab
                       size="small"
                       sx={{
@@ -58,6 +66,8 @@ const ShoppingCart = ({ cartItems, productDetailsById, handleSubmit }) => {
                     >
                       <RemoveIcon fontSize="small" />
                     </Fab>
+                    {/* icon buttons to tie the redux mutations*/}
+
                     <Fab
                       size="small"
                       sx={{

@@ -28,8 +28,8 @@ const EditUserModal = ({ open, onClose, user }) => {
 
   useEffect(() => {
     if (user) {
+      // set initial user details from the provided user object
       setPreviousID(user.UserName);
-      console.log(user);
       setUserDetails({
         UserName: user.UserName || "",
         Email: user.Email || "",
@@ -48,32 +48,31 @@ const EditUserModal = ({ open, onClose, user }) => {
   };
 
   const handleAdminChange = (e) => {
+    // toggle admin status based on checkbox
     const { checked } = e.target;
     setUserDetails((prevDetails) => ({
       ...prevDetails,
-      IsAdmin: checked ? "true" : "false", // Set as string "true" or "false"
+      IsAdmin: checked ? "true" : "false",
     }));
   };
 
   const toggleEdit = (field) => {
+    // toggle editing mode for a specific field
     setIsEditing((prev) => ({ ...prev, [field]: !prev[field] }));
   };
 
   const handleSubmit = async () => {
     try {
+      // update user details
       if (!(await updateUser(previousID, userDetails))) {
-        toast.error("An Error Occured", {
-          position: "bottom-right",
-        });
+        toast.error("An Error Occured", { position: "bottom-right" });
       } else {
         toast.success("User Updated Successfully !", {
           position: "bottom-right",
         });
       }
     } catch (err) {
-      toast.error("Error updating user", {
-        position: "bottom-right",
-      });
+      toast.error("Error updating user", { position: "bottom-right" });
     }
   };
 
@@ -95,14 +94,15 @@ const EditUserModal = ({ open, onClose, user }) => {
         <Typography
           variant="h6"
           component="h2"
-          color={"white"}
-          fontWeight={"bold"}
-          fontSize={"24px"}
+          color="white"
+          fontWeight="bold"
+          fontSize="24px"
           mb={3}
         >
           Edit User Details
         </Typography>
 
+        {/* Editable fields for user details */}
         <Box mb={2}>
           <TextField
             label="UserName"
@@ -111,9 +111,7 @@ const EditUserModal = ({ open, onClose, user }) => {
             onChange={handleChange}
             disabled={!isEditing.UserName}
             fullWidth
-            InputLabelProps={{
-              style: { color: "white" },
-            }}
+            InputLabelProps={{ style: { color: "white" } }}
             InputProps={{
               endAdornment: (
                 <IconButton
@@ -123,23 +121,15 @@ const EditUserModal = ({ open, onClose, user }) => {
                   <EditIcon />
                 </IconButton>
               ),
+              style: { color: "white" },
             }}
             sx={{
               "& .MuiOutlinedInput-root": {
                 backgroundColor: "#24242c",
-                "& fieldset": {
-                  borderColor: "#454545",
-                },
-                "&:hover fieldset": {
-                  borderColor: "#454545",
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: "#5e43f3",
-                },
-                "& input": {
-                  color: "white",
-                  WebkitTextFillColor: "white", 
-                },
+                "& fieldset": { borderColor: "#454545" },
+                "&:hover fieldset": { borderColor: "#454545" },
+                "&.Mui-focused fieldset": { borderColor: "#5e43f3" },
+                "& input": { color: "white", WebkitTextFillColor: "white" },
               },
             }}
           />
@@ -153,11 +143,8 @@ const EditUserModal = ({ open, onClose, user }) => {
             onChange={handleChange}
             disabled={!isEditing.Email}
             fullWidth
-            InputLabelProps={{
-              style: { color: "white" },
-            }}
+            InputLabelProps={{ style: { color: "white" } }}
             InputProps={{
-              style: { color: "white" },
               endAdornment: (
                 <IconButton
                   onClick={() => toggleEdit("Email")}
@@ -166,24 +153,15 @@ const EditUserModal = ({ open, onClose, user }) => {
                   <EditIcon />
                 </IconButton>
               ),
+              style: { color: "white" },
             }}
             sx={{
               "& .MuiOutlinedInput-root": {
                 backgroundColor: "#24242c",
-                "& fieldset": {
-                  borderColor: "#454545",
-                },
-                "&:hover fieldset": {
-                  borderColor: "#454545",
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: "#5e43f3",
-                },
-                "& input": {
-                  color: "white",
-                  WebkitTextFillColor: "white", 
-
-                },
+                "& fieldset": { borderColor: "#454545" },
+                "&:hover fieldset": { borderColor: "#454545" },
+                "&.Mui-focused fieldset": { borderColor: "#5e43f3" },
+                "& input": { color: "white", WebkitTextFillColor: "white" },
               },
             }}
           />
@@ -197,12 +175,8 @@ const EditUserModal = ({ open, onClose, user }) => {
             onChange={handleChange}
             disabled={!isEditing.Name}
             fullWidth
-            InputLabelProps={{
-              style: { color: "white" },
-            }}
+            InputLabelProps={{ style: { color: "white" } }}
             InputProps={{
-              style: { color: "white" },
-
               endAdornment: (
                 <IconButton
                   onClick={() => toggleEdit("Name")}
@@ -211,42 +185,36 @@ const EditUserModal = ({ open, onClose, user }) => {
                   <EditIcon />
                 </IconButton>
               ),
+              style: { color: "white" },
             }}
             sx={{
               "& .MuiOutlinedInput-root": {
                 backgroundColor: "#24242c",
-                "& fieldset": {
-                  borderColor: "#454545",
-                },
-                "&:hover fieldset": {
-                  borderColor: "#454545",
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: "#5e43f3",
-                },
-                "& input": {
-                  color: "white",
-                  WebkitTextFillColor: "white", 
-
-                },
+                "& fieldset": { borderColor: "#454545" },
+                "&:hover fieldset": { borderColor: "#454545" },
+                "&.Mui-focused fieldset": { borderColor: "#5e43f3" },
+                "& input": { color: "white", WebkitTextFillColor: "white" },
               },
             }}
           />
         </Box>
 
+        {/* Checkbox for admin status */}
         <FormControlLabel
           control={
             <Checkbox
-              checked={userDetails.IsAdmin === "true"} 
+              checked={userDetails.IsAdmin === "true"}
               onChange={handleAdminChange}
+              sx={{ color: "white", "&.Mui-checked": { color: "#5e43f3" } }}
             />
           }
           label="Change Admin Status"
           sx={{ mb: 3, color: "white" }}
         />
 
+        {/* Save button */}
         <CustomButton
-          displayValue={"Save"}
+          displayValue="Save"
           onClick={handleSubmit}
           sx={{ mt: 2 }}
           displayIcon={<SaveIcon />}

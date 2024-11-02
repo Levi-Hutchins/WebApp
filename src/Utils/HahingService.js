@@ -1,7 +1,7 @@
 
 import CryptoJS from 'crypto-js';
 
-
+// hash a given password use sha256 and generate salt for entry
 export const hashPassword = async (password) => {
     const salt = CryptoJS.lib.WordArray.random(128 / 8).toString(); 
     const saltedData = salt + password; 
@@ -13,7 +13,7 @@ export const hashPassword = async (password) => {
 
 }
 
-
+// given salt and password hash it
 export const verifyPassword = (salt, password) => {
     const saltedData = salt + password;
     const hash = CryptoJS.SHA256(saltedData).toString();

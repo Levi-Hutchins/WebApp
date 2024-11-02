@@ -1,23 +1,30 @@
-import { React, useState } from 'react';
-import { toast } from 'react-toastify';
-import { Modal, Box, Typography, TextField, IconButton, Grid } from "@mui/material";
+import { React, useState } from "react";
+import { toast } from "react-toastify";
+import {
+  Modal,
+  Box,
+  Typography,
+  TextField,
+  IconButton,
+  Grid,
+} from "@mui/material";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import CloseIcon from "@mui/icons-material/Close";
-import EditIcon from '@mui/icons-material/Edit';
-import SaveIcon from '@mui/icons-material/Save';
+import EditIcon from "@mui/icons-material/Edit";
+import SaveIcon from "@mui/icons-material/Save";
 import CustomButton from "../../../../shared-components/Button/CustomButton";
 import styles from "../../Styles/Modals.module.css";
-import useFindItem from '../../Hooks/useFindItem';
-import useItemMutations from "../../Hooks/useItemMutations"
-import useValidation from '../../Hooks/useValidation';
+import useFindItem from "../../Hooks/useFindItem";
+import useItemMutations from "../../Hooks/useItemMutations";
+import useValidation from "../../Hooks/useValidation";
 import InputBox from "../../../../shared-components/InputBox/InputBox";
 
 const EditItemModal = ({ open, onClose }) => {
   const [searchBy, setSearchBy] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const [itemFound, setItemFound] = useState(null);
-  const [originalItem, setOriginalItem] = useState(null); 
+  const [originalItem, setOriginalItem] = useState(null);
   const [isEditable, setIsEditable] = useState({
     Name: false,
     Author: false,
@@ -29,14 +36,16 @@ const EditItemModal = ({ open, onClose }) => {
 
   const { findItemByID, findItemByAuthor, findItemByName } = useFindItem();
   const { updateItem } = useItemMutations();
-  const { validateEditValues } = useValidation(); 
+  const { validateEditValues } = useValidation();
 
   const handleButtonClick = (buttonValue) => {
+    // sets the search criteria and clears the found item
     setSearchBy(buttonValue);
     setItemFound(null);
   };
 
   const renderDisplayValue = () => {
+    // determines placeholder text based on search criteria
     switch (searchBy) {
       case "ID":
         return "Enter Item ID";
@@ -54,6 +63,7 @@ const EditItemModal = ({ open, onClose }) => {
   };
 
   const handleSubmit = async () => {
+    // search for item based on selected criteria
     let item = null;
     try {
       switch (searchBy) {
@@ -77,24 +87,24 @@ const EditItemModal = ({ open, onClose }) => {
       }
 
       setItemFound(item);
-      setOriginalItem(item); 
+      setOriginalItem(item); // store the original item for change comparison
     } catch (error) {
-      toast.error("An error occurred while fetching the item", { position: "bottom-right" });
+      toast.error("An error occurred while fetching the item", {
+        position: "bottom-right",
+      });
       console.error("Error fetching item:", error);
     }
   };
 
   const handleSave = async () => {
-
-    //TODO: gets the user logged in and add that to the LastUpdatedBy field when calling API
-    //TODO: get the current time ad add that to the LastUpdated field
-
+    // validate edited item fields
     if (!validateEditValues(itemFound)) {
-      return; 
+      return;
     }
 
-   const updatedFields = {};
-    Object.keys(itemFound).forEach(key => {
+    // identify updated fields to send only modified data
+    const updatedFields = {};
+    Object.keys(itemFound).forEach((key) => {
       if (itemFound[key] !== originalItem[key]) {
         updatedFields[key] = itemFound[key];
       }
@@ -108,60 +118,62 @@ const EditItemModal = ({ open, onClose }) => {
     try {
       await updateItem(itemFound.ID, updatedFields);
       toast.success("Item updated successfully!", { position: "bottom-right" });
-      onClose()
+      onClose();
     } catch (error) {
       toast.error("Failed to update item", { position: "bottom-right" });
     }
   };
 
   const handleEditClick = (field) => {
+    // toggle editability of a specific field
     setIsEditable((prevState) => ({
       ...prevState,
-      [field]: !prevState[field], 
+      [field]: !prevState[field],
     }));
   };
 
   const renderEditableField = (label, value, field) => (
     <Box className={styles["editable-field"]} key={field}>
-      {console.log(field)}
       <TextField
         label={label}
-        value={value || ''}
-        disabled={!isEditable[field]} 
+        value={value || ""}
+        disabled={!isEditable[field]}
         onChange={(e) => {
-          if (isEditable[field]) { 
+          if (isEditable[field]) {
             setItemFound({ ...itemFound, [field]: e.target.value });
           }
         }}
         fullWidth
         margin="normal"
         InputLabelProps={{
-          style: { color: 'white' },
+          style: { color: "white" },
         }}
         InputProps={{
-          style: { color: 'white' },
+          style: { color: "white" },
           endAdornment: (
-            <IconButton onClick={() => handleEditClick(field)} sx={{ color: 'white' }}>
+            <IconButton
+              onClick={() => handleEditClick(field)}
+              sx={{ color: "white" }}
+            >
               <EditIcon />
             </IconButton>
-          )
+          ),
         }}
         sx={{
-          '& .MuiOutlinedInput-root': {
-            backgroundColor: '#24242c', 
-            '& fieldset': {
-              borderColor: '#454545', 
+          "& .MuiOutlinedInput-root": {
+            backgroundColor: "#24242c",
+            "& fieldset": {
+              borderColor: "#454545",
             },
-            '&:hover fieldset': {
-              borderColor: '#454545', 
+            "&:hover fieldset": {
+              borderColor: "#454545",
             },
-            '&.Mui-focused fieldset': {
-              borderColor: '#5e43f3', 
+            "&.Mui-focused fieldset": {
+              borderColor: "#5e43f3",
             },
-            '& input': {
-              color: 'white', 
-              WebkitTextFillColor: "white", 
-
+            "& input": {
+              color: "white",
+              WebkitTextFillColor: "white",
             },
           },
         }}
@@ -185,11 +197,23 @@ const EditItemModal = ({ open, onClose }) => {
           <CloseIcon />
         </IconButton>
 
-        <Typography variant="h6" component="h2" color={"white"} fontWeight={"bold"} fontSize={"24px"}>
+        <Typography
+          variant="h6"
+          component="h2"
+          color="white"
+          fontWeight="bold"
+          fontSize="24px"
+        >
           Edit An Item
         </Typography>
 
-        <Typography variant="h6" component="h2" color={"white"} fontWeight={"bold"} fontSize={"20px"}>
+        <Typography
+          variant="h6"
+          component="h2"
+          color="white"
+          fontWeight="bold"
+          fontSize="20px"
+        >
           Search By
         </Typography>
 
@@ -198,53 +222,37 @@ const EditItemModal = ({ open, onClose }) => {
           aria-label="Basic button group"
           sx={{ gap: "10px", marginTop: "10px" }}
         >
-          <Button
-            onClick={() => handleButtonClick("ID")}
-            sx={{
-              backgroundColor: searchBy === "ID" ? "#5e43f3" : "#4F4F56",
-              "&:hover": {
-                backgroundColor: searchBy === "ID" ? "#4733B5" : "#353539",
-              },
-            }}
-          >
-            ID
-          </Button>
-          <Button
-            onClick={() => handleButtonClick("Name")}
-            sx={{
-              backgroundColor: searchBy === "Name" ? "#5e43f3" : "#4F4F56",
-              "&:hover": {
-                backgroundColor: searchBy === "Name" ? "#4733B5" : "#353539",
-              },
-            }}
-          >
-            Name
-          </Button>
-          <Button
-            onClick={() => handleButtonClick("Author")}
-            sx={{
-              backgroundColor: searchBy === "Author" ? "#5e43f3" : "#4F4F56",
-              "&:hover": {
-                backgroundColor: searchBy === "Author" ? "#4733B5" : "#353539",
-              },
-            }}
-          >
-            Author
-          </Button>
+          {["ID", "Name", "Author"].map((option) => (
+            <Button
+              key={option}
+              onClick={() => handleButtonClick(option)}
+              sx={{
+                backgroundColor: searchBy === option ? "#5e43f3" : "#4F4F56",
+                "&:hover": {
+                  backgroundColor: searchBy === option ? "#4733B5" : "#353539",
+                },
+              }}
+            >
+              {option}
+            </Button>
+          ))}
         </ButtonGroup>
 
         {searchBy && !itemFound && (
           <>
-            <InputBox displayValue={renderDisplayValue()} handleChange={handleSearchValueChange} />
+            <InputBox
+              displayValue={renderDisplayValue()}
+              handleChange={handleSearchValueChange}
+            />
 
             <div className={styles["find-item"]}>
-              <CustomButton displayValue={"Find Item"} onClick={handleSubmit} />
+              <CustomButton displayValue="Find Item" onClick={handleSubmit} />
             </div>
           </>
         )}
 
         {itemFound && (
-          <Grid container spacing={2} >
+          <Grid container spacing={2}>
             <Grid item xs={6}>
               {renderEditableField("Name", itemFound.Name, "Name")}
               {renderEditableField("Genre", itemFound.Genre, "Genre")}
@@ -254,15 +262,27 @@ const EditItemModal = ({ open, onClose }) => {
               {renderEditableField("SubGenre", itemFound.SubGenre, "SubGenre")}
             </Grid>
             <Grid item xs={6}>
-              {renderEditableField("Description", itemFound.Description, "Description")}
+              {renderEditableField(
+                "Description",
+                itemFound.Description,
+                "Description"
+              )}
             </Grid>
             <Grid item xs={6}>
-              {renderEditableField("Published", itemFound.Published, "Published")}
+              {renderEditableField(
+                "Published",
+                itemFound.Published,
+                "Published"
+              )}
             </Grid>
 
             <Grid item xs={12}>
               <Box className={styles["button-container"]}>
-                <CustomButton displayValue="Save" onClick={handleSave} displayIcon={<SaveIcon/>} />
+                <CustomButton
+                  displayValue="Save"
+                  onClick={handleSave}
+                  displayIcon={<SaveIcon />}
+                />
               </Box>
             </Grid>
           </Grid>

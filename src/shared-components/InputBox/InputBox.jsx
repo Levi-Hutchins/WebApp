@@ -2,7 +2,7 @@ import React from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import styles from "./InputBox.module.css";
-
+// custome MUI inputbox to handle multiple use cases throughout the app
 const InputBox = ({ displayValue, handleChange, errorLevel, isPassword, value, name, onKeyPress }) => {
   return (
     <Box

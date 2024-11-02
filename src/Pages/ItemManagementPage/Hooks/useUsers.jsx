@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 const useUsers = () => {
   const getAllUsers = useCallback(async () => {
     try {
+      // fetch all users from the api
       const users = await axios.get(
         "http://localhost:8080/api/v1/db/data/v1/inft3050/User",
         {
@@ -16,12 +17,14 @@ const useUsers = () => {
       );
       return users.data;
     } catch (err) {
-      console.error(err);
+      console.error("error fetching users:", err);
       return [];
     }
   }, []);
+
   const findUser = async (userEmail) => {
     try {
+      // check if a user with the given email already exists
       const response = await axios.get(
         "http://localhost:8080/api/v1/db/data/v1/inft3050/User/find-one",
         {
@@ -33,24 +36,25 @@ const useUsers = () => {
           },
         }
       );
-      if (Object.keys(response.data).length > 0) {
-        console.log(response.data);
-        return true;
-      }
+      // return true if user exists
+      return Object.keys(response.data).length > 0;
     } catch (err) {
+      console.error("error finding user:", err);
       throw err;
     }
-    return false;
   };
+
   const addUser = async (user) => {
-    if(await findUser(user.Email)){
-      toast.warning("User with email: "+ user.Email+ " already exists",{
-        position: "bottom-right"
-      })
+    // check if user already exists by email
+    if (await findUser(user.Email)) {
+      toast.warning("user with email: " + user.Email + " already exists", {
+        position: "bottom-right",
+      });
       return false;
     }
+
+    // hash the user's password before saving
     const passwordSalt = await hashPassword(user.Password);
-    console.log(passwordSalt);
     const userValues = {
       UserName: user.UserName,
       Email: user.Email,
@@ -61,6 +65,7 @@ const useUsers = () => {
     };
 
     try {
+      // send post request to add a new user
       const users = await axios.post(
         "http://localhost:8080/api/v1/db/data/v1/inft3050/User",
         userValues,
@@ -72,10 +77,12 @@ const useUsers = () => {
       );
       return users.data;
     } catch (err) {
-      console.error(err);
+      console.error("error adding user:", err);
       throw err;
     }
   };
+
   return { getAllUsers, addUser };
 };
+
 export default useUsers;

@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "@mui/material/Button";
+// custom MUI button that takes typical pops as well as a display icon
 const CustomButton = ({onClick, displayValue, displayIcon}) => {
   return (
     <div>

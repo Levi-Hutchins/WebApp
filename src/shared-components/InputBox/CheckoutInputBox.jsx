@@ -2,7 +2,7 @@ import React from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import styles from "./CheckoutInputBox.module.css";
-
+// custom MUI input box design for the checkout page specifically 
 const CheckoutInputBox = ({ displayValue, handleChange, errorLevel, onKeyPress, width, value, name }) => {
   return (
     <Box

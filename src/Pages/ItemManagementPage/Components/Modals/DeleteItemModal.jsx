@@ -10,6 +10,7 @@ import styles from "../../Styles/Modals.module.css";
 import InputBox from "../../../../shared-components/InputBox/InputBox";
 import useFindItem from "../../Hooks/useFindItem";
 import useItemMutations from "../../Hooks/useItemMutations";
+
 const DeleteItemModal = ({ open, onClose }) => {
   const [searchBy, setSearchBy] = useState("");
   const [searchValue, setSearchValue] = useState("");
@@ -17,12 +18,15 @@ const DeleteItemModal = ({ open, onClose }) => {
   const [deleteConfirm, setDeleteConfirm] = useState(false);
   const { findItemByID, findItemByAuthor, findItemByName } = useFindItem();
   const { deleteItem } = useItemMutations();
+
   const handleButtonClick = (buttonValue) => {
+    // set the search criteria and reset found item state
     setSearchBy(buttonValue);
     setItemFound({});
   };
 
   const renderDisplayValue = () => {
+    // display placeholder text based on selected search criteria
     switch (searchBy) {
       case "ID":
         return "Enter Item ID";
@@ -40,29 +44,28 @@ const DeleteItemModal = ({ open, onClose }) => {
   };
 
   const handleSubmit = async () => {
-    if (searchBy === "ID") {
-      if (!/^\d+$/.test(searchValue)) {
-        toast.error("ID must be a number", {
-          position: "bottom-right",
-        });
-        return;
-      }
-    } else if (searchBy === "Name" || searchBy === "Author") {
-      if (searchValue.trim() === "") {
-        toast.error(`${searchBy} cannot be empty`, {
-          position: "bottom-right",
-        });
-        return;
-      }
-    } else {
+    // validate input based on search criteria before searching
+    if (searchBy === "ID" && !/^\d+$/.test(searchValue)) {
+      toast.error("ID must be a number", { position: "bottom-right" });
+      return;
+    }
+    if (
+      (searchBy === "Name" || searchBy === "Author") &&
+      searchValue.trim() === ""
+    ) {
+      toast.error(`${searchBy} cannot be empty`, { position: "bottom-right" });
+      return;
+    }
+    if (!searchBy) {
       toast.error("Please select a search option", {
         position: "bottom-right",
       });
       return;
     }
 
-    let item = null;
     try {
+      // search for item based on selected criteria
+      let item = null;
       switch (searchBy) {
         case "ID":
           item = await findItemByID(searchValue);
@@ -79,9 +82,7 @@ const DeleteItemModal = ({ open, onClose }) => {
       }
 
       if (Object.keys(item).length === 0) {
-        toast.warn("No Items found", {
-          position: "bottom-right",
-        });
+        toast.warn("No Items found", { position: "bottom-right" });
         return;
       }
 
@@ -95,15 +96,18 @@ const DeleteItemModal = ({ open, onClose }) => {
   };
 
   const handleDeleteClick = () => {
+    // activate delete confirmation state
     setDeleteConfirm(true);
   };
 
   const handleCancelDelete = () => {
+    // cancel delete confirmation
     setDeleteConfirm(false);
   };
 
   const handleConfirmDelete = async () => {
     try {
+      // attempt to delete the found item
       const deleted = await deleteItem(itemFound);
       if (deleted === 1) {
         toast.success("Item deleted successfully", {
@@ -147,9 +151,9 @@ const DeleteItemModal = ({ open, onClose }) => {
         <Typography
           variant="h6"
           component="h2"
-          color={"white"}
-          fontWeight={"bold"}
-          fontSize={"24px"}
+          color="white"
+          fontWeight="bold"
+          fontSize="24px"
         >
           Delete An Item
         </Typography>
@@ -157,9 +161,9 @@ const DeleteItemModal = ({ open, onClose }) => {
         <Typography
           variant="h6"
           component="h2"
-          color={"white"}
-          fontWeight={"bold"}
-          fontSize={"20px"}
+          color="white"
+          fontWeight="bold"
+          fontSize="20px"
         >
           Search By
         </Typography>
@@ -169,74 +173,49 @@ const DeleteItemModal = ({ open, onClose }) => {
           aria-label="Basic button group"
           sx={{ gap: "10px", marginTop: "10px" }}
         >
-          <Button
-            onClick={() => handleButtonClick("ID")}
-            sx={{
-              backgroundColor: searchBy === "ID" ? "#5e43f3" : "#4F4F56",
-              "&:hover": {
-                backgroundColor: searchBy === "ID" ? "#4733B5" : "#353539",
-              },
-            }}
-          >
-            ID
-          </Button>
-          <Button
-            onClick={() => handleButtonClick("Name")}
-            sx={{
-              backgroundColor: searchBy === "Name" ? "#5e43f3" : "#4F4F56",
-              "&:hover": {
-                backgroundColor: searchBy === "Name" ? "#4733B5" : "#353539",
-              },
-            }}
-          >
-            Name
-          </Button>
-          <Button
-            onClick={() => handleButtonClick("Author")}
-            sx={{
-              backgroundColor: searchBy === "Author" ? "#5e43f3" : "#4F4F56",
-              "&:hover": {
-                backgroundColor: searchBy === "Author" ? "#4733B5" : "#353539",
-              },
-            }}
-          >
-            Author
-          </Button>
+          {["ID", "Name", "Author"].map((option) => (
+            <Button
+              key={option}
+              onClick={() => handleButtonClick(option)}
+              sx={{
+                backgroundColor: searchBy === option ? "#5e43f3" : "#4F4F56",
+                "&:hover": {
+                  backgroundColor: searchBy === option ? "#4733B5" : "#353539",
+                },
+              }}
+            >
+              {option}
+            </Button>
+          ))}
         </ButtonGroup>
 
-        {searchBy !== "" &&
-          itemFound &&
-          Object.keys(itemFound).length === 0 && (
-            <>
-              <InputBox
-                displayValue={renderDisplayValue()}
-                handleChange={handleSearchValueChange}
-              />
+        {searchBy && !Object.keys(itemFound).length && (
+          <>
+            <InputBox
+              displayValue={renderDisplayValue()}
+              handleChange={handleSearchValueChange}
+            />
+            <div className={styles["find-item"]}>
+              <CustomButton displayValue="Find Item" onClick={handleSubmit} />
+            </div>
+          </>
+        )}
 
-              <div className={styles["find-item"]}>
-                <CustomButton
-                  displayValue={"Find Item"}
-                  onClick={handleSubmit}
-                />
-              </div>
-            </>
-          )}
-
-        {itemFound && Object.keys(itemFound).length > 0 && (
+        {Object.keys(itemFound).length > 0 && (
           <div className={styles["item-found-panel"]}>
             <Typography
               variant="h6"
-              color={"white"}
-              fontWeight={"bold"}
-              fontSize={"18px"}
+              color="white"
+              fontWeight="bold"
+              fontSize="18px"
               sx={{ marginTop: "20px" }}
             >
               Item Details
             </Typography>
             <Typography
               variant="body1"
-              color={"white"}
-              fontSize={"16px"}
+              color="white"
+              fontSize="16px"
               sx={{ marginTop: "10px" }}
             >
               {searchBy === "Author" ? (
@@ -247,16 +226,16 @@ const DeleteItemModal = ({ open, onClose }) => {
             </Typography>
             <Typography
               variant="body1"
-              color={"white"}
-              fontSize={"16px"}
+              color="white"
+              fontSize="16px"
               sx={{ marginTop: "10px" }}
             >
               <strong>Name:</strong> {itemFound.Name}
             </Typography>
             <Typography
               variant="body1"
-              color={"white"}
-              fontSize={"16px"}
+              color="white"
+              fontSize="16px"
               sx={{ marginTop: "10px" }}
             >
               <strong>Description:</strong>{" "}
@@ -286,9 +265,9 @@ const DeleteItemModal = ({ open, onClose }) => {
               <>
                 <Typography
                   variant="body1"
-                  color={"white"}
-                  fontWeight={"bold"}
-                  fontSize={"16px"}
+                  color="white"
+                  fontWeight="bold"
+                  fontSize="16px"
                   sx={{ marginTop: "20px", textAlign: "center" }}
                 >
                   Are you sure you want to delete this item?

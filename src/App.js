@@ -14,7 +14,7 @@ import "react-toastify/dist/ReactToastify.css";
 import LogInPage from "./Pages/LoginPage/LogInPage";
 import AdminDashboardPage from "./Pages/ItemManagementPage/ItemManagementPage";
 import EmployeePage from "./Pages/EmployeePage/EmployeePage";
-import PrivateRoute from "./shared-components/NavBar/PrivateRoute";
+import PrivateRoute from "./shared-components/AuthProvider/PrivateRoute";
 
 function App() {
   const videoRef = useRef(null);
@@ -35,7 +35,7 @@ function App() {
             <Route path="/Search" element={<SearchPage />} />
             <Route path="/Register" element={<RegisterPage />} />
             <Route path="/LogIn" element={<LogInPage />} />
-
+            {/* protected routes to prevent unauthorised access to admin and employee pages */}
             <Route element={<PrivateRoute role="Admin" />}>
               <Route path="/Admin" element={<AdminDashboardPage />} />
             </Route>

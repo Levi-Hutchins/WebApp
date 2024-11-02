@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-
+// simple validation
 const useValidation = () => {
   const validateEditValues = (itemFound) => {
     if (!itemFound.Name || itemFound.Name.trim() === "") {
