@@ -76,13 +76,13 @@ const useForm = (initialValues, checkoutValidator, toast) => {
       });
     }
   };
-  const createOrder = async (existingUser) => {
+  const createOrder = async (existingUser, userDetails) => {
     const newOrder = {
       Customer: existingUser.CustomerID,
-      StreetAddress: existingUser.StreetAddress,
-      PostCode: existingUser.PostCode,
-      Suburb: existingUser.Suburb,
-      State: existingUser.State
+      StreetAddress: userDetails.StreetAddress,
+      PostCode: userDetails.PostCode,
+      Suburb: userDetails.Suburb,
+      State: userDetails.State
     }
     try{
       await axios.post(
@@ -127,29 +127,38 @@ const useForm = (initialValues, checkoutValidator, toast) => {
 
       try {
         const existingUser = await checkIfUserExists(values.emailAddress);
-        const { CustomerID, PatronId, Patrons, "Orders List":_, ...compareValues } = existingUser;  // Exclude CustomerID and PatronId
+        console.log(existingUser)
         if (existingUser && Object.keys(existingUser).length > 0) {
-          await updateUserDetails(existingUser.CustomerID, compareValues, userDetails);
+            // Destructure to exclude certain fields and create updated user details
+            const { CustomerID, PatronId, Patrons, "Orders List": _, ...compareValues } = existingUser;
+            
+            // Update user details if necessary
+            await updateUserDetails(existingUser.CustomerID, compareValues, userDetails);
+            
+            // Create order for the existing user
+            await createOrder(existingUser, userDetails);
+            
+            // Show success message
+            toast.success("Order Confirmed!", {
+                position: "bottom-right",
+            });
+            
+            // Empty the cart after order confirmation
+            dispatch(emptyCart());
         } else {
-          // No user found, display a message
-          toast.error("You need an account to purchase.", {
-            position: "bottom-right",
-          });
+            // No user found, show an error message
+            toast.error("You need an account to purchase.", {
+                position: "bottom-right",
+            });
+            return;
         }
-        await createOrder(existingUser);
-        toast.success("Order Confirmed!", {
-          position: "bottom-right",})
-        
-        dispatch(emptyCart());
-
-      } catch (error) {
-        console.log(error); 
-      }
-    } else {
-      toast.error("Please correct the highlighted fields.", {
-        position: "bottom-right",
-      });
-    }
+    
+    } catch (error) {
+        console.log(error);
+        toast.error("An error occurred while processing your order.", {
+            position: "bottom-right",
+        });
+    }}
    
   };
 

@@ -16,7 +16,7 @@ const Orders = ({ loggedInUser }) => {
           {orders.map((order) => (
             <li key={order.OrderID} style={{ color: "#ffffff", padding: "10px", borderBottom: "1px solid #5e43f3" }}>
               <p><strong>Order ID: </strong> {order.OrderID}</p>
-              <p><strong>Delivered To: </strong> {order.StreetAddress}</p>
+              <p><strong>Delivery Address: </strong> {order.StreetAddress}</p>
             </li>
           ))}
         </ul>

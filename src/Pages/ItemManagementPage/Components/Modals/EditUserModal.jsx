@@ -138,6 +138,7 @@ const EditUserModal = ({ open, onClose, user }) => {
                 },
                 "& input": {
                   color: "white",
+                  WebkitTextFillColor: "white", 
                 },
               },
             }}
@@ -180,6 +181,8 @@ const EditUserModal = ({ open, onClose, user }) => {
                 },
                 "& input": {
                   color: "white",
+                  WebkitTextFillColor: "white", 
+
                 },
               },
             }}
@@ -223,6 +226,8 @@ const EditUserModal = ({ open, onClose, user }) => {
                 },
                 "& input": {
                   color: "white",
+                  WebkitTextFillColor: "white", 
+
                 },
               },
             }}
@@ -232,7 +237,7 @@ const EditUserModal = ({ open, onClose, user }) => {
         <FormControlLabel
           control={
             <Checkbox
-              checked={userDetails.IsAdmin === "true"} // Interpret "true" as checked
+              checked={userDetails.IsAdmin === "true"} 
               onChange={handleAdminChange}
             />
           }

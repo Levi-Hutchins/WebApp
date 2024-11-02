@@ -41,7 +41,7 @@ const useUserOrders = (loggedInUser, setLoading = () => {}) => {
             },
           }
         );
-
+        console.log(ordersResponse.data.list)
         setOrders(ordersResponse.data.list);
       } catch (error) {
         if (error.response && error.response.status === 404) {
