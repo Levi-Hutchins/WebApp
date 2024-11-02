@@ -98,6 +98,7 @@ const AccountDetails = ({ loggedInUser, setLoading }) => {
         fullWidth
         margin="normal"
         InputProps={{
+          // this is used throughhout the project adn allows us to put a button at the end of the inputbox
           endAdornment: (
             <InputAdornment position="end">
               <CustomButton
