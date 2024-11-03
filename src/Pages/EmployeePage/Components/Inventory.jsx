@@ -12,7 +12,10 @@ import ViewProductModal from "./Modals/ViewProductModal";
 import axios from "axios";
 import TextField from "@mui/material/TextField";
 
-export default function InventoryPage({ loggedInUser }) {
+// Inventory component - displays the inventory in the Employee page
+export default function Inventory() {
+
+  // states
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -24,6 +27,7 @@ export default function InventoryPage({ loggedInUser }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // retrieves inventory 
   useEffect(() => {
     const fetchInventory = async () => {
       try {
@@ -35,7 +39,7 @@ export default function InventoryPage({ loggedInUser }) {
             },
           }
         );
-
+        // fields retrieved from backend 
         const productList = response.data.list.map((item) => ({
           id: item.Product.ID,
           name: item.Product.Name,
@@ -55,8 +59,9 @@ export default function InventoryPage({ loggedInUser }) {
     };
 
     fetchInventory();
-  }, [loggedInUser]);
+  }, []);
 
+  // opens modal for clicked row
   const handleOpen = async (row) => {
     setSelectedRow(row);
     setModalOpen(true);
@@ -76,16 +81,19 @@ export default function InventoryPage({ loggedInUser }) {
       setProductDescription("No description available.");
     }
   };
-
+// closes modal
   const handleClose = () => setModalOpen(false);
 
+  // handles page change in pagination
   const handleChangePage = (event, newPage) => setPage(newPage);
 
+  // handles the number of rows in pagination
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
 
+  // search functionality 
   const handleSearch = (event) => {
     const query = event.target.value.toLowerCase();
     setSearchQuery(query);
@@ -100,6 +108,7 @@ export default function InventoryPage({ loggedInUser }) {
     setPage(0);
   };
 
+  // table columns
   const columns = [
     { id: "name", label: "Product Name", minWidth: 120 },
     { id: "format", label: "Format", minWidth: 100 },

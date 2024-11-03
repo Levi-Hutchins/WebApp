@@ -14,40 +14,49 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../Redux/Cart/CartSlice";
 
+// item table component 
 export default function ItemsTable({ data, }) {
+
+  // states
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null); 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); // redux dispatch function for cart
+  
+  // opens modal for clicked item
   const handleOpen = (row) => {
     setSelectedRow(row);
     setModalOpen(true); 
   };
 
+  // closes modal
   const handleClose = () => setModalOpen(false);
 
+  // changes page 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
+  // handles row change pagination
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
 
+  // adds the item into the cart
   const handleCartAdd = (event, value) => {
-    event.stopPropagation();
+    event.stopPropagation(); // Prevents modal opening on button click
     dispatch(addToCart(value))
 
   };
 
-
-
+  // table colums
   const columns = [{ id: "Name", label: "Product Name", minWidth: 170 }];
 
   return (
     <>
+      {/* Table container for displaying items */}
       <Paper sx={{ width: "700px", overflow: "hidden" }}>
         <TableContainer sx={{ maxHeight: 440 }}>
           <Table stickyHeader aria-label="sticky table">

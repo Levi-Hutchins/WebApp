@@ -5,26 +5,31 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
+// LoginPortal component - handles user login functionality
 const LoginPortal = () => {
+
+  // states for login input
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+  // handles submission of the login form
   async function handleSubmit(event) {
     event.preventDefault(); //Prevent reloading of the page
 
     const token = await HandleLogin(username, password.trim());
-    console.log("token: ", token);
     if (token) {
-      console.log("Inside if token")
       // Authenticated successful
       const IsAdmin = localStorage.getItem("IsAdmin") === "true";
+      // routes user to admin page if admin
       if (IsAdmin){
         navigate("/Admin");
-      }else{
+      }
+      // routes to account page if not admin
+      else{
       navigate("/UserAccount");}
-    } else {
+    } 
+    else {
       // Authentication failed
       toast.error("Authentication failed. Please try again.", {
         position: "bottom-right",
@@ -32,10 +37,12 @@ const LoginPortal = () => {
     }
   }
 
+  // updates userName state
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
   };
 
+  // updates password state
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
   };
@@ -58,11 +65,11 @@ const LoginPortal = () => {
     >
       <Box
         sx={{
-          backgroundColor: "#28293d", // Same form background color
+          backgroundColor: "#28293d",
           borderRadius: "8px",
           padding: "40px",
           width: "500px",
-          boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)", // Same box shadow
+          boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)", 
         }}
       >
         <h1 style={{ color: "white", textAlign: "center", marginBottom: "20px" }}>
@@ -80,24 +87,23 @@ const LoginPortal = () => {
                 onChange={handleUsernameChange}
                 sx={{
                   "& .MuiOutlinedInput-root": {
-                    backgroundColor: "#1c1c2b", // Input background to match SignUp
-                    color: "white", // Input text color
+                    backgroundColor: "#1c1c2b", 
+                    color: "white", 
                     borderRadius: "5px",
                     "&:hover fieldset": {
-                      borderColor: "#5e43f3", // Same hover color as SignUp
+                      borderColor: "#5e43f3", 
                     },
                     "&.Mui-focused fieldset": {
-                      borderColor: "#5e43f3", // Focus border color
+                      borderColor: "#5e43f3", 
                     },
                   },
                   input: {
-                    color: "white", // Text color in the input
+                    color: "white", 
                   },
                   "& .MuiInputLabel-root": {
-                    color: "#aaa", // Placeholder and label color
+                    color: "#aaa", 
                   },
-                }}
-              />
+                }} />
             </FormGroup>
 
             <FormGroup sx={{ marginBottom: "15px" }}>
@@ -110,7 +116,7 @@ const LoginPortal = () => {
                 onChange={handlePasswordChange}
                 sx={{
                   "& .MuiOutlinedInput-root": {
-                    backgroundColor: "#1c1c2b", // Same background as SignUp
+                    backgroundColor: "#1c1c2b", 
                     color: "white",
                     borderRadius: "5px",
                     "&:hover fieldset": {
@@ -126,8 +132,7 @@ const LoginPortal = () => {
                   "& .MuiInputLabel-root": {
                     color: "#aaa",
                   },
-                }}
-              />
+                }}/>
             </FormGroup>
           </FormControl>
 
@@ -138,14 +143,13 @@ const LoginPortal = () => {
               sx={{
                 width: "50%",
                 padding: "12px",
-                backgroundColor: "#6c63ff", // Matching button color
+                backgroundColor: "#6c63ff", 
                 borderRadius: "5px",
                 fontSize: "16px",
                 "&:hover": {
-                  backgroundColor: "#5a54e0", // Hover effect to match
+                  backgroundColor: "#5a54e0",
                 },
-              }}
-            >
+              }}>
               Submit
             </Button>
           </Box>
@@ -158,14 +162,13 @@ const LoginPortal = () => {
               sx={{
                 width: "50%",
                 padding: "12px",
-                backgroundColor: "#6c63ff", // Matching button color
+                backgroundColor: "#6c63ff",
                 borderRadius: "5px",
                 fontSize: "16px",
                 "&:hover": {
-                  backgroundColor: "#5a54e0", // Hover effect to match
+                  backgroundColor: "#5a54e0", 
                 },
-              }}
-            >
+              }}>
               Forgot password
             </Button>
           </Box>
