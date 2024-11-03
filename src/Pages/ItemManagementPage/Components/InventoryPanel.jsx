@@ -10,7 +10,7 @@ const InventoryPanel = () => {
   const { getAllInventory } = useInventory(); 
   const [inventory, setInventory] = useState([]); 
   const [error, setError] = useState(null); 
-
+  console.log(inventory)
   // determine icon based on item type
   const handleDisplayIcon = (iconType) => {
     if (iconType === "Hard copy book") return <AutoStoriesIcon fontSize="small" />;
@@ -49,11 +49,12 @@ const InventoryPanel = () => {
         {/* map through inventory items, display name, quantity, and icon */}
         {inventory && inventory.length > 0 ? (
           inventory.map((item, index) => (
+            
             <div key={index} className={styles["inventory-row"]}>
               <span className={styles["item-name"]}>
-                {item.Name} {handleDisplayIcon(item.ItemType)}
+                {item.name} {handleDisplayIcon(item.itemType)}
               </span> 
-              <span className={styles["item-quantity"]}>{item.Quantity}</span>
+              <span className={styles["item-quantity"]}>{item.quantity}</span>
             </div>
           ))
         ) : (

@@ -21,6 +21,7 @@ const PrivateRoute = ({ role }) => {
     }
 
     return false;
+    
   };
   // if their roles do not match navigate them to the log in page
   if (!auth()) return <Navigate to="/LogIn" />;
