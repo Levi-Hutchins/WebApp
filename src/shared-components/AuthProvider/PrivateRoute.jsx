@@ -23,8 +23,8 @@ const PrivateRoute = ({ role }) => {
     return false;
     
   };
-  // if their roles do not match navigate them to the log in page
-  if (!auth()) return <Navigate to="/LogIn" />;
+  // if their roles do not match navigate them to the Home page
+  if (!auth()) return <Navigate to="/" />;
   // navigate them to the outlet page
   return <Outlet />;
 };
