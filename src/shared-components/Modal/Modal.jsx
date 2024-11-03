@@ -1,4 +1,4 @@
-import { React, useEffect } from "react";
+import { React } from "react";
 import { Modal, Box, Typography } from "@mui/material";
 import "./Modal.css";
 // re-usable MUI modal with props didnt really end up using much aside from search page
