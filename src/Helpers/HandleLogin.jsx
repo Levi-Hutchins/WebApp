@@ -13,12 +13,10 @@ async function sha256(message) {
     return hashHex;
     }  
 
-    const HandleLogin = async (email, password) => {
-        var token = 'sPi8tSXBw3BgursDPmfAJz8B3mPaHA6FQ9PWZYJZ';
-        console.log(process.env.REACT_APP_APIKEY);
-        console.log(email)
-    
+    // helper function that handles login functionality 
+    const HandleLogin = async (email, password) => {   
         try {
+            // check if user logging in is a User
             const response = await axios.get(
                 "http://localhost:8080/api/v1/db/data/v1/inft3050/User/find-one",
                 {
@@ -32,28 +30,25 @@ async function sha256(message) {
             );
     
             const { Salt, IsAdmin, HashPW } = response.data;
-            const inputHashed = await sha256(Salt + password);
+            const inputHashed = await sha256(Salt + password);  // hash password
             
-            
-            
-            console.log("Input Hashed: ", inputHashed);
-            console.log("Stored PW: ", HashPW);
-            
+            // compare inputted password with stored password
             if (inputHashed === HashPW) {
                 toast.success("Login successful", {
                     position: "bottom-right"
                 });
                 localStorage.setItem("LogInData",JSON.stringify({EmailAddress: response.data.Email, User: "Employee"}))
                 
+                // check is user is an Admin
                 if (IsAdmin === true){
                     localStorage.setItem("LogInData",JSON.stringify({EmailAddress: response.data.Email, User: "Admin"}))
                     localStorage.setItem("IsAdmin", true)
                 }else{
                     localStorage.setItem("IsAdmin", false)
                 }
-
-                return token } //???????????????????????????
-                
+                return true } 
+            
+            // check if user logging in is Patron
             const patronResponse = await axios.get(
                 "http://localhost:8080/api/v1/db/data/v1/inft3050/Patrons/find-one",
                 {
@@ -66,19 +61,18 @@ async function sha256(message) {
                 }
             );
 
-            console.log(patronResponse.data)
-
             if (patronResponse.data) {
-                const patronInputHashed = await sha256(patronResponse.data.Salt + password);
+                const patronInputHashed = await sha256(patronResponse.data.Salt + password);  // hash password
 
+                // compare inputted password with stored password
                 if (patronInputHashed === patronResponse.data.HashPW) {
                     toast.success("Login successful", {
                         position: "bottom-right"
                     });
-                    localStorage.setItem("IsAdmin", false)
+                    localStorage.setItem("IsAdmin", false)  // patrons cannot be admin
                     localStorage.setItem("LogInData",JSON.stringify({EmailAddress: patronResponse.data.Email, User: "Customer"}))
                     console.log("User is a Patron:", patronResponse.data);
-                    return token; // return token if both login and Patron check are successful
+                    return true; // return true if both login and Patron check are successful
                 }
             } 
             else {

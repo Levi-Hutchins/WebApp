@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import CustomBadge from "../Badge/CustomBadge";
 import { toast } from "react-toastify";
 
+// 
 const NavBar = () => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track login status
@@ -13,7 +14,7 @@ const NavBar = () => {
   const [isEmployee, setIsEmployee] = useState(false); //State to track if user is employee
   const [isCustomer, setIsCustomer] = useState(false); // State to track if user is a customer
 
-  // Check if the user is logged in when the component mounts
+  // Check if the user is logged in using local storage
   useEffect(() => {
     const loggedIn = localStorage.getItem("LogInData"); // Get login status from localStorage
     if (loggedIn) {
@@ -28,16 +29,16 @@ const NavBar = () => {
     // Parse login data and validate it
     if (loginData) {
       try {
-        const parsedData = JSON.parse(loginData); // Parse JSON data
+        const parsedData = JSON.parse(loginData);
         if (parsedData.EmailAddress) {
-          console.log("SetIsLoggedIn == True")
           setIsLoggedIn(true); // User is logged in if valid data exists
           setIsEmployee(parsedData.User === "Employee"); // check if user is employee
           setIsCustomer(parsedData.User === "Customer") // check if user is customer
           setAdminMode(isAdmin === "true")
 
-        } else {
-          console.log("SetIsLoggedIn == False")
+        } 
+        // user is not logged in
+        else {
           setIsLoggedIn(false);
           setIsEmployee(false)
           setIsCustomer(false)
@@ -51,11 +52,11 @@ const NavBar = () => {
     }
   };
 
-  // Check if the user is logged in when the component mounts or localStorage changes
+  // Check if user is logged in when the component mounts or localStorage changes
   useEffect(() => {
-    updateLoginStatus(); // Initial check
+    updateLoginStatus(); 
 
-    // Add an event listener to detect changes in localStorage
+    // event listener to detect changes in localStorage
     window.addEventListener("storage", updateLoginStatus);
 
     return () => { 
@@ -63,6 +64,7 @@ const NavBar = () => {
     };
   });
 
+  // Handles login/logout button, removes local stoarge data if logged in - navigates to login page if not
   const handleLoginLogoutClick = () => {
     if (isLoggedIn) {
       localStorage.removeItem("LogInData");
@@ -79,6 +81,7 @@ const NavBar = () => {
     }
   };
 
+  // checks if user is logged in before navigating to account page
   const checkLogIn = () => {
     if (localStorage.getItem("LogInData")) {
       navigate("/UserAccount"); // Navigate to user account if logged in
@@ -87,12 +90,11 @@ const NavBar = () => {
     }
   };
 
-
-
   return (
     <div className="nav">
       <div className="left-section">
         <div className="account-link" onClick={checkLogIn}>
+        {/* conditionally render Account button if not admin */}
         {!adminMode ? (
           <AccountCircleIcon
             fontSize="large"
@@ -103,11 +105,13 @@ const NavBar = () => {
             }}
           />) : (<></>)}
           </div>
+        {/* conditionally render Admin button if admin */}
         {adminMode ? (   
           <Link to="/Admin" className="homepage">
             ADMIN
           </Link>) : (<></>)
         } 
+        {/* Conditionally render employee button if user is employee */}
         {isEmployee ? (
           <Link to="/Employee" className="nav-item">
             EMPLOYEE
@@ -116,7 +120,7 @@ const NavBar = () => {
         <Link to="/" className="homepage">
           HOME
         </Link>
-
+        {/* conditionally render Item Search button if not admin */}
         {!adminMode ? (
         <Link to="/Search" className="nav-item">
           ITEM SEARCH
@@ -126,6 +130,7 @@ const NavBar = () => {
 
       <ul className="right-section">
         <li className="register-button-container">
+          {/* Conditionally render Register button if user is not logged in */}
           {!isLoggedIn ?(
           <Button
             className="register-button"
@@ -164,6 +169,7 @@ const NavBar = () => {
         </li>
         
         <li className="shop-button-container">
+        {/* Conditionally render Shopping Cart if user is not admin */}
         {!adminMode ? (<CustomBadge
             className="shop-button"
             onClick={() => navigate("/ShoppingCart")}

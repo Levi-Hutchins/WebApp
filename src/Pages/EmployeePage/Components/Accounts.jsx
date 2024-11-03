@@ -11,7 +11,10 @@ import TablePagination from "@mui/material/TablePagination";
 import TextField from "@mui/material/TextField";
 import ViewAccountModal from "./Modals/ViewAccountModal";
 
+// cutome raccounts component - displays the customers in the Employee page
 export default function CustomerAccounts() {
+
+  // states
   const [customers, setCustomers] = useState([]);
   const [filteredCustomers, setFilteredCustomers] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -22,12 +25,17 @@ export default function CustomerAccounts() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // retrieves customers
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
         const response = await axios.get(
           "http://localhost:8080/api/v1/db/data/v1/inft3050/Patrons",
-          { headers: { "xc-token": process.env.REACT_APP_APIKEY } }
+          { 
+            headers: {
+              "xc-token": process.env.REACT_APP_APIKEY 
+            }
+           }
         );
         setCustomers(response.data.list);
         setFilteredCustomers(response.data.list);
@@ -42,10 +50,12 @@ export default function CustomerAccounts() {
     fetchCustomers();
   }, []);
 
+  // search functionality
   const handleSearch = (event) => {
     const query = event.target.value.toLowerCase();
     setSearchQuery(query);
 
+    // Filter customers based on name or email
     const filtered = customers.filter((customer) =>
       customer.Name.toLowerCase().includes(query) ||
       customer.Email.toLowerCase().includes(query)
@@ -53,20 +63,24 @@ export default function CustomerAccounts() {
     setFilteredCustomers(filtered);
     setPage(0);
   };
-
+  
+  // opens modal for clicked customer
   const handleOpen = (customer) => {
     setSelectedCustomer(customer);
     setModalOpen(true);
   };
 
+  // closes modal 
   const handleClose = () => setModalOpen(false);
 
+  // handles pagination 
   const handleChangePage = (event, newPage) => setPage(newPage);
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
 
+  // table columns
   const columns = [
     { id: "Name", label: "Customer Name", minWidth: 140 },
     { id: "Email", label: "Email", minWidth: 140 },

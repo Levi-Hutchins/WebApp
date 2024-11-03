@@ -3,8 +3,9 @@ import { Modal, Box, Typography, IconButton, Button } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { toast } from "react-toastify";
 
+// Modal component to display the Customer information inside Employee page
 const ViewAccountModal = ({ open, onClose, customer }) => {
-  if (!customer) return null; // Prevent modal from rendering if no customer is selected
+  if (!customer) return null; // prevents modal from rendering if no customer is selected
 
   return (
     <Modal open={open} onClose={onClose}>
@@ -32,7 +33,7 @@ const ViewAccountModal = ({ open, onClose, customer }) => {
           <strong>Email:</strong> {customer.Email}
         </Typography>
 
-        {/* View Orders button - not fucntional due to backend set up */}
+        {/* View Orders button - not functional due to backend set up */}
         <Button 
             className="ViewOrders-button"
             variant="contained"
@@ -49,8 +50,6 @@ const ViewAccountModal = ({ open, onClose, customer }) => {
             }}>
             View Customer Orders
         </Button>
-
-
       </Box>
     </Modal>
   );
