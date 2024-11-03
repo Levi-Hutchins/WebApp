@@ -16,9 +16,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   
   },
 }));
-
-
-
+// custom MUI badge that is tied with redux to update the chip when items are added to cart
 const CustomBadge = ({ onClick}) => {
   const cartItems = useSelector((state) => state.cart.cartItems)
   const itemCount = cartItems.reduce((a ,b) => a + b.cartQuantity, 0)

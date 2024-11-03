@@ -1,4 +1,3 @@
-// useCustomerDetails.js
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -9,14 +8,16 @@ const useCustomerDetails = (loggedInUser, setLoading = () => {}) => {
 
   useEffect(() => {
     const fetchCustomerData = async () => {
+      // check if the user is logged in and has an email; if not, stop loading
       if (!loggedInUser || !loggedInUser.EmailAddress) {
         setLoading(false);
         return;
       }
 
-      setLoading(true); 
+      setLoading(true);
 
       try {
+        // fetch patron data based on logged-in user's email
         const patronResponse = await axios.get(
           "http://localhost:8080/api/v1/db/data/v1/inft3050/Patrons/find-one",
           {
@@ -29,6 +30,7 @@ const useCustomerDetails = (loggedInUser, setLoading = () => {}) => {
           }
         );
 
+        // set patron data in userDetails for use throughout the component
         const patronData = patronResponse.data;
         setUserDetails({
           ID: patronData.UserID,
@@ -36,6 +38,7 @@ const useCustomerDetails = (loggedInUser, setLoading = () => {}) => {
           Name: patronData.Name,
         });
 
+        // fetch checkout details based on the patron ID from the previous response
         const toResponse = await axios.get(
           "http://localhost:8080/api/v1/db/data/v1/inft3050/TO/find-one",
           {
@@ -48,6 +51,7 @@ const useCustomerDetails = (loggedInUser, setLoading = () => {}) => {
           }
         );
 
+        // set checkout data in checkOutDetails for further use
         const toData = toResponse.data;
         setCheckOutDetails({
           ID: toData.CustomerID,
@@ -60,14 +64,16 @@ const useCustomerDetails = (loggedInUser, setLoading = () => {}) => {
           CVV: toData.CVV,
         });
       } catch (error) {
+        // display an error message if the fetch fails
         toast.error("Error fetching customer data", { position: "bottom-right" });
       } finally {
+        // set loading to false regardless of the fetch outcome
         setLoading(false);
       }
     };
-
+    // call the function
     fetchCustomerData();
-  }, [loggedInUser, setLoading]);
+  }, [loggedInUser, setLoading]); //dependencies
 
   return { userDetails, checkOutDetails };
 };

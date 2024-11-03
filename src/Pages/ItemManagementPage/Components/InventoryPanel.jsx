@@ -6,20 +6,21 @@ import { toast } from "react-toastify";
 import useInventory from "../Hooks/useInventory";
 
 const InventoryPanel = () => {
-  // destructure the function from the hook
+  // extract getAllInventory function from the inventory hook
   const { getAllInventory } = useInventory(); 
   const [inventory, setInventory] = useState([]); 
   const [error, setError] = useState(null); 
-  // depending on the resouce type renders different icons
-  const handleDisplayIcon = (iconType) => {
-    if(iconType === "Hard copy book") return <AutoStoriesIcon fontSize="small"/>
-    else return <SpatialAudioOffIcon fontSize="small"/>
 
-  }
+  // determine icon based on item type
+  const handleDisplayIcon = (iconType) => {
+    if (iconType === "Hard copy book") return <AutoStoriesIcon fontSize="small" />;
+    return <SpatialAudioOffIcon fontSize="small" />;
+  };
 
   useEffect(() => {
     const fetchInventory = async () => {
       try {
+        // fetch inventory data
         const data = await getAllInventory(); 
         setInventory(data); 
       } catch (err) {
@@ -30,9 +31,8 @@ const InventoryPanel = () => {
     fetchInventory(); 
   }, [getAllInventory]);
 
-
   if (error) {
-    toast.error("An error occured fetching inventory",{
+    toast.error("An error occurred fetching inventory", {
       position: "bottom-right"
     });
   }
@@ -45,14 +45,14 @@ const InventoryPanel = () => {
           <span className={styles["header-item"]}>Item</span>
           <span className={styles["header-quantity"]}>Quantity</span>
         </div>
-                      {/*map through the items and render each item name with quantity
-                      along with the respective icon*/ }
-
+        
+        {/* map through inventory items, display name, quantity, and icon */}
         {inventory && inventory.length > 0 ? (
-          
           inventory.map((item, index) => (
             <div key={index} className={styles["inventory-row"]}>
-              <span className={styles["item-name"]}>{item.Name}  {handleDisplayIcon(item.ItemType)}</span> 
+              <span className={styles["item-name"]}>
+                {item.Name} {handleDisplayIcon(item.ItemType)}
+              </span> 
               <span className={styles["item-quantity"]}>{item.Quantity}</span>
             </div>
           ))

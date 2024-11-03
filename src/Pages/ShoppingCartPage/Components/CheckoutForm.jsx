@@ -5,8 +5,9 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-
 import { toast } from "react-toastify";
+
+// allow only numbers to be entered and display toast message
 const handleNumbersOnly = (e) => {
   if (!(/[0-9]/.test(e.key) || e.key === "Backspace" || e.key === "Delete")) {
     e.preventDefault();
@@ -15,6 +16,7 @@ const handleNumbersOnly = (e) => {
     });
   }
 };
+
 const CheckoutForm = ({ values, errors, handleChange, handleSubmit }) => {
   return (
     <div className={styles["checkout-panel"]}>
@@ -101,14 +103,6 @@ const CheckoutForm = ({ values, errors, handleChange, handleSubmit }) => {
           </Select>
         </FormControl>
 
-        {/* <CheckoutInputBox
-       make this a drop down
-        displayValue={"Suburb"}
-        handleChange={handleChange}
-        errorLevel={!!errors.suburb}
-        value={values.suburb}
-        name="suburb"
-      /> */}
       </div>
 
       <div className={styles["checkout-input-card"]}>

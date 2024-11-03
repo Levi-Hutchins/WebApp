@@ -7,12 +7,14 @@ const useEmployeeDetails = (loggedInUser, setLoading) => {
 
   useEffect(() => {
     const fetchEmployeeData = async () => {
+      // check if the user is logged in and has an email; if not, stop loading
       if (!loggedInUser || !loggedInUser.EmailAddress) {
         setLoading(false);
         return;
       }
 
       try {
+        // fetch employee data from the server based on the logged-in user's email
         const response = await axios.get(
           "http://localhost:8080/api/v1/db/data/v1/inft3050/User/find-one",
           {
@@ -25,6 +27,7 @@ const useEmployeeDetails = (loggedInUser, setLoading) => {
           }
         );
 
+        // set user data in userDetails for further use in the component
         const userData = response.data;
         setUserDetails({
           Email: userData.Email,
@@ -32,14 +35,18 @@ const useEmployeeDetails = (loggedInUser, setLoading) => {
           UserName: userData.UserName,
         });
       } catch (error) {
-        toast.error("Error fetching employee data", { position: "bottom-right" });
+        // display an error message if there is an issue with the data fetch
+        toast.error("Error fetching employee data", {
+          position: "bottom-right",
+        });
       } finally {
+        // set loading to false once the fetch completes, regardless of success or failure
         setLoading(false);
       }
     };
-
+    // call the function
     fetchEmployeeData();
-  }, [loggedInUser, setLoading]);
+  }, [loggedInUser, setLoading]); // dependencies
 
   return { userDetails };
 };

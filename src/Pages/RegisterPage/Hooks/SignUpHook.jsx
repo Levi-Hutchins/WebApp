@@ -12,7 +12,7 @@ const useForm = (initialValues) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
+    // update form values based on input changes
     setValues({
       ...values,
       [name]: value,
@@ -21,11 +21,13 @@ const useForm = (initialValues) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // validate form values before submitting
     if (!validateSignUp(values)) {
       return;
     }
 
     try {
+      // check if user already exists by email
       const response = await axios.get(
         "http://localhost:8080/api/v1/db/data/v1/inft3050/Patrons/find-one",
         {
@@ -39,16 +41,17 @@ const useForm = (initialValues) => {
       );
 
       if (!Object.keys(response.data).length) {
-        console.log(values.Password)
-        const passwordSalt = await hashPassword(values.Password); // Await hashPassword here
+        // hash password and create new user object
+        const passwordSalt = await hashPassword(values.Password);
         const userToAdd = {
           Email: values.Email,
           Name: values.Name,
           Salt: passwordSalt.salt,
           HashPW: passwordSalt.hash,
         };
-        console.log(userToAdd);
+
         try {
+          // add user to the database
           const userResponse = await axios.post(
             "http://localhost:8080/api/v1/db/data/v1/inft3050/Patrons",
             userToAdd,
@@ -60,7 +63,7 @@ const useForm = (initialValues) => {
           );
 
           if (userResponse) {
-            console.log(userResponse);
+            // create associated TO record for the user
             await axios.post(
               "http://localhost:8080/api/v1/db/data/v1/inft3050/TO",
               { PatronId: userResponse.data.UserID, Email: userToAdd.Email },
@@ -70,25 +73,25 @@ const useForm = (initialValues) => {
                 },
               }
             );
-            toast.success("User Created!", { position: "bottom-right" });
+            toast.success("user created!", { position: "bottom-right" });
             setTimeout(() => {
-              navigate("/LogIn");
+              navigate("/LogIn"); // navigate to login page after user creation
             }, 2000);
           }
         } catch (error) {
-          toast.error("Oops! An error occurred", {
+          toast.error("oops! an error occurred", {
             position: "bottom-right",
           });
         }
       } else {
-        toast.error("User already exists with this email", {
+        toast.error("user already exists with this email", {
           position: "bottom-right",
         });
       }
     } catch (error) {
-      console.error("Error during user lookup:", error);
+      console.error("error during user lookup:", error);
       toast.error(
-        "There was an error during sign up. Please try again later.",
+        "there was an error during sign up. please try again later.",
         {
           position: "bottom-right",
         }

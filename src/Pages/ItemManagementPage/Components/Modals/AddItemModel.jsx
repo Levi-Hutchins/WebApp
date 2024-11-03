@@ -29,11 +29,13 @@ const AddItemModal = ({ open, onClose }) => {
 
   useEffect(() => {
     const fetchUserName = async () => {
+      // retrieve the logged-in user's email from local storage
       const userEmail = JSON.parse(localStorage.getItem("LogInData"))?.EmailAddress;
       console.log(userEmail);
       if (!userEmail) return;
   
       try {
+        // fetch user data from the API based on the user's email
         const response = await axios.get(
           "http://localhost:8080/api/v1/db/data/v1/inft3050/User/find-one",
           {
@@ -46,7 +48,7 @@ const AddItemModal = ({ open, onClose }) => {
           }
         );
         if (response.data) {
-          setLoggedInUserName(response.data.UserName);
+          setLoggedInUserName(response.data.UserName); // update state with user's username
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -57,7 +59,7 @@ const AddItemModal = ({ open, onClose }) => {
   }, []);
 
   useEffect(() => {
-    // Update LastUpdatedBy in itemDetails when loggedInUserName changes
+    // update LastUpdatedBy in itemDetails when loggedInUserName changes
     setItemDetails((prevDetails) => ({
       ...prevDetails,
       LastUpdatedBy: loggedInUserName,
@@ -66,7 +68,7 @@ const AddItemModal = ({ open, onClose }) => {
 
   const { addItem } = useItemMutations();
   const { validateAddItem } = useValidation();
-
+  
   const subGenres = {
     1: [
       { name: "Fiction", value: 1 },
@@ -108,6 +110,7 @@ const AddItemModal = ({ open, onClose }) => {
   };
 
   const convertToISO = (dateString) => {
+    // convert date from DD/MM/YYYY format to ISO format
     const [day, month, year] = dateString.split("/").map(Number);
     const isoDate = new Date(year, month - 1, day);
     return isoDate.toISOString();
@@ -115,6 +118,7 @@ const AddItemModal = ({ open, onClose }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    // update itemDetails state with new values
     setItemDetails((prevDetails) => ({
       ...prevDetails,
       [name]: value,
@@ -122,9 +126,11 @@ const AddItemModal = ({ open, onClose }) => {
   };
 
   const handleSubmit = async () => {
+    // validate item details before submitting
     if (!validateAddItem(itemDetails)) {
       return;
     }
+    // convert the Published date to ISO format
     const isoPublishedDate = convertToISO(itemDetails.Published);
     const updatedItemDetails = {
       ...itemDetails,
@@ -132,12 +138,14 @@ const AddItemModal = ({ open, onClose }) => {
     };
 
     try {
+      // call addItem mutation to add the new item
       await addItem(updatedItemDetails);
       toast.success("Item Created!", {
         position: "bottom-right",
       });
       onClose();
     } catch (error) {
+      // display an error toast if submission fails
       toast.error("Oops! An error occurred", {
         position: "bottom-right",
       });

@@ -5,8 +5,6 @@ import PersonIcon from "@mui/icons-material/Person";
 import CustomButton from "../../../shared-components/Button/CustomButton";
 import useForm from "../Hooks/SignUpHook";
 
-
-
 const SignUp = () => {
   const initialValues = {
     Email: "",
@@ -14,15 +12,13 @@ const SignUp = () => {
     Password: "",
     ConfirmPassword: "",
   };
-  const { values, handleChange, handleSubmit } = useForm(
-    initialValues,
-  );
+  // use custom hook to handle form values and submit
+  const { values, handleChange, handleSubmit } = useForm(initialValues);
 
   return (
     <>
       <div className={styles["container"]}>
         <div className={styles["signup-inputs"]}>
-  
           <div className={styles["signup-input"]}>
             <InputBox
               displayValue="Email Address*"
@@ -57,13 +53,9 @@ const SignUp = () => {
               name="ConfirmPassword"
             />
           </div>
-   
-
-          
-          
 
           <div className={styles["submit-button"]}>
-          <CustomButton
+            <CustomButton
               displayValue="Sign Up"
               onClick={handleSubmit}
               buttonIcon={<PersonIcon />}

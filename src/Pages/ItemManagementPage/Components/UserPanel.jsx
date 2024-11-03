@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import PersonIcon from "@mui/icons-material/Person";
-import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
-import DeleteIcon from '@mui/icons-material/Delete';
-import styles from '../Styles/UsersPanel.module.css';
-import CustomButton from "../../../shared-components/Button/CustomButton"
+import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
+import DeleteIcon from "@mui/icons-material/Delete";
+import styles from "../Styles/UsersPanel.module.css";
+import CustomButton from "../../../shared-components/Button/CustomButton";
 import AddUserModal from "./Modals/AddUserModal";
 import EditUserModal from "./Modals/EditUserModal";
 import DeleteUserModal from "./Modals/DeleteUserModal"; // Import delete modal
@@ -15,12 +15,13 @@ import useUserMutations from "../Hooks/useUserMutations";
 const UsersPanel = () => {
   const [usersModalOpen, setUsersModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
-  const [deleteModalOpen, setDeleteModalOpen] = useState(false); // State for delete modal
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [users, setUsers] = useState([]);
 
   const { getAllUsers } = useUsers(); // assuming deleteUser is defined in useUsers
-  const {deleteUser}= useUserMutations();
+  const { deleteUser } = useUserMutations();
+  // populate the users table when pages loads
   useEffect(() => {
     const fetchUsers = async () => {
       const usersData = await getAllUsers();
@@ -29,6 +30,7 @@ const UsersPanel = () => {
     fetchUsers();
   }, [getAllUsers]);
 
+  // modal closing logic
   const handleCloseAddUser = () => {
     setUsersModalOpen(false);
   };
@@ -39,15 +41,15 @@ const UsersPanel = () => {
   };
 
   const handleEditUser = (user) => {
-    setSelectedUser(user); 
-    setEditModalOpen(true); 
+    setSelectedUser(user);
+    setEditModalOpen(true);
   };
 
   const handleDeleteUser = (user) => {
-    setSelectedUser(user); 
+    setSelectedUser(user);
     setDeleteModalOpen(true); // Open delete confirmation modal
   };
-
+  // handles deletion confirmation and updates users list
   const handleDeleteConfirm = async (user) => {
     try {
       await deleteUser(user.UserName);
@@ -63,42 +65,39 @@ const UsersPanel = () => {
     <div className={styles["panel"]}>
       <h2 className={styles["users-title"]}>Users</h2>
       <div className={styles["users-list"]}>
-        {users.map(user => (
+        {users.map((user) => (
           <div key={user.UserName} className={styles["user-item"]}>
             <PersonIcon className={styles["user-icon"]} />
             <span className={styles["user-name"]}>{user.Name}</span>
-            <EditIcon 
-              className={styles["edit-icon"]} 
-              onClick={() => handleEditUser(user)} 
+            <EditIcon
+              className={styles["edit-icon"]}
+              onClick={() => handleEditUser(user)}
             />
-            <DeleteIcon 
-              className={styles["delete-icon"]} 
+            <DeleteIcon
+              className={styles["delete-icon"]}
               onClick={() => handleDeleteUser(user)}
-              sx={{ color: "#DA2727" }} 
+              sx={{ color: "#DA2727" }}
             />
           </div>
         ))}
       </div>
-      <CustomButton 
-        displayValue={"Add New User"} 
-        displayIcon={<PersonAddAltIcon />} 
-        className={styles["add-button"]} 
-        onClick={() => setUsersModalOpen(true)} 
+      <CustomButton
+        displayValue={"Add New User"}
+        displayIcon={<PersonAddAltIcon />}
+        className={styles["add-button"]}
+        onClick={() => setUsersModalOpen(true)}
       />
-      <AddUserModal 
-        open={usersModalOpen} 
-        onClose={handleCloseAddUser} 
+      <AddUserModal open={usersModalOpen} onClose={handleCloseAddUser} />
+      <EditUserModal
+        open={editModalOpen}
+        onClose={handleCloseEditUser}
+        user={selectedUser}
       />
-      <EditUserModal 
-        open={editModalOpen} 
-        onClose={handleCloseEditUser} 
-        user={selectedUser} 
-      />
-      <DeleteUserModal 
-        open={deleteModalOpen} 
-        onClose={() => setDeleteModalOpen(false)} 
-        user={selectedUser} 
-        onDeleteConfirm={handleDeleteConfirm} 
+      <DeleteUserModal
+        open={deleteModalOpen}
+        onClose={() => setDeleteModalOpen(false)}
+        user={selectedUser}
+        onDeleteConfirm={handleDeleteConfirm}
       />
     </div>
   );

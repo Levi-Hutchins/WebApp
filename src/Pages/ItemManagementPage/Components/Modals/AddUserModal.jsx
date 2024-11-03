@@ -14,7 +14,7 @@ import { toast } from "react-toastify";
 
 const AddUserModal = ({ open, onClose }) => {
   const { validateAddUser } = useValidation();
-  const {addUser} = useUsers();
+  const { addUser } = useUsers();
   const [userDetails, setUserDetails] = useState({
     UserName: "",
     Email: "",
@@ -25,6 +25,7 @@ const AddUserModal = ({ open, onClose }) => {
   });
 
   const handleChange = (e) => {
+    // update userDetails state based on form input changes
     const { name, value } = e.target;
     setUserDetails((prevDetails) => ({
       ...prevDetails,
@@ -33,6 +34,7 @@ const AddUserModal = ({ open, onClose }) => {
   };
 
   const handleAdminChange = (e) => {
+    // toggle the IsAdmin field when checkbox is changed
     const { checked } = e.target;
     setUserDetails((prevDetails) => ({
       ...prevDetails,
@@ -41,20 +43,22 @@ const AddUserModal = ({ open, onClose }) => {
   };
 
   const handleSubmit = async () => {
-    if(!validateAddUser(userDetails)){
+    // validate user details before attempting to add the user
+    if (!validateAddUser(userDetails)) {
       return;
     }
-    try{
-      if(await addUser(userDetails)){
+    try {
+      // attempt to add the user and show success toast if successful
+      if (await addUser(userDetails)) {
         toast.success("User created successfully", {
           position: 'bottom-right'
         });
       }
-      
-    }catch(err){
-      toast.error("Error creating user",{
+    } catch (err) {
+      // show error toast if there is an issue creating the user
+      toast.error("Error creating user", {
         position: 'bottom-right'
-      })
+      });
     }
   };
 
