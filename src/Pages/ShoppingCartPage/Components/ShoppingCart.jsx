@@ -10,19 +10,21 @@ import { useDispatch } from "react-redux";
 import { removeFromCart, addToCart } from "../../../Redux/Cart/CartSlice";
 
 const ShoppingCart = ({ cartItems, productDetailsById, handleSubmit }) => {
+
+
   // dispatch hook to send states to redux
   const dispatch = useDispatch();
 
-  // handle removing an item from the cart
-  const handleRemoveFromCart = (event, value) => {
-    event.stopPropagation();
-    dispatch(removeFromCart(value));
-  };
+ // handle removing an item from the cart
+ const handleRemoveFromCart = (event, value) => {
+  event.stopPropagation();
+  dispatch(removeFromCart(value));
+};
 
-  // handle adding an item to the cart
-  const handleAddToCart = (event, value) => {
-    event.stopPropagation();
-    dispatch(addToCart(value));
+// handle adding an item to the cart
+const handleAddToCart = (event, value) => {
+  event.stopPropagation();
+  dispatch(addToCart(value));
   };
   return (
     <div className={styles["cart-summary-panel"]}>
@@ -46,12 +48,11 @@ const ShoppingCart = ({ cartItems, productDetailsById, handleSubmit }) => {
                       </span>
                     )}
                     <span className={styles["item-price"]}>
-                      $
-                      {(cartItem.cartQuantity * productDetail.Price).toFixed(2)}
+                      ${(cartItem.cartQuantity * productDetail.Price).toFixed(2)}
                     </span>
                   </div>
                   <div className={styles["item-buttons"]}>
-                    {/* icon buttons to tie the redux mutations*/}
+                            {/* icon buttons to tie the redux mutations*/}
 
                     <Fab
                       size="small"
@@ -66,8 +67,7 @@ const ShoppingCart = ({ cartItems, productDetailsById, handleSubmit }) => {
                     >
                       <RemoveIcon fontSize="small" />
                     </Fab>
-                    {/* icon buttons to tie the redux mutations*/}
-
+                    
                     <Fab
                       size="small"
                       sx={{
@@ -86,7 +86,7 @@ const ShoppingCart = ({ cartItems, productDetailsById, handleSubmit }) => {
 
                 <Divider
                   sx={{ borderColor: "white", margin: "8px 0" }}
-                  component="li"
+                  component="div"
                 />
               </li>
             );
